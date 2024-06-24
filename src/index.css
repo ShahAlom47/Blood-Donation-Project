@@ -86,3 +86,11 @@
 
     color: white;
   }
+
+
+  .swiper-button-prev, .swiper-button-next {
+    bottom: 5% !important;
+    top: auto !important;
+    color: #ea062b !important;
+}
+

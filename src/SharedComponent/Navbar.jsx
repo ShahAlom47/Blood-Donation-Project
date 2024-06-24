@@ -63,7 +63,7 @@ const Navbar = () => {
     </>
 
     return (
-        <div className={` flex lg:h-[50px] md:h-[40px] h-[35px] border-b- shadow-md shadow-white  bg-gradient-to-t from-[#00000000] to-[#0000004f]  w-full m-auto" p-0  z-50 fixed  ${visible ? 'top-0 transition-all' : '-top-20 transition-all'} duration-1000 `}>
+        <div className={` flex lg:h-[50px] md:h-[40px] h-[35px] border-b- shadow-md shadow-black  bg-gradient-to-t from-[#00000000] to-[#0000004f]  w-full m-auto" p-0  z-50 fixed  ${visible ? 'top-0 transition-all' : '-top-20 transition-all'} duration-1000 `}>
             <div className=" bg-gray-100 w-3/12 flex justify-evenly items-center"><img className=' h-full' src={logo} alt="" /></div>
             <div className=' bg-color-p flex justify-end items-center w-full font-medium'>
                 <div className=" hidden bg-color- max-w flex-1 lg:flex md:flex text-white justify-center font-light items-center gap-4 pl-5 lg:text-xl md:text-sm">{nav}</div>
