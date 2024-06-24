@@ -53,7 +53,7 @@ const Navbar = () => {
         <NavLink className={`hover:underline animate__animated animate__bounceInUp`}>Campaign</NavLink>
         <NavLink className={`hover:underline animate__animated animate__bounceInUp`}>Blog</NavLink>
         <NavLink className={`hover:underline animate__animated animate__bounceInUp`}>Contact Us</NavLink>
-        <label onClick={themeControl} className="flex cursor-pointer gap-2 items-center ml-3">
+        <label onClick={themeControl} className="flex cursor-pointer gap-2 items-center ml-3 hover:text-black">
 
             {
                 themData === 'light' ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" /></svg>
@@ -71,8 +71,8 @@ const Navbar = () => {
                     {
                         user ?
                             <div>
-                                <div className="dropdown dropdown-end">
-                                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                <div className="dropdown dropdown-end p-0 m-0">
+                                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar p-0 m-0">
                                         <div className="w-8 rounded-full">
                                             <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                                         </div>
@@ -94,11 +94,11 @@ const Navbar = () => {
                     }
 
                 </div>
-                <button onClick={() => setOpen(!isOpen)} className=' md:hidden lg:hidden flex  mx-1 px-1 hover:text-black hover:bg-[#f8f8f890] rounded-sm bg-opacity-5 text-white text-2xl btn btn-sm bg-transparent border-none '><RxHamburgerMenu className='' /></button>
+                <button onClick={() => setOpen(!isOpen)} className=' md:hidden lg:hidden flex  mx-1 px-1 hover:text-black  rounded-sm bg-opacity-5 text-white text-2xl btn btn-sm bg-transparent border-none '><RxHamburgerMenu className='' /></button>
 
 
 
-                <div id="drop-down" className={` text-white font-light overflow-hidden flex flex-col absolute bg-color-p p-2 top-16 w-0.5  
+                <div id="drop-down" className={` text-white font-light overflow-hidden flex flex-col absolute bg-color-p p-2 top-[100%] w-0.5  
              ${isOpen ? ' lg:w-0 md:w-0 lg:-left-16 md:-left-16  top-10 left-0 w-[100px] max-w-full transition-all duration-1000 ease-in-out' : '-left-10 top-10 max-w-0 transition-all duration-1000 ease-in-out'}`}
                 >
                     {nav}

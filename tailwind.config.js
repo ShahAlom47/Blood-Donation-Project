@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         'color-p': '#ea062b',
+        'color-text': '#111111',
       },
     },
   },
