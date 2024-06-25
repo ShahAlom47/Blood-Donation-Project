@@ -1,8 +1,15 @@
 import banner from '../../../assets/banner/banner.jpg';
 import { BsPlayBtnFill } from 'react-icons/bs';
 import { Zoom } from 'react-awesome-reveal';
+import ModalVideo from 'react-modal-video';
+import 'react-modal-video/css/modal-video.min.css';
+import { useState } from 'react';
 
 const Banner = () => {
+    const videoID='YHxdhI5ZrHc'
+    const [isOpen, setOpen] = useState(false);
+
+
     return (
         <div className="lg:min-h-[500px] min-h-[400px] relative bg-cover" style={{ backgroundImage: `url(${banner})` }}>
             <div className="h-full absolute inset-0 bg-gradient-to-r from-white to-transparent p-8">
@@ -12,7 +19,7 @@ const Banner = () => {
                             <div className='flex flex-col justify-center items-start h-full pl-8 mb-1 w-full space-y-3'>
                                 <div className='flex gap-2 items-center'>
                                     <Zoom>
-                                        <button className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
+                                        <button onClick={() => setOpen(true)} className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
                                             <BsPlayBtnFill />
                                         </button>
                                     </Zoom>
@@ -31,7 +38,7 @@ const Banner = () => {
                             <div className='flex flex-col justify-center items-start h-full pl-8 w-full space-y-3'>
                                 <div className='flex gap-2 items-center'>
                                     <Zoom>
-                                        <button className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
+                                        <button onClick={() => setOpen(true)}  className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
                                             <BsPlayBtnFill />
                                         </button>
                                     </Zoom>
@@ -52,7 +59,7 @@ const Banner = () => {
                             <div className='flex flex-col justify-center items-start h-full pl-8 w-full space-y-3'>
                                 <div className='flex gap-2 items-center'>
                                     <Zoom>
-                                        <button className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
+                                        <button onClick={() => setOpen(true)}  className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
                                             <BsPlayBtnFill />
                                         </button>
                                     </Zoom>
@@ -73,6 +80,15 @@ const Banner = () => {
 
                 </div>
             </div>
+{/* modal */}
+
+<ModalVideo 
+        channel='youtube' 
+        isOpen={isOpen} 
+        videoId='YHxdhI5ZrHc' 
+        onClose={() => setOpen(false)} 
+      />
+
         </div>
     );
 };
