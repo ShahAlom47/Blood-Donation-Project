@@ -4,16 +4,17 @@ import { Zoom } from 'react-awesome-reveal';
 import ModalVideo from 'react-modal-video';
 import 'react-modal-video/css/modal-video.min.css';
 import { useState } from 'react';
+import { BiSolidDonateHeart } from 'react-icons/bi';
+import { LuLogIn } from 'react-icons/lu';
 
 const Banner = () => {
-    const videoID='YHxdhI5ZrHc'
     const [isOpen, setOpen] = useState(false);
 
 
     return (
-        <div className="lg:min-h-[500px] min-h-[400px] relative bg-cover" style={{ backgroundImage: `url(${banner})` }}>
+        <div className="lg:min-h-[600px] min-h-[500px] relative border-b-2 bg-cover" style={{ backgroundImage: `url(${banner})` }}>
             <div className="h-full absolute inset-0 bg-gradient-to-r from-white to-transparent p-8">
-                <div className='max-w flex items-center relative h-full'>
+                <div className='max-w flex items-center relative h-full pb-16'>
                     <div className="carousel w-full h-full lg:my-12 my-6 overflow-hidden">
                         <div id="slide1" className="carousel-item relative h-full w-full">
                             <div className='flex flex-col justify-center items-start h-full pl-8 mb-1 w-full space-y-3'>
@@ -38,7 +39,7 @@ const Banner = () => {
                             <div className='flex flex-col justify-center items-start h-full pl-8 w-full space-y-3'>
                                 <div className='flex gap-2 items-center'>
                                     <Zoom>
-                                        <button onClick={() => setOpen(true)}  className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
+                                        <button onClick={() => setOpen(true)} className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
                                             <BsPlayBtnFill />
                                         </button>
                                     </Zoom>
@@ -59,7 +60,7 @@ const Banner = () => {
                             <div className='flex flex-col justify-center items-start h-full pl-8 w-full space-y-3'>
                                 <div className='flex gap-2 items-center'>
                                     <Zoom>
-                                        <button onClick={() => setOpen(true)}  className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
+                                        <button onClick={() => setOpen(true)} className='zoom-btn hover:bg-transparent text-color-p text-5xl'>
                                             <BsPlayBtnFill />
                                         </button>
                                     </Zoom>
@@ -78,16 +79,51 @@ const Banner = () => {
                         </div>
                     </div>
 
+                    <div className='w-full  absolute - top-[90%] '>
+                        <div className="flex lg:flex-row flex-col  items-center justify-center w-10/12  m-auto ">
+                            <div className='bg-color-p lg:w-6/12 w-full  text-white flex items-center justify-between p-4'>
+                            <div className="">
+                                    <h1 className="text-xl font-bold text-white p-3 flex gap-4 items-center ">
+                                        Register Now
+                                    </h1>
+                                    <p className="">
+                                    Register now to join our lifesaving community. Your pledge helps ensure quick responses in emergencies. Join us today
+                                    </p>
+                                </div>
+                              <div className='w-3/12 '>
+                              <button className='btn btn-ghost hover:bg-transparent '>  <LuLogIn className=' hover:text-black  text-4xl ' /></button>
+                              </div>
+                            </div>
+                            <div className='bg-black lg:w-6/12 w-full  text-white flex items-center justify-between p-4'>
+                                <div className="">
+                                    <h1 className="text-xl font-bold text-white p-3 flex gap-4 items-center ">
+                                        Donate Now
+                                    </h1>
+                                    <p className="">
+                                    Donate now to save lives. Your blood donation provides hope and critical support for patients in need. Be a hero today.
+                                    </p>
+                                </div>
+                                <div className='w-3/12 '>
+                              <button className='btn btn-ghost hover:bg-transparent '>  <BiSolidDonateHeart className=' hover:text-color-p  text-4xl ' /></button>
+                              </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
-{/* modal */}
 
-<ModalVideo 
-        channel='youtube' 
-        isOpen={isOpen} 
-        videoId='YHxdhI5ZrHc' 
-        onClose={() => setOpen(false)} 
-      />
+
+            {/* modal */}
+
+            <ModalVideo
+                channel='youtube'
+                isOpen={isOpen}
+                videoId='YHxdhI5ZrHc'
+                onClose={() => setOpen(false)}
+            />
 
         </div>
     );

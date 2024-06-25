@@ -1,12 +1,13 @@
-import Loading from "../../SharedComponent/Loading";
+
 import Banner from "./Banner/Banner";
+import Banner2 from "./Banner/Banner2";
 
 
 const Home = () => {
     return (
         <div className=" ">
          <Banner></Banner>
-         <Loading></Loading>
+        <Banner2></Banner2>
             
         </div>
     );
