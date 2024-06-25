@@ -72,7 +72,7 @@
     top: 0;
     left: 0;
     background-color: rgb(19, 19, 19);
-    width: 100px;
+    width: 100%;
     height: 50px;
     transform: translateX(-100%);
     transition: all 0.5s linear;
@@ -93,4 +93,7 @@
     top: auto !important;
     color: #ea062b !important;
 }
+
+
+/* modal */
 
