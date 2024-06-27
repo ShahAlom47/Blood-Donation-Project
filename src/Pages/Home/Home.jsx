@@ -1,6 +1,7 @@
 
 import Banner from "./Banner/Banner";
 import Banner2 from "./Banner/Banner2";
+import WellComeSec from "./WellComeSec/WellComeSec";
 
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
         <div className=" ">
          <Banner></Banner>
         <Banner2></Banner2>
+        <WellComeSec></WellComeSec>
             
         </div>
     );

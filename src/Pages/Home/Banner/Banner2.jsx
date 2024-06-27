@@ -38,7 +38,7 @@ const Banner2 = () => {
     ];
 
     return (
-        <div className="bg-gray-200 pt-20">
+        <div className="bg-gray-200 max-w pt-36 py-20">
             <div className="card-section  mx-auto">
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 p-5">
                     {data.map((item, index) => (
