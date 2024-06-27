@@ -6,12 +6,12 @@ const WellComeSec = () => {
     return (
         <div className='max-w'>
 
-            <div className="flex gap-4  w-full my-16 ">
-                <div className="w-6/12  relative">
+            <div className="lg:flex md:flex gap-4  w-full my-16 ">
+                <div className="lg:w-6/12 md:w-6/12 w-full  relative">
                     <img src={img1} alt="help-img" className="" />
-                    <img src={img2} alt="help-image" className=" absolute right-20 bottom-1/2" />
+                    <img src={img2} alt="help-image" className=" absolute lg:right-[12%] md:right-[0%]   right-[5%] w-6/12  top-[30%]" />
                 </div>
-                <div className=" flex-1">
+                <div className=" flex-1 p-8">
                     <p className='text-color-p'>HELP THE PEOPLE IN NEED</p>
                     <h1 className='text-4xl font-bold my-4'>Welcome to Blood Donors Organization</h1>
                     <p className="">

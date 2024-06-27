@@ -98,7 +98,7 @@ const Banner = () => {
             </div>
             <div className="max-w bg-gray-200 lg:relative  md:relative  border-4 p-3 ">
                 <div className='  lg:absolute md:absolute -top-[200%]   '>
-                    <div className="flex lg:flex-row flex-col  items-center justify-center lg:w-10/12 md:w-10/12 w-11/12  m-auto ">
+                    <div className="flex lg:flex-row md:flex-row flex-col  items-center justify-center lg:w-10/12 md:w-10/12 w-11/12  m-auto ">
                         <div className='bg-color-p min-h-40 lg:w-6/12 w-full  text-white lg:flex items-center justify-between p-4'>
                             <div className="">
                                 <h1 className="text-xl font-bold text-white p-3 flex gap-4 items-center ">
