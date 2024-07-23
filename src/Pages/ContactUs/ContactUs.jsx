@@ -4,6 +4,7 @@ import PageHeading from "../../Components/PageHeading";
 import img from '../../assets/image/contact-bg.jpg'
 import { MdOutlineAccessTime } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 
 const ContactUs = () => {
@@ -28,6 +29,13 @@ const ContactUs = () => {
                             New York</span></h2>
                         <h2 className="text-lg font-semibold flex items-center gap-4"><MdOutlineAccessTime /> <span>Mon - Fri: 8:00 am - 7:00 pm</span></h2>
                     </div>
+                </div>
+
+                <div className="flex justify-evenly gap-5 my-9 ">
+                    <a className=" btn-p flex justify-center items-center gap-2" target="blank" href="https://www.facebook.com/sai.ami.393"><FaFacebookF />  Facebook</a>
+                    <a className=" btn-p flex justify-center items-center gap-2" target="blank" href="https://www.linkedin.com/in/shah-alom-626322290/"><FaLinkedinIn />  Linkedin</a>
+                    <a className=" btn-p flex justify-center items-center gap-2" target="blank" href="https://www.facebook.com/sai.ami.393"><FaTwitter /> Twitter </a>
+
                 </div>
 
             </div>
