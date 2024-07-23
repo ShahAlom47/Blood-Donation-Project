@@ -64,6 +64,10 @@
     color: white;
     border-radius: 2px;
   }
+  .btn-p:hover{
+
+    color: white;
+  }
 
   .btn-p::before{
 
@@ -80,12 +84,10 @@
   }
   .btn-p:hover:before{
     transform: translateX(0);
-  }
-
-  .btn-p:hover{
-
     color: white;
   }
+
+ 
 
 
   .swiper-button-prev, .swiper-button-next {
@@ -96,5 +98,7 @@
 
 
 /* modal */
-
+.btn-text-color{
+color: black;
+}
 

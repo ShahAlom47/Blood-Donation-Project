@@ -16,7 +16,7 @@ const RequestList = () => {
                        <div
                        onClick={()=>handelRequest(data.bloodGroup)}
                        data-tooltip-id="my-tooltip" data-tooltip-content="View Details"
-                       className=" cursor-pointer flex gap-4 font-semibold p-3 border-b-2 hover:border-color-p hover:bg-slate-200">
+                       className="cursor-pointer flex gap-4 font-semibold p-3 border-b-2 hover:border-color-p hover:bg-slate-200 transition-colors duration-600">
                        <IoMdHeart  className="text-red-600"/>
                        <span>{data.bloodGroup}</span>
                        <span> {data.address}</span>
