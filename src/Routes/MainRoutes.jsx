@@ -5,6 +5,7 @@ import Root from "../Layout/Root";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
 import ContactUs from "../Pages/ContactUs/ContactUs";
+import AnimatedLayout from "../SharedComponent/AnimatedLayout";
 
   const router = createBrowserRouter([
     {
@@ -14,11 +15,11 @@ import ContactUs from "../Pages/ContactUs/ContactUs";
       children:[
         {
             path: "/",
-            element: <div><Home></Home></div>,
+            element: <div><AnimatedLayout><Home></Home></AnimatedLayout></div>,
         },
         {
             path: "/contact",
-            element: <div><ContactUs></ContactUs></div>,
+            element: <div><AnimatedLayout><ContactUs></ContactUs></AnimatedLayout></div>,
         }
       ]
     },

@@ -3,11 +3,12 @@ import Navbar from "../SharedComponent/Navbar";
 import Footer from "../SharedComponent/Footer";
 import { useEffect, useState } from "react";
 import Loading from "../SharedComponent/Loading";
+import usePageLoading from "../CustomHocks/usePageLoading";
 
 
 const Root = () => {
     const [loading, setLoading] = useState(true);
-
+const {pageLoading}=usePageLoading()
     useEffect(() => {
       const loadData = async () => {
         await new Promise(resolve => setTimeout(resolve, 2000));
@@ -21,7 +22,10 @@ const Root = () => {
         loading?<Loading></Loading>:
         <div>
             <Navbar></Navbar>
-            <Outlet></Outlet>
+            {
+              pageLoading?<Loading></Loading>: <Outlet></Outlet>
+            }
+           
             <Footer></Footer>
             
         </div>
