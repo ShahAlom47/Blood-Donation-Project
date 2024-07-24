@@ -1,0 +1,25 @@
+.transition-group {
+    position: relative;
+}
+
+.fade-enter {
+    opacity: 0;
+    transform: scale(0.9); /* বা translateY(20px) বা rotate(-10deg) */
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transform: scale(1); /* বা translateY(0) বা rotate(0deg) */
+    transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.fade-exit {
+    opacity: 1;
+    transform: scale(1); /* বা translateY(0) বা rotate(0deg) */
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transform: scale(0.9); /* বা translateY(20px) বা rotate(10deg) */
+    transition: opacity 300ms ease-in, transform 300ms ease-in;
+}

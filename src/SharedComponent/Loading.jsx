@@ -6,7 +6,7 @@ const Loading = () => {
   return (
     <div style={loaderStyle} className='min-h-screen w-full flex justify-center items-center'>
       <div className='w-3/12 m-auto'>
-        <video style={videoStyle} className='w-full m-auto' autoPlay loop muted>
+        <video style={videoStyle} className='w-full m-auto bg-transparent' autoPlay loop muted>
           <source src={video} type='video/mp4' />
           Your browser does not support the video tag.
         </video>

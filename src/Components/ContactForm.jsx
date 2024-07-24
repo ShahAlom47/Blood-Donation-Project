@@ -31,7 +31,7 @@ const ContactForm = () => {
    
 
     return (
-        <div className="bg-white">
+        <div className="">
             <form onSubmit={handleSubmit(onSubmit)} className="flex gap-5 flex-col">
                 <input placeholder="Name" type="text" name="to_name" className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("name")} required />
                 <input placeholder="Your Email" type="email" name="user_email" className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("email")} required />
