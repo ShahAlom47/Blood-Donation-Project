@@ -48,10 +48,10 @@ const Navbar = () => {
 
 
     const nav = <>
-        <NavLink className={`hover:underline animate__animated animate__bounceInUp `}>Home</NavLink>
-        <NavLink className={`hover:underline animate__animated animate__bounceInUp`}>About Us</NavLink>
-        <NavLink className={`hover:underline animate__animated animate__bounceInUp`}>Campaign</NavLink>
-        <NavLink className={`hover:underline animate__animated animate__bounceInUp`}>Blog</NavLink>
+        <NavLink className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp `}>Home</NavLink>
+        <NavLink className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp`}>About Us</NavLink>
+        <NavLink className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp`}>Campaign</NavLink>
+        <NavLink className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp`}>Blog</NavLink>
         <NavLink to={'/contact'} className={`hover:underline animate__animated animate__bounceInUp`}>Contact Us</NavLink>
         <label onClick={themeControl} className="flex cursor-pointer gap-2 items-center ml-3 hover:text-black">
 
