@@ -6,6 +6,7 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
 import ContactUs from "../Pages/ContactUs/ContactUs";
 import AnimatedLayout from "../SharedComponent/AnimatedLayout";
+import Register from "../Pages/Authentication/Register";
 
   const router = createBrowserRouter([
     {
@@ -20,7 +21,11 @@ import AnimatedLayout from "../SharedComponent/AnimatedLayout";
         {
             path: "/contact",
             element: <div><AnimatedLayout><ContactUs></ContactUs></AnimatedLayout></div>,
-        }
+        },
+        {
+            path: "/register",
+            element: <div><AnimatedLayout><Register></Register></AnimatedLayout></div>,
+        },
       ]
     },
   ]);

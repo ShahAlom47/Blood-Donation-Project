@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 
 const ContactSection = () => {
@@ -9,7 +10,7 @@ const ContactSection = () => {
                     <p className="mb-6 font-medium pr-5">Every drop of blood counts. Join our mission to save lives and make a difference. Your contribution can help those in need and bring hope to countless individuals. Be a hero today by becoming a blood donor.</p>
                 </div>
                 <div>
-                    <button style={{backgroundColor:'white',  }} className="btn-p btn-text-color font-bold  hover:text-white">Contact Us</button>
+                 <Link to={'/contact'}>   <button style={{backgroundColor:'white',  }} className="btn-p btn-text-color font-bold  hover:text-white">Contact Us</button></Link>
                 </div>
             </div>
             
