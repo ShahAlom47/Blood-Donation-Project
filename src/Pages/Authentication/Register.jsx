@@ -1,32 +1,36 @@
-import  { useState } from 'react';
+import  {  useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Select from 'react-select';
 import PageHeading from "../../Components/PageHeading";
 import img from '../../assets/image/register-bg.jpg';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import useUser from '../../CustomHocks/useUser';
 
 const cities = [
     { value: 'Dhaka', label: 'Dhaka' },
     { value: 'Chittagong', label: 'Chittagong' },
     { value: 'Sylhet', label: 'Sylhet' },
-    // আরও সিটি যোগ করুন
 ];
 
 const countries = [
     { value: 'Bangladesh', label: 'Bangladesh' },
     { value: 'India', label: 'India' },
     { value: 'USA', label: 'USA' },
-    // আরও কান্ট্রি যোগ করুন
 ];
 
 const Register = () => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const [lastDonate,setLatestDonate]=useState(null)
+    const {user,addUser}=useUser()
 
-    const onSubmit = data => {
+   
+
+    const onSubmit =async data => {
         const formData = { ...data, lastDonate: lastDonate ? lastDonate.toLocaleDateString('en-GB') : null };
-        console.log(formData)
+        const res= await addUser(formData)
+        console.log(res)
+      
     };
 
     const handleDateChange = (date) => {
@@ -57,7 +61,7 @@ const Register = () => {
                             <label className="block text-gray-700 font-medium">Full Name</label>
                             <input 
                                 type="text" 
-                                {...register("fullName", { required: "Full Name is required" })} 
+                                {...register("name", { required: "Full Name is required" })} 
                                 className="input input-bordered rounded-sm w-full mt-1"
                             />
                             {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
