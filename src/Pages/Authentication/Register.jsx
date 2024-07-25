@@ -6,6 +6,9 @@ import img from '../../assets/image/register-bg.jpg';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import useUser from '../../CustomHocks/useUser';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const cities = [
     { value: 'Dhaka', label: 'Dhaka' },
@@ -20,16 +23,31 @@ const countries = [
 ];
 
 const Register = () => {
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    const [lastDonate,setLatestDonate]=useState(null)
-    const {user,addUser}=useUser()
+    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
+    const [lastDonate,setLatestDonate]=useState(null);
+    const navigate=useNavigate();
+    const {addUser}=useUser()
 
    
 
     const onSubmit =async data => {
         const formData = { ...data, lastDonate: lastDonate ? lastDonate.toLocaleDateString('en-GB') : null };
         const res= await addUser(formData)
-        console.log(res)
+
+    
+        if(res.token){
+                toast.success('Account Created Successfully ')
+                reset()
+                setTimeout(() => {
+                    navigate('/')
+                }, 2000);
+                return
+
+        }
+        else if(res.message){
+            toast.error(res.message)
+                
+        }
       
     };
 
@@ -53,6 +71,7 @@ const Register = () => {
     return (
         <div>
             <PageHeading img={img} title={'Register As a Blood Donor'} />
+            <ToastContainer />
             <div className="max-w my-5">
                 <h1 className="text-3xl font-bold text-center mt-16 mb-6">Red Love Organization</h1>
                 <div className="border-2 lg:p-8 md:p-6 p-3 lg:w-8/12 md:w-10/12 w-full m-auto mb-8">
@@ -89,7 +108,7 @@ const Register = () => {
                                 {...register("password", {
                                     required: "Password is required",
                                     minLength: {
-                                        value: 8,
+                                        value: 6,
                                         message: "Password must be at least 8 characters long"
                                     },
                                     pattern: {
@@ -175,6 +194,7 @@ const Register = () => {
 
                         <button style={{width:'100%'}} type="submit" className="btn-p w-full mt-4">Register</button>
                     </form>
+                    <p className=' text-center my-7 font-semibold '>Already have an account?<Link to={'/login'}><button className='btn btn-link '> Login Now</button></Link></p>
                 </div>
             </div>
         </div>

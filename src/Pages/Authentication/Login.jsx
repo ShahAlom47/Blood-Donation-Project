@@ -3,26 +3,47 @@ import { useForm } from 'react-hook-form';
 import PageHeading from "../../Components/PageHeading";
 import img from '../../assets/image/register-bg.jpg';
 import 'react-datepicker/dist/react-datepicker.css';
+import useUser from '../../CustomHocks/useUser';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { login } = useUser()
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const navigate =useNavigate()
 
     const onSubmit = async (data) => {
         setEmailError('');
         setPasswordError('');
-
-      
         try {
-            
-            if (data.email !== "test@example.com") {
-                setEmailError("Invalid email address");
-            } else if (data.password !== "password123") {
-                setPasswordError("Incorrect password");
-            } else {
-                console.log('Login successful:', data);
-            }
+        const res = await login(data.email, data.password)
+        if (res.message === 'Login successful') {
+       
+            toast.success(res.message)
+            reset()
+            setTimeout(() => {
+                navigate('/')
+            }, 2000);
+            return
+        }
+
+        else if(res.message === 'Invalid email'){
+            setEmailError(res.message)
+            return
+        }
+        else if(res.message === 'Invalid  password'){
+            setPasswordError(res.message)
+            return
+        }
+
+
+
+   
+
+           
 
         } catch (error) {
             console.error("Login error:", error);
@@ -31,6 +52,7 @@ const Login = () => {
 
     return (
         <div>
+            <ToastContainer />
             <PageHeading img={img} title={'Login As a Blood Donor'} />
             <div className="max-w py-10">
                 <div className="border-2 lg:p-8 md:p-6 p-3 lg:w-8/12 md:w-10/12 w-full m-auto mb-8">
@@ -67,6 +89,7 @@ const Login = () => {
                         </div>
                         <button style={{ width: '100%' }} type="submit" className="btn-p w-full mt-4">Login</button>
                     </form>
+                    <p className=' text-center my-7 font-semibold '>Don`t have an account?<Link to={'/register'}><button className='btn btn-link '> Register Now</button></Link></p>
                 </div>
             </div>
         </div>
