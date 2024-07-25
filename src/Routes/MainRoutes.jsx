@@ -7,6 +7,7 @@ import Home from "../Pages/Home/Home";
 import ContactUs from "../Pages/ContactUs/ContactUs";
 import AnimatedLayout from "../SharedComponent/AnimatedLayout";
 import Register from "../Pages/Authentication/Register";
+import Login from "../Pages/Authentication/Login";
 
   const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ import Register from "../Pages/Authentication/Register";
         {
             path: "/register",
             element: <div><AnimatedLayout><Register></Register></AnimatedLayout></div>,
+        },
+        {
+            path: "/login",
+            element: <div><AnimatedLayout><Login></Login></AnimatedLayout></div>,
         },
       ]
     },

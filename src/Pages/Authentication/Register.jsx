@@ -78,6 +78,25 @@ const Register = () => {
                             />
                             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
                         </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-medium">Password</label>
+                            <input
+                                type="password"
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Password must be at least 8 characters long"
+                                    },
+                                    pattern: {
+                                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                                        message: "Password must contain at least one letter and one number"
+                                    }
+                                })}
+                                className="input input-bordered rounded w-full mt-1"
+                            />
+                            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+                        </div>
 
                         <div className="mb-4">
                             <label className="block text-gray-700 font-medium">Phone Number</label>
