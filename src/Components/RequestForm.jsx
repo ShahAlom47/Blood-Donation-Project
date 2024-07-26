@@ -1,14 +1,44 @@
 import { useForm } from "react-hook-form";
-
+import useUser from "../CustomHocks/useUser";
+import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const RequestForm = () => {
+    const { user } = useUser();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { register, handleSubmit, reset } = useForm();
 
-    const {
-        register, handleSubmit } = useForm()
-    const onSubmit = (data) => console.log(data)
+   
+    useEffect(() => {
+        const formData = JSON.parse(localStorage.getItem('RequFormData'));
+        if (formData) {
+            reset(formData);
+        }
+    }, [reset]);
 
+    const onSubmit = (data) => {
+        if (!user) {
+            localStorage.setItem('RequFormData', JSON.stringify(data));
+            Swal.fire({
+                title: "You are not logged in!",
+                text: "To request blood, please log in first",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Login"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login', { state: { from: location.pathname } });
+                }
+            });
+            return;
+        }
 
-
+        console.log(data);
+        localStorage.removeItem('RequFormData');
+    };
 
     return (
         <div className=" bg-white ">
@@ -31,8 +61,7 @@ const RequestForm = () => {
                 </select>
                 <textarea placeholder="Your Message" className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("message")} required></textarea>
 
-
-                <button type="submit" className="btn-p cursor-pointer" >Submit</button>
+                <button type="submit" className="btn-p cursor-pointer">Submit</button>
             </form>
         </div>
     );

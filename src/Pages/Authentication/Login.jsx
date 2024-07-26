@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import useUser from '../../CustomHocks/useUser';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 
 const Login = () => {
@@ -16,6 +16,7 @@ const Login = () => {
     const [passwordError, setPasswordError] = useState('');
     const [showPass,setShowPass]=useState(false)
     const navigate =useNavigate()
+    const location = useLocation();
 
     const onSubmit = async (data) => {
         setEmailError('');
@@ -27,7 +28,7 @@ const Login = () => {
             toast.success(res.message)
             reset()
             setTimeout(() => {
-                navigate('/')
+                navigate(location.state?.from || '/', { replace: true });
             }, 2000);
             return
         }
