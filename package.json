@@ -34,6 +34,7 @@
     "react-toastify": "^10.0.5",
     "react-tooltip": "^5.27.0",
     "react-transition-group": "^4.4.5",
+    "responsive-table-react": "^1.2.3",
     "sort-by": "^1.2.0",
     "sweetalert2": "^11.12.3",
     "swiper": "^11.1.4"
