@@ -37,6 +37,7 @@ const AuthProvider = ({ children }) => {
             if (res?.data?.insertedId) {
                 const token = await setToken(userData);
                 if (token.token) {
+                    // eslint-disable-next-line no-unused-vars
                     const { password, ...userWithoutPassword } = userData;
                     setUser(userWithoutPassword); 
                     setLoading(false);
@@ -57,6 +58,7 @@ const AuthProvider = ({ children }) => {
 
             if (res?.data?.message === 'Login successful') {
                 setToken(res?.data?.user);
+                // eslint-disable-next-line no-unused-vars
                 const { password, ...userWithoutPassword } = res.data.user;
                 setUser(userWithoutPassword); 
                 return res.data;
@@ -97,7 +99,7 @@ const AuthProvider = ({ children }) => {
             }
         };
 
-        const interval = setInterval(checkToken, 60000);
+        const interval = setInterval(checkToken, 600000);
         checkToken(); 
 
         return () => {

@@ -7,12 +7,14 @@ import useUser from '../../CustomHocks/useUser';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 
 const Login = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const { login } = useUser()
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [showPass,setShowPass]=useState(false)
     const navigate =useNavigate()
 
     const onSubmit = async (data) => {
@@ -76,14 +78,17 @@ const Login = () => {
                         </div>
                         <div className="mb-4">
                             <label className="block text-gray-700 font-medium">Password</label>
+                            <div className="input input-bordered rounded w-full mt-1 relative">
                             <input
-                                type="password"
+                                type={`${showPass?'text':'password'}`}
                                 {...register("password", {
                                     required: "Password is required",
                                 })}
                                 placeholder='Your Password'
-                                className="input input-bordered rounded w-full mt-1"
+                                className="my-auto w-full mt-2"
                             />
+                            <button className='absolute top-1/4 right-5' onClick={()=>setShowPass(!showPass)}>{showPass?<IoIosEyeOff />:<IoIosEye />}</button>
+                            </div>
                             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                             {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
                         </div>

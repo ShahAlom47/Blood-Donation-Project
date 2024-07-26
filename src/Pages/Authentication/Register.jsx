@@ -9,6 +9,7 @@ import useUser from '../../CustomHocks/useUser';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 
 const cities = [
     { value: 'Dhaka', label: 'Dhaka' },
@@ -25,6 +26,8 @@ const countries = [
 const Register = () => {
     const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
     const [lastDonate,setLatestDonate]=useState(null);
+    
+    const [showPass,setShowPass]=useState(false)
     const navigate=useNavigate();
     const {addUser}=useUser()
 
@@ -103,21 +106,24 @@ const Register = () => {
                         </div>
                         <div className="mb-4">
                             <label className="block text-gray-700 font-medium">Password</label>
-                            <input
-                                type="password"
+                          <div className='relative input input-bordered rounded w-full mt-1'>
+                          <input
+                                  type={`${showPass?'text':'password'}`}
                                 {...register("password", {
                                     required: "Password is required",
                                     minLength: {
                                         value: 6,
-                                        message: "Password must be at least 8 characters long"
+                                        message: "Password must be at least 6 characters long"
                                     },
                                     pattern: {
-                                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
                                         message: "Password must contain at least one letter and one number"
                                     }
                                 })}
-                                className="input input-bordered rounded w-full mt-1"
+                                className=" mt-1"
                             />
+                              <button className='absolute top-1/4 right-5' onClick={()=>setShowPass(!showPass)}>{showPass?<IoIosEyeOff />:<IoIosEye />}</button>
+                          </div>
                             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                         </div>
 
