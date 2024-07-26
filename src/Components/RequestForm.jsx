@@ -1,26 +1,23 @@
 import { useForm } from "react-hook-form";
-import useUser from "../CustomHocks/useUser";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import useUser from "../CustomHocks/useUser";
+import useAxios from "../CustomHocks/useAxiosSecure";
 
 const RequestForm = () => {
     const { user } = useUser();
     const navigate = useNavigate();
     const location = useLocation();
     const [requireDate, setRequireDate] = useState(null);
-    const { register, handleSubmit, reset } = useForm();
+    const { register, handleSubmit, reset, setValue } = useForm();
+    const axiosSecure = useAxios();
 
-    const handelDate = (date) => {
-        setRequireDate(date)
-    }
-    const customStyles = {
-        menu: (provided) => ({
-            ...provided,
-            zIndex: 9999
-        })
+    const handleDate = (date) => {
+        setRequireDate(date);
     };
+
     useEffect(() => {
         const formData = JSON.parse(localStorage.getItem('RequFormData'));
         if (formData) {
@@ -28,7 +25,7 @@ const RequestForm = () => {
         }
     }, [reset]);
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         if (!user) {
             localStorage.setItem('RequFormData', JSON.stringify(data));
             Swal.fire({
@@ -52,22 +49,34 @@ const RequestForm = () => {
             ...data,
             requestedDate: new Date().toLocaleDateString('en-GB'),
             requireDate: requireDate ? requireDate.toLocaleDateString('en-GB') : null,
-            status: 'In Progress'
+            status: 'In Progress',
+            userEmail:user.email,
+        };
 
+        try {
+            const res = await axiosSecure.post('/donation/bloodRequest', formData);
+            if (res.data.insertedId) {
+                Swal.fire('Completed');
+                localStorage.removeItem('RequFormData');
+                setRequireDate(null);
+                reset();
+                setValue("bloodGroup", ""); // Resetting the select field to default value
+            }
+        } catch (error) {
+            console.log(error);
         }
-        console.log(formData);
     };
 
     return (
-        <div className=" bg-white ">
-            <h1 className=" text-xl font-bold m-5">Request For Blood</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className=" p-5  flex gap-5 flex-col ">
-                <input placeholder="Name" type="text" className=" bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("name")} required />
-                <input placeholder="Your Phone " type="number" className=" bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("phone")} required />
-                <input placeholder="Your Email" type="email" className=" bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("email")} required />
-                <input placeholder="Your Address" type="text" className=" bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("address")} required />
-                <select className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("bloodGroup")} required>
-                    <option value="" disabled selected hidden>Select Blood Group</option>
+        <div className="bg-white">
+            <h1 className="text-xl font-bold m-5">Request For Blood</h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="p-5 flex gap-5 flex-col">
+                <input placeholder="Name" type="text" className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("name")} required />
+                <input placeholder="Your Phone " type="number" className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("phone")} required />
+                <input placeholder="Your Email" type="email" className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("email")} required />
+                <input placeholder="Your Address" type="text" className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("address")} required />
+                <select className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none" {...register("bloodGroup")} required defaultValue="">
+                    <option value="" disabled>Select Blood Group</option>
                     <option value="A+" className="font-bold">A(+)</option>
                     <option value="A-" className="font-bold">A(-)</option>
                     <option value="B+" className="font-bold">B(+)</option>
@@ -77,14 +86,13 @@ const RequestForm = () => {
                     <option value="O+" className="font-bold">O(+)</option>
                     <option value="O-" className="font-bold">O(-)</option>
                 </select>
-                <div className="mb-4 ">
+                <div className="mb-4">
                     <div className="bg-gray-300 rounded-sm py-2 px-4 w-full outline-none">
                         <DatePicker
-                            placeholderText='Required Date'
+                            placeholderText="Required Date"
                             selected={requireDate}
-                            onChange={handelDate}
+                            onChange={handleDate}
                             className="w-full mt-1 bg-transparent outline-none"
-                            styles={customStyles}
                         />
                     </div>
                 </div>
