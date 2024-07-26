@@ -35,7 +35,7 @@ const Register = () => {
 
     const onSubmit =async data => {
         const formData = { ...data, lastDonate: lastDonate ? lastDonate.toLocaleDateString('en-GB') : null };
-        const res= await addUser(formData)
+        const res= await addUser({...formData,role:'user'})
 
     
         if(res.token){

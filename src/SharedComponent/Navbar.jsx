@@ -71,7 +71,7 @@ const Navbar = () => {
             <div className=" bg-gray-100 w-3/12 flex justify-evenly items-center"><img className=' h-full' src={logo} alt="" /></div>
             <div className=' bg-color-p flex justify-end items-center w-full font-medium'>
                 <div className=" hidden bg-color- max-w flex-1 lg:flex md:flex text-white justify-center font-light items-center gap-4 pl-5 lg:text-xl md:text-sm">{nav}</div>
-                <div>
+                <div className=' mr-4'>
                     {
                         user ?
                             <div>
