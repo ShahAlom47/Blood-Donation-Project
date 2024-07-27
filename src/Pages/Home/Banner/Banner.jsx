@@ -9,7 +9,7 @@ import 'react-modal-video/css/modal-video.min.css';
 import { BiSolidDonateHeart } from 'react-icons/bi';
 import { LuLogIn } from 'react-icons/lu';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import './Banner.css'; // Import CSS for transitions
+import './Banner.css'; 
 
 const Banner = () => {
     const [isOpen, setOpen] = useState(false);
@@ -45,6 +45,7 @@ const Banner = () => {
         }, 4000);
 
         return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleNextSlide = () => {

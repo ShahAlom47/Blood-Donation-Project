@@ -51,6 +51,8 @@ const RequestForm = () => {
             requireDate: requireDate ? requireDate.toLocaleDateString('en-GB') : null,
             status: 'In Progress',
             userEmail:user.email,
+            userName:user.name,
+            donors: []
         };
 
         try {

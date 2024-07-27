@@ -4,12 +4,20 @@ import { Tooltip } from "react-tooltip";
 import useAxiosPublic from "../../../../CustomHocks/useAxiosPublic";
 import Loading from "../../../../SharedComponent/Loading";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import Modal from 'react-modal';
+import RequestDetails from "./RequestDetails";
 
 const RequestList = () => {
     const axiosPublic = useAxiosPublic();
     const [page, setPage] = useState(1);
-    const navigate =useNavigate()
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [modalData,setModalData]=useState({})
+
+   
+  
+    const closeModal = () => {
+      setModalIsOpen(false);
+    };
 
     const { data, isLoading } = useQuery({
         queryKey: ['bloodRequestList', page],
@@ -19,8 +27,9 @@ const RequestList = () => {
         }
     });
 
-    const handelRequest = (id) => {
-        navigate(`/bloodRequest/Details/${id}`)
+    const handelRequest = (data) => {
+        setModalData(data)
+        setModalIsOpen(true);
     };
 
     const handelPrev = () => {
@@ -40,7 +49,7 @@ const RequestList = () => {
                     data?.data?.map((data, index) => (
                         <div key={index + 1}>
                             <div
-                                onClick={() => handelRequest(data._id)}
+                                onClick={() => handelRequest(data)}
                                 data-tooltip-id="my-tooltip" data-tooltip-content="View Details"
                                 className="lg:text-lg md:text-lg text-sm cursor-pointer flex justify-between items-center lg:gap-4 md:gap-3 gap-1 font-semibold p-3 py-2 border-b-2 hover:border-color-p hover:bg-slate-200 transition-colors duration-600">
                                 <IoMdHeart className="text-red-600" />
@@ -54,7 +63,15 @@ const RequestList = () => {
                         </div>
                     ))
                 }
-                <Tooltip id="my-tooltip" />
+                <Tooltip id="my-tooltip" /> 
+                 <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    contentLabel="Example Modal"
+                    style={customStyles}
+                >
+                   <RequestDetails data={modalData} closeModal={closeModal}></RequestDetails>
+                </Modal>
             </div>
 
             <div className="flex items-end justify-center h-full lg:p-5 md:p-4  p-1">
@@ -66,3 +83,23 @@ const RequestList = () => {
 };
 
 export default RequestList;
+const customStyles = {
+    overlay: {
+      zIndex: '50',
+      backgroundColor: 'rgba(0, 0, 0, 0.75)'
+    },
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '90%', 
+      maxWidth: '90%', 
+      minWidth: '80%', 
+      height: 'auto', 
+      maxHeight: '90vh', 
+      overflow: 'auto' 
+    }
+  };
