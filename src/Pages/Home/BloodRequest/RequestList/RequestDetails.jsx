@@ -12,6 +12,7 @@ const RequestDetails = ({ data, closeModal }) => {
     const AxiosSecure=useAxios()
 
     const {
+        _id,
         name,
         bloodGroup,
         email,
@@ -42,16 +43,29 @@ const RequestDetails = ({ data, closeModal }) => {
                 try {
                
                    const res= await updateDonationRequestAndNotify();
-                    console.log(res);
+                   
 
-                    Swal.fire({
-                        title: 'Thank you for volunteering to donate blood!',
-                        width: 600,
-                        padding: '3em',
-                        color: '#716add',
-                        background: '#fff url(/images/trees.png)',
-                    });
-                    setAlertMessage('Thank you for volunteering to donate blood!');
+                    if(res.success){
+                        Swal.fire({
+                            title: res.message,
+                            width: 600,
+                            padding: '3em',
+                            color: '#716add',
+                            background: '#fff url(/images/trees.png)',
+                        });
+                        setAlertMessage('');
+                    }
+                    else{
+                        Swal.fire({
+                            title: res.message,
+                            width: 600,
+                            padding: '3em',
+                            color: '#716add',
+                            background: '#fff url(/images/trees.png)',
+                        });
+                        setAlertMessage(res.message);
+                    }
+                 
                 } catch (error) {
                     console.error('Error volunteering to donate:', error);
                     setAlertMessage('There was an error processing your request. Please try again.');
@@ -87,6 +101,7 @@ const RequestDetails = ({ data, closeModal }) => {
                 donorEmail: user.email,
                 donorName: user.name,
                 status: "Pending",
+                id:_id,
                 notificationData: {
                     donorEmail: user.email,
                     requesterEmail: userEmail,
@@ -97,7 +112,7 @@ const RequestDetails = ({ data, closeModal }) => {
                 }
               
             });
-            console.log(response.data);
+           
             return response.data;
         } catch (error) {
             console.error('Error updating donation request and sending notification:', error);
