@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import useUser from "../../../../CustomHocks/useUser";
 import useAxios from "../../../../CustomHocks/useAxiosSecure";
+import PropTypes from 'prop-types';
 
 const RequestForm = ({setRefetchData,refetchData}) => {
     const { user } = useUser();
@@ -108,3 +109,8 @@ const RequestForm = ({setRefetchData,refetchData}) => {
 };
 
 export default RequestForm;
+
+RequestForm.propTypes = {
+    setRefetchData: PropTypes.func.isRequired,
+   refetchData: PropTypes.bool.isRequired
+};

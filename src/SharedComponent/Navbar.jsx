@@ -77,7 +77,7 @@ const Navbar = () => {
                         user ?
                             <div className=' flex items-center gap-4'>
                                 <div>
-                                    <NotificationIcon value={8||0}></NotificationIcon>
+                                    <NotificationIcon value={8||0}  userEmail={user.email}></NotificationIcon>
                                 </div>
                                 <div className="dropdown dropdown-end p-0 m-0">
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar p-0 m-0">

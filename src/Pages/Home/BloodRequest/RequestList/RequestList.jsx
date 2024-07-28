@@ -6,6 +6,7 @@ import Loading from "../../../../SharedComponent/Loading";
 import { useEffect, useState } from "react";
 import Modal from 'react-modal';
 import RequestDetails from "./RequestDetails";
+import PropTypes from 'prop-types';
 
 const RequestList = ({refetchData}) => {
     const axiosPublic = useAxiosPublic();
@@ -90,6 +91,11 @@ const RequestList = ({refetchData}) => {
 };
 
 export default RequestList;
+
+RequestList.propTypes = {
+   refetchData: PropTypes.bool.isRequired
+};
+
 const customStyles = {
     overlay: {
       zIndex: '50',

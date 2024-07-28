@@ -1,15 +1,34 @@
 import { RxBell } from "react-icons/rx";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import useAxios from "../CustomHocks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import useUser from "../CustomHocks/useUser";
+import Loading from "../SharedComponent/Loading";
 
+const NotificationIcon = () => {
+  const AxiosSecure = useAxios();
+  const { user } = useUser();
 
-const NotificationIcon = ({ value }) => {
+  const { data, isLoading, } = useQuery({
+    queryKey: ['getAllNotification'],
+    queryFn: async () => {
+      const res = await AxiosSecure.get(`/notification/getUserNotification/${user?.email}`);
+      return res.data;
+    },
+    refetchInterval: 60000, // 60 seconds
+  });
+
+  // Filter unread notifications
+  const unreadCount = data?.filter(notification => notification.status === 'unread').length || 0;
+
   return (
     <div>
       <label htmlFor="my-drawer-4" className="drawer-button ">
         <div className="relative inline-flex items-center p-1 rounded-full hover:bg-gray-300  text-white hover:text-color-p ">
           <RxBell className=" text-xl" />
-
-          <span className="absolute -top-1 -right-1 block min-w-5 text-[8px] bg-black bg-opacity-90 rounded-full p-1 text-center text-white ">{value > 10 ? '10+' : value}</span>
+          <span className="absolute -top-1 -right-1 block min-w-5 text-[8px] bg-black bg-opacity-90 rounded-full p-1 text-center text-white ">
+            {unreadCount > 10 ? '10+' : unreadCount}
+          </span>
         </div>
       </label>
 
@@ -18,9 +37,13 @@ const NotificationIcon = ({ value }) => {
         <div className="drawer-side top-12">
           <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
           <ul className="menu bg-color-p text-base-content min-h-screen  w-80 p-4">
-            {/* Sidebar content here */}
-            <li><a>Sidebar Item 1</a></li>
-            <li><a>Sidebar Item 2</a></li>
+            {isLoading ? <Loading /> : (
+              <div>
+                {data?.map(notification => (
+                  <li key={notification._id}>{notification.message}</li>
+                ))}
+              </div>
+            )}
           </ul>
         </div>
       </div>
@@ -28,7 +51,8 @@ const NotificationIcon = ({ value }) => {
   );
 };
 
-export default NotificationIcon;
 NotificationIcon.propTypes = {
-  value: PropTypes.number.isRequired
+  value: PropTypes.number
 };
+
+export default NotificationIcon;
