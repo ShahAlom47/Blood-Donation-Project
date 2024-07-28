@@ -6,10 +6,13 @@ import useUser from '../../../../CustomHocks/useUser';
 import Swal from 'sweetalert2';
 import PageHeading from '../../../../Components/PageHeading';
 import useAxios from '../../../../CustomHocks/useAxiosSecure';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const RequestDetails = ({ data, closeModal }) => {
     const { user } = useUser();
     const AxiosSecure=useAxios()
+    const navigate=useNavigate()
+    const location=useLocation()
 
     const {
         _id,
@@ -24,6 +27,7 @@ const RequestDetails = ({ data, closeModal }) => {
         status,
         userEmail,
         userName,
+        donors,
     } = data;
 
     // State to manage alert messages
@@ -31,12 +35,26 @@ const RequestDetails = ({ data, closeModal }) => {
 
     const handleDonate = async () => {
         const requestGroup = bloodGroup.toUpperCase();  
-        const userGroup = user.bloodGroup.toUpperCase();  
-        const userLastDonate = new Date(user.lastDonate);  
-
-        
+        const userGroup = user?.bloodGroup.toUpperCase();  
+        const userLastDonate = new Date(user?.lastDonate);   
         const threeMonthsAgo = new Date();
         threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+        if (!user) {
+            Swal.fire({
+                title: "You are not logged in!",
+                text: "To request blood, please log in first",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Login"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login', { state: { from: location.pathname } });
+                }
+            });
+            return;
+        }
 
         if (requestGroup === userGroup) {
             if (userLastDonate <= threeMonthsAgo) {
@@ -83,7 +101,7 @@ const RequestDetails = ({ data, closeModal }) => {
             }
         } else {
             Swal.fire({
-                title: `Your Blood Group Is ${user.bloodGroup}`,
+                title: `Your Blood Group Is ${user?.bloodGroup}`,
                 text: 'Your blood group does not match the requested blood group.',
                 width: 600,
                 padding: '3em',
@@ -98,14 +116,14 @@ const RequestDetails = ({ data, closeModal }) => {
     const updateDonationRequestAndNotify = async () => {
         try {
             const response = await AxiosSecure.put('/donation/updateDonationRequest', {
-                donorEmail: user.email,
-                donorName: user.name,
+                donorEmail: user?.email,
+                donorName: user?.name,
                 status: "Pending",
                 id:_id,
                 notificationData: {
-                    donorEmail: user.email,
+                    donorEmail: user?.email,
                     requesterEmail: userEmail,
-                    message:` New donation volunteer: ${user.name}`,
+                    message:` New donation volunteer: ${user?.name}`,
                     type: "donation_interest",
                     status: "unread",
                     timestamp: new Date().toISOString()
@@ -140,13 +158,25 @@ const RequestDetails = ({ data, closeModal }) => {
                     </div>
                     <div>
                         <div className="flex justify-between flex-wrap">
-                            <div className="mb-4 text-xl">
-                                <h3 className="text-xl font-bold border-b-2 border-color-p mb-4">Blood Group Information</h3>
-                                <p><strong>Blood Group:</strong> <span className="text-2xl text-color-p font-semibold">{bloodGroup}</span></p>
-                                <p><strong>Status:</strong> <span className="text-xl bg-yellow-200 px-2 rounded-sm">{status}</span></p>
-                                <p><strong>Require Date:</strong> {requireDate}</p>
-                                <p><strong>Message:</strong> {message}</p>
-                            </div>
+                        <div className="mb-4 text-xl">
+    <h3 className="text-xl font-bold border-b-2 border-color-p mb-4">Blood Group Information</h3>
+    <p><strong>Blood Group:</strong> <span className="text-2xl text-color-p font-semibold">{bloodGroup}</span></p>
+    <p><strong>Status:</strong> <span className="text-xl bg-yellow-200 px-2 rounded-sm">{status}</span></p>
+    <p><strong>Require Date:</strong> {requireDate}</p>
+    <p><strong>Message:</strong> {message}</p>
+    <p><strong>Ready Donor:</strong></p>
+    <ul className="list-disc list-inside mt-2">
+        {donors.length > 0 ? (
+            donors.map((donor, index) => (
+                <li key={index} className="mt-1">
+                    <span className="font-semibold">{donor.donorName}</span> - <span className="text-sm text-gray-600">{donor.donorEmail}</span>
+                </li>
+            ))
+        ) : (
+            <p>No donors available</p>
+        )}
+    </ul>
+</div>
                             <div className="mb-4 text-xl">
                                 <h3 className="text-xl font-bold border-b-2 border-color-p mb-4">Requester Information</h3>
                                 <p><strong>Name:</strong> {name}</p>
