@@ -3,11 +3,11 @@ import { IoMdHeart } from "react-icons/io";
 import { Tooltip } from "react-tooltip";
 import useAxiosPublic from "../../../../CustomHocks/useAxiosPublic";
 import Loading from "../../../../SharedComponent/Loading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from 'react-modal';
 import RequestDetails from "./RequestDetails";
 
-const RequestList = () => {
+const RequestList = ({refetchData}) => {
     const axiosPublic = useAxiosPublic();
     const [page, setPage] = useState(1);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -19,13 +19,20 @@ const RequestList = () => {
       setModalIsOpen(false);
     };
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading,refetch } = useQuery({
         queryKey: ['bloodRequestList', page],
         queryFn: async () => {
             const res = await axiosPublic.get(`/donation/getBloodRequest?page=${page}&limit=8`);
             return res.data;
         }
     });
+
+    useEffect(() => {
+        if (refetchData) {
+            refetch();
+        }
+    }, [refetchData, refetch]);
+
 
     const handelRequest = (data) => {
         setModalData(data)

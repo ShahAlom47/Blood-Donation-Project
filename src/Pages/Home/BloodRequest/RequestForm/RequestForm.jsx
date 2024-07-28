@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import useUser from "../../../../CustomHocks/useUser";
 import useAxios from "../../../../CustomHocks/useAxiosSecure";
 
-const RequestForm = () => {
+const RequestForm = ({setRefetchData,refetchData}) => {
     const { user } = useUser();
     const navigate = useNavigate();
     const location = useLocation();
@@ -61,8 +61,9 @@ const RequestForm = () => {
                 Swal.fire('Completed');
                 localStorage.removeItem('RequFormData');
                 setRequireDate(null);
-                // reset();
+                reset();
                 setValue("bloodGroup", ""); // Resetting the select field to default value
+                setRefetchData(!refetchData)
             }
         } catch (error) {
             console.log(error);

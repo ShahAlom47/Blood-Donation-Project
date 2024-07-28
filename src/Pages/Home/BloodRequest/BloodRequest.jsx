@@ -1,10 +1,19 @@
 
+import { useEffect, useState } from "react";
 import SectionHeading from "../../../Components/SectionHeading";
 import banner from '../../../assets/image/blood-request-banner.jpg'
 import RequestForm from "./RequestForm/RequestForm";
 import RequestList from "./RequestList/RequestList";
 
 const BloodRequest = () => {
+const [refetchData,setRefetchData]=useState(false)
+
+useEffect(()=>{
+
+
+},[refetchData])
+
+
     return (
         <div className="mb-10 ">
             <div className="relative min-h-[250px] bg-cover bg-center" style={{ backgroundImage: `url(${banner})` }}>
@@ -15,10 +24,10 @@ const BloodRequest = () => {
             </div>
             <div className="max-w lg:p-10 md:p-5 p-2 gap-5 flex lg:flex-row md:flex-row flex-col  ">
                 <div className="flex-1  bg-white shadow-xl min-h-full ">
-                <RequestList></RequestList>
+                <RequestList refetchData={refetchData}></RequestList>
                 </div>
                 <div className="lg:w-1/2 md:w-1/2 bg-white shadow-xl h-full ">
-                <RequestForm></RequestForm>
+                <RequestForm setRefetchData={setRefetchData} refetchData={refetchData}></RequestForm>
 
                 </div>
             </div>
