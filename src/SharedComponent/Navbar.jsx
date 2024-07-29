@@ -10,6 +10,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 import { Tooltip } from 'react-tooltip'
 import useUser from '../CustomHocks/useUser';
 import NotificationIcon from '../Components/NotificationIcon';
+import { IoIosArrowDown } from 'react-icons/io';
 
 
 
@@ -19,7 +20,8 @@ const Navbar = () => {
     const [visible, setVisible] = useState(true);
     const [theme, setTheme] = useState(true);
     const [themData, setThemeData] = useState(null)
-    const { user,logout } = useUser()
+    const [donateBtn, setDonateBtn] = useState(false)
+    const { user, logout } = useUser()
     // const user = true
 
     useEffect(() => {
@@ -52,9 +54,17 @@ const Navbar = () => {
 
     const nav = <>
         <NavLink className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp `}>Home</NavLink>
-        <NavLink className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp`}>About Us</NavLink>
+        <NavLink to={'/allRequest'} className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp `}>Blood Request</NavLink>
+       
+        <div className="dropdown dropdown-bottom">
+            <div onClick={()=>setDonateBtn(!donateBtn)} tabIndex={0} role="button" className={`hover:text-black px-3 rounded-sm animate__animated animate__bounceInUp flex items-center `}>Donate <IoIosArrowDown /></div>
+            <ul tabIndex={0} className="dropdown-content menu bg-color-p rounded-sm z-[1] w-40 mt-1 p-2 shadow">
+                <li><Link>Donate Blood</Link></li>
+                <li><Link>Donate Money</Link></li>
+            </ul>
+        </div>
         <NavLink className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp`}>Campaign</NavLink>
-        <NavLink className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp`}>Blog</NavLink>
+
         <NavLink to={'/contact'} className={`hover:underline animate__animated animate__bounceInUp`}>Contact Us</NavLink>
 
         <label onClick={themeControl} className="flex cursor-pointer gap-2 items-center ml-3 hover:text-black">
@@ -64,7 +74,7 @@ const Navbar = () => {
                     : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             }
         </label>
-       
+
     </>
 
     return (
@@ -77,7 +87,7 @@ const Navbar = () => {
                         user ?
                             <div className=' flex items-center gap-4'>
                                 <div>
-                                    <NotificationIcon value={8||0}  userEmail={user.email}></NotificationIcon>
+                                    <NotificationIcon value={8 || 0} userEmail={user.email}></NotificationIcon>
                                 </div>
                                 <div className="dropdown dropdown-end p-0 m-0">
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar p-0 m-0">
@@ -88,14 +98,14 @@ const Navbar = () => {
                                     <ul tabIndex={0} className="-mt-1 z-[1] text-white p-2 shadow menu menu-sm dropdown-content bg-color-p rounded-sm w-32">
                                         <li className='border-b-2 pl-2  uppercase' >{user.name} </li>
                                         <li><a>My Profile</a></li>
-                                        <li><a onClick={()=>logout()}>Logout</a></li>
+                                        <li><a onClick={() => logout()}>Logout</a></li>
                                     </ul>
                                 </div>
 
                             </div> :
                             <div>
                                 <Link
-                                to={'/login'}
+                                    to={'/login'}
                                     data-tooltip-id="my-tooltip" data-tooltip-content="LogIn"
                                     className='text-white font-light hover:bg-transparent hover:text-lg btn btn-sm p-0 bg-transparent border-none text-xl lg:mr-2 md:mr-2 '><BiLogIn /> </Link>
 

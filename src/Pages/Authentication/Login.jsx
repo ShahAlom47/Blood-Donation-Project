@@ -23,6 +23,7 @@ const Login = () => {
         setPasswordError('');
         try {
         const res = await login(data.email, data.password)
+        console.log(res);
         if (res.message === 'Login successful') {
        
             toast.success(res.message)
@@ -40,6 +41,9 @@ const Login = () => {
         else if(res.message === 'Invalid  password'){
             setPasswordError(res.message)
             return
+        }
+        else{
+            toast.warn(res.message)
         }
 
 

@@ -8,6 +8,7 @@ import ContactUs from "../Pages/ContactUs/ContactUs";
 import AnimatedLayout from "../SharedComponent/AnimatedLayout";
 import Register from "../Pages/Authentication/Register";
 import Login from "../Pages/Authentication/Login";
+import BloodRequest from "../Pages/Home/BloodRequest/BloodRequest";
 
   const router = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ import Login from "../Pages/Authentication/Login";
         {
             path: "/",
             element: <div><AnimatedLayout><Home></Home></AnimatedLayout></div>,
+        },
+        {
+            path: "/allRequest",
+            element: <div><AnimatedLayout><BloodRequest></BloodRequest></AnimatedLayout></div>,
         },
       
         {

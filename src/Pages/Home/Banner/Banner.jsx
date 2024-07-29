@@ -10,10 +10,15 @@ import { BiSolidDonateHeart } from 'react-icons/bi';
 import { LuLogIn } from 'react-icons/lu';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './Banner.css'; 
+import { useNavigate } from 'react-router-dom';
+import useUser from '../../../CustomHocks/useUser';
+import Swal from 'sweetalert2';
 
 const Banner = () => {
     const [isOpen, setOpen] = useState(false);
     const [currentSlide, setCurrentSlide] = useState(0);
+    const navigate=useNavigate()
+    const {user}=useUser()
 
     const slides = [
         {
@@ -55,6 +60,19 @@ const Banner = () => {
     const handlePrevSlide = () => {
         setCurrentSlide((prevSlide) => (prevSlide - 1 + slides.length) % slides.length);
     };
+
+    const handelRegister = () => {
+        if (!user) {
+            navigate('/register');
+            return;
+        }
+        Swal.fire({
+            title: 'Already Registered!',
+            text: 'You are already registered. Feel free to explore and participate in our life-saving missions.',
+            icon: 'success',
+            confirmButtonText: 'Great!'
+        });
+    }
 
     return (
         <div className="relative">
@@ -106,7 +124,7 @@ const Banner = () => {
             <div className="max-w bg-gray-200 lg:relative md:relative border-4 p-3">
                 <div className='lg:absolute md:absolute -top-[200%]'>
                     <div className="flex lg:flex-row md:flex-row flex-col items-center justify-center lg:w-10/12 md:w-10/12 w-11/12 m-auto">
-                        <div className='bg-color-p min-h-40 lg:w-6/12 w-full text-white lg:flex items-center justify-between p-4'>
+                        <div onClick={handelRegister} className='bg-color-p min-h-40 lg:w-6/12 w-full text-white lg:flex items-center justify-between p-4'>
                             <div className="">
                                 <h1 className="text-xl font-bold text-white p-3 flex gap-4 items-center ">
                                     Register Now

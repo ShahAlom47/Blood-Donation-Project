@@ -8,11 +8,14 @@ import PageHeading from '../../../../Components/PageHeading';
 import useAxios from '../../../../CustomHocks/useAxiosSecure';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const RequestDetails = ({ data, closeModal }) => {
+const RequestDetails = ({ data, closeModal,refetch }) => {
     const { user } = useUser();
     const AxiosSecure=useAxios()
     const navigate=useNavigate()
     const location=useLocation()
+
+
+    
 
     const {
         _id,
@@ -55,6 +58,18 @@ const RequestDetails = ({ data, closeModal }) => {
             });
             return;
         }
+        if(user.email===userEmail){
+            Swal.fire({
+                title:'Its Your Own Request ',
+                width: 600,
+                padding: '3em',
+                color: '#716add',
+                background: '#fff url(/images/trees.png)',
+            });
+            setAlertMessage('');
+            refetch()
+            return
+        }
 
         if (requestGroup === userGroup) {
             if (userLastDonate <= threeMonthsAgo) {
@@ -72,6 +87,7 @@ const RequestDetails = ({ data, closeModal }) => {
                             background: '#fff url(/images/trees.png)',
                         });
                         setAlertMessage('');
+                        refetch()
                     }
                     else{
                         Swal.fire({
@@ -196,7 +212,8 @@ const RequestDetails = ({ data, closeModal }) => {
 
 RequestDetails.propTypes = {
     data: PropTypes.object.isRequired,
-    closeModal: PropTypes.func.isRequired
+    closeModal: PropTypes.func.isRequired,
+    refetch: PropTypes.func.isRequired
 };
 
 export default RequestDetails;

@@ -78,7 +78,7 @@ const RequestList = ({refetchData}) => {
                     contentLabel="Example Modal"
                     style={customStyles}
                 >
-                   <RequestDetails data={modalData} closeModal={closeModal}></RequestDetails>
+                   <RequestDetails data={modalData} refetch={refetch} closeModal={closeModal}></RequestDetails>
                 </Modal>
             </div>
 
