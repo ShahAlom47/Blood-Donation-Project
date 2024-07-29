@@ -9,6 +9,7 @@ import AnimatedLayout from "../SharedComponent/AnimatedLayout";
 import Register from "../Pages/Authentication/Register";
 import Login from "../Pages/Authentication/Login";
 import BloodRequest from "../Pages/Home/BloodRequest/BloodRequest";
+import DonateBlood from "../Pages/DonateBlood/DonateBlood";
 
   const router = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ import BloodRequest from "../Pages/Home/BloodRequest/BloodRequest";
         {
             path: "/allRequest",
             element: <div><AnimatedLayout><BloodRequest></BloodRequest></AnimatedLayout></div>,
+        },
+        {
+            path: "/donateBlood",
+            element: <div><AnimatedLayout><DonateBlood></DonateBlood></AnimatedLayout></div>,
         },
       
         {

@@ -59,7 +59,7 @@ const Navbar = () => {
         <div className="dropdown dropdown-bottom">
             <div onClick={()=>setDonateBtn(!donateBtn)} tabIndex={0} role="button" className={`hover:text-black px-3 rounded-sm animate__animated animate__bounceInUp flex items-center `}>Donate <IoIosArrowDown /></div>
             <ul tabIndex={0} className="dropdown-content menu bg-color-p rounded-sm z-[1] w-40 mt-1 p-2 shadow">
-                <li><Link>Donate Blood</Link></li>
+                <li><Link to={'/donateBlood'}>Donate Blood</Link></li>
                 <li><Link>Donate Money</Link></li>
             </ul>
         </div>
