@@ -28,11 +28,11 @@ const DonateBlood = () => {
     return (
         <div>
             <PageHeading title={'Donate Now'} img={bg}> </PageHeading>
-            <div className="max-w my-5">
-                <h1 className="text-center text-5xl font-bold my-6">Make a Donation</h1>
-                <form onSubmit={handleSubmit(onSubmit)} className=" lg:w-8/12 md:w-10/12 w-full mx-auto  border-2 lg:p-8 md:p-5">
-                    <div>
-                        <label className="block">Name:</label>
+            <div className="max-w my-5 p-5">
+                <h1 className="text-center lg:text-5xl md:text-4xl text-2xl font-bold my-6">Make a Donation</h1>
+                <form onSubmit={handleSubmit(onSubmit)} className=" lg:w-8/12 md:w-10/12 w-full mx-auto  border-2 m-5 lg:p-8 md:p-5 p-4">
+                    <div className='mt-3'>
+                        <label className="block font-semibold ">Name:</label>
                         <input
                             {...register('name')}
                             className="w-full p-2 border border-gray-300 rounded"
@@ -40,16 +40,16 @@ const DonateBlood = () => {
                         />
                     </div>
                     <div className="  grid lg:grid-cols-2 gap-4 md:grid-cols-2 grid-cols-1">
-                        <div>
-                            <label className="block">Email:</label>
+                        <div  className='mt-3'>
+                            <label className="block font-semibold ">Email:</label>
                             <input
                                 {...register('email')}
                                 className="w-full p-2 border border-gray-300 rounded"
                                 type="email"
                             />
                         </div>
-                        <div>
-                            <label className="block">Phone Number:</label>
+                        <div  className='mt-3'>
+                            <label className="block font-semibold ">Phone Number:</label>
                             <input
                                 {...register('phoneNumber')}
                                 className="w-full p-2 border border-gray-300 rounded"
@@ -58,16 +58,16 @@ const DonateBlood = () => {
                         </div>
                     </div>
                     <div className="  grid lg:grid-cols-2 gap-4 md:grid-cols-2 grid-cols-1">
-                        <div>
-                            <label className="block">Blood Group:</label>
+                        <div  className='mt-3'>
+                            <label className="block font-semibold ">Blood Group:</label>
                             <input
                                 {...register('bloodGroup')}
                                 className="w-full p-2 border border-gray-300 rounded"
                                 type="text"
                             />
                         </div>
-                        <div>
-                            <label className="block">Last Donate Date:</label>
+                        <div  className='mt-3'>
+                            <label className="block font-semibold ">Last Donate Date:</label>
                             <Controller
                                 control={control}
                                 name="lastDonate"
@@ -84,16 +84,16 @@ const DonateBlood = () => {
                     </div>
 
                     <div className="  grid lg:grid-cols-2 gap-4 md:grid-cols-2 grid-cols-1">
-                        <div>
-                            <label className="block">City:</label>
+                        <div  className='mt-3'>
+                            <label className="block font-semibold ">City:</label>
                             <input
                                 {...register('city')}
                                 className="w-full p-2 border border-gray-300 rounded"
                                 type="text"
                             />
                         </div>
-                        <div>
-                            <label className="block">Country:</label>
+                        <div  className='mt-3'>
+                            <label className="block font-semibold ">Country:</label>
                             <input
                                 {...register('country')}
                                 className="w-full p-2 border border-gray-300 rounded"
@@ -101,7 +101,7 @@ const DonateBlood = () => {
                             />
                         </div>
                     </div>
-                    <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded btn-p mt-3">Donate Now</button>
+                    <button style={{width:'200px'}} type="submit" className="px-4 py-2 bg-blue-500 text-white rounded btn-p mt-7">Donate Now</button>
                 </form>
             </div>
         </div>
