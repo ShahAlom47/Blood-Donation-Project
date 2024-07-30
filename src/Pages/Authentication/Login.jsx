@@ -17,19 +17,19 @@ const Login = () => {
     const [showPass,setShowPass]=useState(false)
     const navigate =useNavigate()
     const location = useLocation();
-
+    console.log(location);
     const onSubmit = async (data) => {
         setEmailError('');
         setPasswordError('');
         try {
         const res = await login(data.email, data.password)
-        console.log(res);
+      
         if (res.message === 'Login successful') {
        
             toast.success(res.message)
             reset()
             setTimeout(() => {
-                navigate(location.state?.from || '/', { replace: true });
+                navigate(location.state?.from|| location.state || '/', { replace: true });
             }, 2000);
             return
         }

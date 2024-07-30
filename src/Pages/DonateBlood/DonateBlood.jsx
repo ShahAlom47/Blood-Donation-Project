@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useForm, Controller } from 'react-hook-form';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -7,10 +7,12 @@ import useUser from "../../CustomHocks/useUser";
 import bg from '../../assets/image/blood-donate-bg.png';
 import useAxios from '../../CustomHocks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const DonateBlood = () => {
     const { user } = useUser();
     const AxiosSecure = useAxios();
+    const navigate=useNavigate()
     const { register, handleSubmit, control, reset, formState: { errors } } = useForm({
         defaultValues: {
             name: user?.name,
@@ -32,8 +34,9 @@ const DonateBlood = () => {
             type:'donor'
         }
         try {
-            const res = await AxiosSecure.post('', donorData);
+            const res = await AxiosSecure.post('/bloodBank/addBloodDonor', donorData);
             if (res.data.insertedId) {
+                reset()
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -42,6 +45,9 @@ const DonateBlood = () => {
                     showConfirmButton: false,
                     timer: 3000
                 });
+                setTimeout(() => {
+                    navigate(-1)
+                }, 2000);
             }
             console.log(res.data);
         } catch (error) {

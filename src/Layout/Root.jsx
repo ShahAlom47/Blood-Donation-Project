@@ -20,10 +20,10 @@ const {pageLoading}=usePageLoading()
   
     return (
         loading?<Loading></Loading>:
-        <div>
+        <div className="mt-12">
             <Navbar></Navbar>
             {
-              pageLoading?<Loading></Loading>: <Outlet></Outlet>
+              pageLoading?<Loading></Loading>: <Outlet className=''></Outlet>
             }
            
             <Footer></Footer>

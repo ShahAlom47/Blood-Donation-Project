@@ -10,6 +10,8 @@ import Register from "../Pages/Authentication/Register";
 import Login from "../Pages/Authentication/Login";
 import BloodRequest from "../Pages/Home/BloodRequest/BloodRequest";
 import DonateBlood from "../Pages/DonateBlood/DonateBlood";
+import PrivetRouter from "./PrivetRouter/PrivetRouter";
+import DashBoard from "../Pages/DashBoard/DashBoard";
 
   const router = createBrowserRouter([
     {
@@ -25,10 +27,7 @@ import DonateBlood from "../Pages/DonateBlood/DonateBlood";
             path: "/allRequest",
             element: <div><AnimatedLayout><BloodRequest></BloodRequest></AnimatedLayout></div>,
         },
-        {
-            path: "/donateBlood",
-            element: <div><AnimatedLayout><DonateBlood></DonateBlood></AnimatedLayout></div>,
-        },
+      
       
         {
             path: "/contact",
@@ -42,6 +41,16 @@ import DonateBlood from "../Pages/DonateBlood/DonateBlood";
             path: "/login",
             element: <div><AnimatedLayout><Login></Login></AnimatedLayout></div>,
         },
+        // privet Route 
+        {
+          path: "/dashBoard",
+          element: <div><AnimatedLayout> <PrivetRouter><DashBoard></DashBoard></PrivetRouter></AnimatedLayout></div>,
+      },
+        {
+          path: "/donateBlood",
+          element: <div><AnimatedLayout> <PrivetRouter><DonateBlood></DonateBlood></PrivetRouter></AnimatedLayout></div>,
+      },
+    
       ]
     },
   ]);
