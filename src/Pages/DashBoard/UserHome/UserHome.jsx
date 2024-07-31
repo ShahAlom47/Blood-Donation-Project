@@ -1,5 +1,6 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react"; 
+import MyBloodRequest from "../Componets/User/MyBloodRequest";
 
 const UserHome = () => {
     const [value, setValue] = useState(0);
@@ -9,7 +10,7 @@ const UserHome = () => {
     };
 
     const tabStyle = {
-        borderRadius: '0px 0px 6px 6px',
+        borderRadius: '6px 6px 0px 0px',
         padding: "4px 10px",
         fontWeight: '600',
         transition: 'background-color 0.3s ease, color 0.3s ease',
@@ -25,7 +26,7 @@ const UserHome = () => {
             <div className="my-5">
                 <Box sx={{ width: '100%' }}>
                     <Tabs
-                        className="border-t-2 border-color-p mb-8"
+                        className="border-b-2 border-color-p mb-8"
                         value={value}
                         onChange={handleChange}
                         aria-label="dashboard tabs"
@@ -39,6 +40,11 @@ const UserHome = () => {
                                 color: '#ea062b', // Customize arrow color
                             },
                         }}
+                        TabIndicatorProps={{
+                            style: {
+                                display: 'none'
+                            }
+                        }}
                     >
                         <Tab sx={tabStyle} label="My Blood Request" />
                         <Tab sx={tabStyle} label="My Donation History" />
@@ -48,7 +54,7 @@ const UserHome = () => {
                         <Tab sx={tabStyle} label="Tab 6" />
                     </Tabs>
 
-                    {value === 0 && <Box>Content for Tab 1</Box>}
+                    {value === 0 && <Box><MyBloodRequest></MyBloodRequest></Box>}
                     {value === 1 && <Box>Content for Tab 2</Box>}
                     {value === 2 && <Box>Content for Tab 3</Box>}
                     {value === 3 && <Box>Content for Tab 4</Box>}

@@ -20,7 +20,7 @@ export default function ErrorPage({ btn }) {
                 <Lottie className="w-4/12 m-auto text-red-500" animationData={errorAni} />
                 <p className=" font-semibold">Sorry, an unexpected error has occurred.</p>
 
-                <i className=" font-semibold text-xl">{error.statusText || error.message}</i>
+                <i className=" font-semibold text-xl">{error?.statusText || error?.message}</i>
                 {
                     btn ? '' : <div className=" flex gap-5 items-center justify-center">
                         <button onClick={() => navigate(-1)} className="btn  btn-sm  my-3 rounded-sm  bg-red-500 text-white hover:text-black  "> <FaArrowLeft /> Back </button>
