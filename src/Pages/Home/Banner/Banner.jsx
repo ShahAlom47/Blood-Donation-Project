@@ -10,7 +10,7 @@ import { BiSolidDonateHeart } from 'react-icons/bi';
 import { LuLogIn } from 'react-icons/lu';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './Banner.css'; 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useUser from '../../../CustomHocks/useUser';
 import Swal from 'sweetalert2';
 
@@ -124,7 +124,7 @@ const Banner = () => {
             <div className="max-w bg-gray-200 lg:relative md:relative border-4 p-3">
                 <div className='lg:absolute md:absolute -top-[200%]'>
                     <div className="flex lg:flex-row md:flex-row flex-col items-center justify-center lg:w-10/12 md:w-10/12 w-11/12 m-auto">
-                        <div onClick={handelRegister} className='bg-color-p min-h-40 lg:w-6/12 w-full text-white lg:flex items-center justify-between p-4'>
+                        <div  className='bg-color-p min-h-40 lg:w-6/12 w-full text-white lg:flex items-center justify-between p-4'>
                             <div className="">
                                 <h1 className="text-xl font-bold text-white p-3 flex gap-4 items-center ">
                                     Register Now
@@ -134,7 +134,7 @@ const Banner = () => {
                                 </p>
                             </div>
                             <div className='w-3/12'>
-                                <button className='btn btn-ghost hover:bg-transparent'>
+                                <button onClick={handelRegister} className='btn btn-ghost hover:bg-transparent'>
                                     <LuLogIn className='hover:text-black text-4xl' />
                                 </button>
                             </div>
@@ -149,9 +149,10 @@ const Banner = () => {
                                 </p>
                             </div>
                             <div className='w-3/12'>
-                                <button className='btn btn-ghost hover:bg-transparent'>
+                               <Link to={'/donateBlood'}> <button className='btn btn-ghost hover:bg-transparent'>
                                     <BiSolidDonateHeart className='hover:text-color-p text-4xl' />
                                 </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
