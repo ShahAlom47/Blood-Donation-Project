@@ -1,22 +1,29 @@
 import { useQuery } from '@tanstack/react-query';
-import useAxios from '../../../../CustomHocks/useAxiosSecure';
-import Loading from '../../../../SharedComponent/Loading';
-import ErrorPage from '../../../ErrorPage/ErrorPage';
-import useUser from '../../../../CustomHocks/useUser';
+
 import { ResponsiveTable } from 'responsive-table-react';
 import { useState } from 'react';
 import Modal from 'react-modal';
 import { AiOutlineWarning } from "react-icons/ai";
 import Swal from 'sweetalert2';
+import useAxios from '../../../../CustomHocks/useAxiosSecure';
+import Loading from '../../../../SharedComponent/Loading';
+import ErrorPage from '../../../ErrorPage/ErrorPage';
 
-const MyBloodRequest = () => {
+const AllBloodRequest = () => {
     const AxiosSecure = useAxios();
-    const { user } = useUser();
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalData, setModalData] = useState({})
+    const [page, setPage] = useState(1);
 
 
+    const handelPrev = () => {
+        if (page > 1) setPage(page - 1);
+    };
+
+    const handelNext = () => {
+        if (page < data.totalPages) setPage(page + 1);
+    };
 
     const closeModal = () => {
         setModalIsOpen(false);
@@ -24,13 +31,14 @@ const MyBloodRequest = () => {
 
 
     const { data, isLoading, error,refetch } = useQuery({
-        queryKey: ['userAllBloodRequest'],
+        queryKey: ['adminAllBloodRequest'],
         queryFn: async () => {
-            const res = await AxiosSecure.get(`/donation/user/allRequest/${user.email}`);
+              const res = await AxiosSecure.get(`/donation/admin/allRequest?page=${page}&limit=8`);
             return res.data;
         }
     });
 
+console.log(data.data);
 
     const handleComplete = async (requestId, name, email) => {
         Swal.fire({
@@ -92,7 +100,7 @@ const MyBloodRequest = () => {
     ];
 
 
-    const tableData = data ? data.map(request => ({
+    const tableData = data ? data?.data?.map(request => ({
         name: request.name,
         phone: request.phone,
         email: request.email,
@@ -128,6 +136,10 @@ const MyBloodRequest = () => {
                     ClassName="bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 />
             </div>
+            <div className="flex items-end justify-center h-full lg:p-5 md:p-4  p-1">
+                <button onClick={handelPrev} style={{ borderRadius: '0px 100%' }} className="btn btn-p rounded-r-full" disabled={page === 1}>Prev</button>
+                <button onClick={handelNext} style={{ borderRadius: ' 100% 0px' }} className="btn btn-p rounded-r-full" disabled={page === data?.totalPages}>Next</button>
+            </div>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
@@ -160,7 +172,7 @@ const MyBloodRequest = () => {
     );
 };
 
-export default MyBloodRequest;
+export default AllBloodRequest 
 
 const customStyles = {
     overlay: {

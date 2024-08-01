@@ -1,4 +1,5 @@
 import useUser from "../../CustomHocks/useUser";
+import AdminHome from "./AdminHome/AdminHome";
 import UserProfileLayout from "./Componets/UserProfileLayout";
 import UserHome from "./UserHome/UserHome";
 
@@ -11,6 +12,9 @@ const DashBoard = () => {
 
            {
             user.role==='user'&&<UserHome></UserHome>
+           }
+           {
+            user.role==='admin'&&<AdminHome></AdminHome>
            }
         </div>
     );
