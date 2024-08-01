@@ -7,6 +7,7 @@ import { ResponsiveTable } from 'responsive-table-react';
 import { useState } from 'react';
 import Modal from 'react-modal';
 import { AiOutlineWarning } from "react-icons/ai";
+import Swal from 'sweetalert2';
 
 const MyBloodRequest = () => {
     const AxiosSecure = useAxios();
@@ -15,14 +16,14 @@ const MyBloodRequest = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalData, setModalData] = useState({})
 
-
+console.log(modalData);
 
     const closeModal = () => {
         setModalIsOpen(false);
     };
 
 
-    const { data, isLoading, error } = useQuery({
+    const { data, isLoading, error,refetch } = useQuery({
         queryKey: ['userAllBloodRequest'],
         queryFn: async () => {
             const res = await AxiosSecure.get(`/donation/user/allRequest/${user.email}`);
@@ -31,11 +32,48 @@ const MyBloodRequest = () => {
     });
 
 
-    const handleComplete = (requestId) => {
-
-        console.log('Complete button clicked for request ID:', requestId);
-
+    const handleComplete = async (requestId, name, email) => {
+        Swal.fire({
+            title: "Are you sure?",
+            showCancelButton: true,
+            confirmButtonColor: "#ea062b",
+            cancelButtonColor: "#000",
+            confirmButtonText: "Confirm"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                const confirmedDonorData = {
+                    donorName: name,
+                    donorEmail: email,
+                };
+    
+                try {
+                    const res = await AxiosSecure.patch(`/donation/user/confirmDonation/${requestId}`, confirmedDonorData);
+    
+                    if (res.status === 200) {
+                        setModalIsOpen(false)
+                        refetch()
+                        Swal.fire({
+                            title: "Completed",
+                            icon: "success"
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error",
+                            text: "Something went wrong. Please try again.",
+                            icon: "error"
+                        });
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: error.response?.data?.message || "An unexpected error occurred. Please try again.",
+                        icon: "error"
+                    });
+                }
+            }
+        });
     };
+    
 
     if (isLoading) return <div><Loading /></div>;
     if (error) return <div><ErrorPage /></div>;
@@ -62,7 +100,7 @@ const MyBloodRequest = () => {
         requestedDate: request.requestedDate,
         requireDate: request.requireDate,
         status: request.status,
-     
+
 
         donors: (
             <button
@@ -109,7 +147,7 @@ const MyBloodRequest = () => {
                                     disabled={modalData.status !== 'Pending'}
                                     style={{ width: '90px' }}
                                     className={`px-4 py-2 btn-p text-white rounded ${modalData.status !== 'Pending' ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                    onClick={() => handleComplete(modalData._id)}
+                                    onClick={() => handleComplete(modalData._id,donor.donorName,donor.donorEmail)}
                                 >
                                     Complete
                                 </button>
