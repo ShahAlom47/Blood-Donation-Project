@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import useAxios from '../../../../CustomHocks/useAxiosSecure';
 import Loading from '../../../../SharedComponent/Loading';
 import ErrorPage from '../../../ErrorPage/ErrorPage';
+import { MdDeleteForever } from 'react-icons/md';
 
 const AllBloodRequest = () => {
     const AxiosSecure = useAxios();
@@ -86,6 +87,34 @@ const AllBloodRequest = () => {
     if (isLoading) return <div><Loading /></div>;
     if (error) return <div><ErrorPage /></div>;
 
+    const handelDelete = async (id) => {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then(async(result) => {
+            if (result.isConfirmed) {
+                const res= await AxiosSecure.delete(`/donation/delete/bloodRequest/${id}`)
+                if(res?.data?.deletedCount>0){
+                    refetch()
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                      });
+                }
+            }
+          });
+
+      
+        console.log(id);
+
+    }
 
 
     const columns = [
@@ -96,7 +125,9 @@ const AllBloodRequest = () => {
         { 'text': 'Requested Date', 'id': 'requestedDate' },
         { 'text': 'Require Date', 'id': 'requireDate' },
         { 'text': 'Status', 'id': 'status' },
-        { 'text': 'Donors', 'id': 'donors' }
+        { 'text': 'Donors', 'id': 'donors' },
+        
+        { 'text': 'Delete', 'id': 'delete' }
     ];
 
 
@@ -120,7 +151,17 @@ const AllBloodRequest = () => {
             >
                 Donors <span> ({request.donors.length})</span>
             </button>
-        )
+        ),
+        delete: (
+            <button
+                className=" text-2xl text-color-p hover:text-3xl "
+                onClick={() => {
+                    handelDelete(request._id)
+                }}
+            >
+                <MdDeleteForever />
+            </button>
+        ),
     })) : [];
 
 

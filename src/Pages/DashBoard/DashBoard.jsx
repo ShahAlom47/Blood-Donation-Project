@@ -3,7 +3,6 @@ import AdminHome from "./AdminHome/AdminHome";
 import UserProfileLayout from "./Componets/UserProfileLayout";
 import UserHome from "./UserHome/UserHome";
 
-
 const DashBoard = () => {
     const {user}=useUser()
     return (

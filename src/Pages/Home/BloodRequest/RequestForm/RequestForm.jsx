@@ -7,7 +7,7 @@ import useUser from "../../../../CustomHocks/useUser";
 import useAxios from "../../../../CustomHocks/useAxiosSecure";
 import PropTypes from 'prop-types';
 
-const RequestForm = ({setRefetchData,refetchData}) => {
+const RequestForm = ({ setRefetchData, refetchData }) => {
     const { user } = useUser();
     const navigate = useNavigate();
     const location = useLocation();
@@ -24,7 +24,12 @@ const RequestForm = ({setRefetchData,refetchData}) => {
         if (formData) {
             reset(formData);
         }
-    }, [reset]);
+        if (user) {
+            setValue('name', user.name);
+            setValue('email', user.email);
+            setValue('phone', user.phoneNumber); 
+        }
+    }, [reset, setValue, user]);
 
     const onSubmit = async (data) => {
         if (!user) {
@@ -51,8 +56,8 @@ const RequestForm = ({setRefetchData,refetchData}) => {
             requestedDate: new Date().toLocaleDateString('en-GB'),
             requireDate: requireDate ? requireDate.toLocaleDateString('en-GB') : null,
             status: 'In Progress',
-            userEmail:user.email,
-            userName:user.name,
+            userEmail: user.email,
+            userName: user.name,
             donors: []
         };
 
@@ -64,7 +69,7 @@ const RequestForm = ({setRefetchData,refetchData}) => {
                 setRequireDate(null);
                 reset();
                 setValue("bloodGroup", ""); // Resetting the select field to default value
-                setRefetchData(!refetchData)
+                setRefetchData(!refetchData);
             }
         } catch (error) {
             console.log(error);
@@ -112,5 +117,5 @@ export default RequestForm;
 
 RequestForm.propTypes = {
     setRefetchData: PropTypes.func.isRequired,
-   refetchData: PropTypes.bool.isRequired
+    refetchData: PropTypes.bool.isRequired
 };
