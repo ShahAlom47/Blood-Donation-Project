@@ -34,11 +34,11 @@ const AllBloodRequest = () => {
         queryKey: ['adminAllBloodRequest'],
         queryFn: async () => {
               const res = await AxiosSecure.get(`/donation/admin/allRequest?page=${page}&limit=8`);
-            return res.data;
+            return res?.data;
         }
     });
 
-console.log(data.data);
+
 
     const handleComplete = async (requestId, name, email) => {
         Swal.fire({

@@ -54,7 +54,7 @@ const UserHome = () => {
                         <Tab sx={tabStyle} label="Tab 6" />
                     </Tabs>
 
-                    {value === 0 && <Box><MyBloodRequest></MyBloodRequest></Box>}
+                    {value === 0 && <Box className=''><MyBloodRequest></MyBloodRequest></Box>}
                     {value === 1 && <Box>Content for Tab 2</Box>}
                     {value === 2 && <Box>Content for Tab 3</Box>}
                     {value === 3 && <Box>Content for Tab 4</Box>}

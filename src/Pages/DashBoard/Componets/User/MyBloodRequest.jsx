@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Modal from 'react-modal';
 import { AiOutlineWarning } from "react-icons/ai";
 import Swal from 'sweetalert2';
+import { MdDeleteForever } from "react-icons/md";
 
 const MyBloodRequest = () => {
     const AxiosSecure = useAxios();
@@ -23,7 +24,7 @@ const MyBloodRequest = () => {
     };
 
 
-    const { data, isLoading, error,refetch } = useQuery({
+    const { data, isLoading, error, refetch } = useQuery({
         queryKey: ['userAllBloodRequest'],
         queryFn: async () => {
             const res = await AxiosSecure.get(`/donation/user/allRequest/${user.email}`);
@@ -45,10 +46,10 @@ const MyBloodRequest = () => {
                     donorName: name,
                     donorEmail: email,
                 };
-    
+
                 try {
                     const res = await AxiosSecure.patch(`/donation/user/confirmDonation/${requestId}`, confirmedDonorData);
-    
+
                     if (res.status === 200) {
                         setModalIsOpen(false)
                         refetch()
@@ -73,7 +74,36 @@ const MyBloodRequest = () => {
             }
         });
     };
-    
+
+
+    const handelDelete = async (id) => {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then(async(result) => {
+            if (result.isConfirmed) {
+                const res= await AxiosSecure.delete(`/donation/delete/bloodRequest/${id}`)
+                if(res?.data?.deletedCount>0){
+                    refetch()
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Your file has been deleted.",
+                        icon: "success"
+                      });
+                }
+            }
+          });
+
+      
+        console.log(id);
+
+    }
 
     if (isLoading) return <div><Loading /></div>;
     if (error) return <div><ErrorPage /></div>;
@@ -88,11 +118,12 @@ const MyBloodRequest = () => {
         { 'text': 'Requested Date', 'id': 'requestedDate' },
         { 'text': 'Require Date', 'id': 'requireDate' },
         { 'text': 'Status', 'id': 'status' },
-        { 'text': 'Donors', 'id': 'donors' }
+        { 'text': 'Donors', 'id': 'donors' },
+        { 'text': 'Delete', 'id': 'delete' }
     ];
 
 
-    const tableData = data ? data.map(request => ({
+    const tableData = data ? data?.map(request => ({
         name: request.name,
         phone: request.phone,
         email: request.email,
@@ -112,7 +143,17 @@ const MyBloodRequest = () => {
             >
                 Donors <span> ({request.donors.length})</span>
             </button>
-        )
+        ),
+        delete: (
+            <button
+                className=" text-2xl text-color-p hover:text-3xl "
+                onClick={() => {
+                    handelDelete(request._id)
+                }}
+            >
+                <MdDeleteForever />
+            </button>
+        ),
     })) : [];
 
 
@@ -147,7 +188,7 @@ const MyBloodRequest = () => {
                                     disabled={modalData.status !== 'Pending'}
                                     style={{ width: '90px' }}
                                     className={`px-4 py-2 btn-p text-white rounded ${modalData.status !== 'Pending' ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                    onClick={() => handleComplete(modalData._id,donor.donorName,donor.donorEmail)}
+                                    onClick={() => handleComplete(modalData._id, donor.donorName, donor.donorEmail)}
                                 >
                                     Complete
                                 </button>
