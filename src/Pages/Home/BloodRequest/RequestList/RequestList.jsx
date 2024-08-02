@@ -11,8 +11,8 @@ import PropTypes from 'prop-types';
 const RequestList = ({refetchData}) => {
     const axiosPublic = useAxiosPublic();
     const [page, setPage] = useState(1);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalData,setModalData]=useState({})
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
    
   

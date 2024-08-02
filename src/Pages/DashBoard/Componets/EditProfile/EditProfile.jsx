@@ -7,10 +7,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import useUser from '../../../../CustomHocks/useUser';
 import useAxios from '../../../../CustomHocks/useAxiosSecure';
-import axios from 'axios';
 
 const cities = [
     { value: 'Dhaka', label: 'Dhaka' },
@@ -26,7 +25,7 @@ const countries = [
 
 const EditProfile = () => {
     const { user } = useUser()
-    const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue,  formState: { errors } } = useForm();
     const [lastDonate, setLatestDonate] = useState(null);
     const navigate = useNavigate();
     const AxiosSecure=useAxios()
