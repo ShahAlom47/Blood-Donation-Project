@@ -8,8 +8,9 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [reLoad,setReLoad]=useState(false)
     const axiosPublic = useAxiosPublic();
-    console.log(user);
+
 
     // Set token and user
     const setToken = async (user) => {
@@ -105,11 +106,12 @@ const AuthProvider = ({ children }) => {
         return () => {
             clearInterval(interval);
         };
-    }, [axiosPublic]);
+    }, [axiosPublic,reLoad]);
 
     const userInfo = {
         user,
         loading,
+        setReLoad,
         addUser,
         login,
         logout,

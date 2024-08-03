@@ -1,8 +1,14 @@
 
+import Swal from 'sweetalert2';
+import useAxios from '../../../../CustomHocks/useAxiosSecure';
 import usePhotoHost from '../../../../CustomHocks/usePhotoHost';
+import useUser from '../../../../CustomHocks/useUser';
+import PropTypes from 'prop-types';
 
-const PhotoForm = () => {
+const PhotoForm = ({closeModal}) => {
   const { handelHost } = usePhotoHost()
+  const AxiosSecure=useAxios()
+  const {user,setReLoad}=useUser()
 
   const handlePhotoForm = async (e) => {
     e.preventDefault();
@@ -14,7 +20,15 @@ const PhotoForm = () => {
     }
     const photoResult = await handelHost(photo)
     if(photoResult.url){
-      console.log(photoResult.url);
+      const updateProfilePhoto=await AxiosSecure.patch(`/user/updateUserProfilePhoto/${user.email}`,{photoURL:photoResult.url})
+     if(updateProfilePhoto?.data?.matchedCount>0){
+      Swal.fire('Completed')
+      e.target.reset();
+      closeModal();
+      setReLoad(true)
+
+     }
+      console.log(updateProfilePhoto?.data?.matchedCount);
     }
   
 
@@ -31,3 +45,6 @@ const PhotoForm = () => {
 };
 
 export default PhotoForm;
+PhotoForm.propTypes = {
+  closeModal: PropTypes.func
+};

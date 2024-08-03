@@ -59,7 +59,7 @@ const UserProfileLayout = () => {
                 contentLabel="Example Modal"
                 style={customStyles}
             >
-                <PhotoForm> </PhotoForm>
+                <PhotoForm closeModal={closeModal} >  </PhotoForm>
             </Modal>
 
 
