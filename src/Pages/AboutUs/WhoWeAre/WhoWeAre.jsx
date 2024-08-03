@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import img from '../../../assets/image/who_we Are.jpg';
 
 const WhoWeAre = () => {
@@ -22,7 +22,7 @@ const WhoWeAre = () => {
     const previewText = fullText.substring(0, 350);
 
     return (
-        <div>
+        <div className='max-w'>
             <div id="section1" className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 items-start py-6">
                 <div className='px-10'>
                     <h1 className='text-4xl font-bold mb-3 text-black'>Who We Are</h1>
