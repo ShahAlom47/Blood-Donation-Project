@@ -13,6 +13,7 @@ import DonateBlood from "../Pages/DonateBlood/DonateBlood";
 import PrivetRouter from "./PrivetRouter/PrivetRouter";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import EditProfile from "../Pages/DashBoard/Componets/EditProfile/EditProfile";
+import AboutUs from "../Pages/AboutUs/AboutUs";
 
   const router = createBrowserRouter([
     {
@@ -33,6 +34,10 @@ import EditProfile from "../Pages/DashBoard/Componets/EditProfile/EditProfile";
         {
             path: "/contact",
             element: <div><AnimatedLayout><ContactUs></ContactUs></AnimatedLayout></div>,
+        },
+        {
+            path: "/about",
+            element: <div><AnimatedLayout><AboutUs></AboutUs></AnimatedLayout></div>,
         },
         {
             path: "/register",
