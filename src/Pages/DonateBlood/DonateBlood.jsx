@@ -31,7 +31,8 @@ const DonateBlood = () => {
 
         const donorData={
             ...data,
-            type:'donor'
+            type:'donor',
+            status:'Available'
         }
         try {
             const res = await AxiosSecure.post('/bloodBank/addBloodDonor', donorData);

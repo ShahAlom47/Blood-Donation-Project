@@ -1,5 +1,4 @@
 import { FaDroplet } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 
 
 const BloodCard = ({ group ,handleBloodCardClick}) => {

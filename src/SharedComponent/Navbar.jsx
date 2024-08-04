@@ -119,7 +119,7 @@ const Navbar = () => {
 
 
                 <div id="drop-down" className={` text-white font-light overflow-hidden flex flex-col absolute bg-color-p p-2 top-[100%] w-0.5  
-             ${isOpen ? ' lg:w-0 md:w-0 lg:-left-16 md:-left-16  top-10 left-0 w-[100px] max-w-full transition-all duration-1000 ease-in-out' : '-left-10 top-10 max-w-0 transition-all duration-1000 ease-in-out'}`}
+             ${isOpen ? ' lg:w-0 md:w-0 lg:-left-16 md:-left-16  top-10 left-0 w-[150px] max-w-full transition-all duration-1000 ease-in-out' : '-left-10 top-10 max-w-0 transition-all duration-1000 ease-in-out'}`}
                 >
                     {nav}
                 </div>
