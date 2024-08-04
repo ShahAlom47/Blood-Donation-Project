@@ -23,8 +23,8 @@ const WhoWeAre = () => {
 
     return (
         <div className='max-w'>
-            <div id="section1" className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 items-start py-6">
-                <div className='px-10'>
+            <div id="section1" className="grid gap-5 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 items-start py-6">
+                <div className='lg:px-10 md:px-8 px-4'>
                     <h1 className='text-4xl font-bold mb-3 text-black'>Who We Are</h1>
                     <h3 className='text-lg font-semibold mb-3'>Connecting Lives Through Blood Donation</h3>
                   <div className="text-gray-600 font-medium">
