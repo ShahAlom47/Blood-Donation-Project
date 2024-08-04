@@ -63,7 +63,7 @@ const Navbar = () => {
                 <li><Link>Donate Money</Link></li>
             </ul>
         </div>
-        <NavLink className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp`}>Campaign</NavLink>
+        <NavLink to={'/bloodBank'} className={`hover:underline px-3 rounded-sm animate__animated animate__bounceInUp`}>Blood Bank</NavLink>
 
         <NavLink to={'/contact'} className={`hover:underline animate__animated animate__bounceInUp`}>Contact Us</NavLink>
         <NavLink to={'/about'} className={`hover:underline animate__animated animate__bounceInUp`}>About Us</NavLink>

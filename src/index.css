@@ -116,3 +116,11 @@ background-color: rgba(0, 0, 0, 0.261);
 .Mui-selected {
   color: #fafcff;
 }
+
+.blood-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.blood-card:hover {
+  transform: scale(1.05);
+}

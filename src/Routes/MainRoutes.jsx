@@ -1,6 +1,6 @@
 import {
-    createBrowserRouter,
-  } from "react-router-dom";
+  createBrowserRouter,
+} from "react-router-dom";
 import Root from "../Layout/Root";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
@@ -14,55 +14,60 @@ import PrivetRouter from "./PrivetRouter/PrivetRouter";
 import DashBoard from "../Pages/DashBoard/DashBoard";
 import EditProfile from "../Pages/DashBoard/Componets/EditProfile/EditProfile";
 import AboutUs from "../Pages/AboutUs/AboutUs";
+import BloodBank from "../Pages/BloodBank/BloodBank";
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <div><Root></Root></div>,
-      errorElement: <ErrorPage />,
-      children:[
-        {
-            path: "/",
-            element: <div><AnimatedLayout><Home></Home></AnimatedLayout></div>,
-        },
-        {
-            path: "/allRequest",
-            element: <div><AnimatedLayout><BloodRequest></BloodRequest></AnimatedLayout></div>,
-        },
-      
-      
-        {
-            path: "/contact",
-            element: <div><AnimatedLayout><ContactUs></ContactUs></AnimatedLayout></div>,
-        },
-        {
-            path: "/about",
-            element: <div><AnimatedLayout><AboutUs></AboutUs></AnimatedLayout></div>,
-        },
-        {
-            path: "/register",
-            element: <div><AnimatedLayout><Register></Register></AnimatedLayout></div>,
-        },
-        {
-            path: "/login",
-            element: <div><AnimatedLayout><Login></Login></AnimatedLayout></div>,
-        },
-        // privet Route 
-        {
-          path: "/dashBoard",
-          element: <div><AnimatedLayout> <PrivetRouter><DashBoard></DashBoard></PrivetRouter></AnimatedLayout></div>,
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div><Root></Root></div>,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <div><AnimatedLayout><Home></Home></AnimatedLayout></div>,
       },
-        {
-          path: "/donateBlood",
-          element: <div><AnimatedLayout> <PrivetRouter><DonateBlood></DonateBlood></PrivetRouter></AnimatedLayout></div>,
+      {
+        path: "/allRequest",
+        element: <div><AnimatedLayout><BloodRequest></BloodRequest></AnimatedLayout></div>,
+      },
+
+
+      {
+        path: "/contact",
+        element: <div><AnimatedLayout><ContactUs></ContactUs></AnimatedLayout></div>,
+      },
+      {
+        path: "/about",
+        element: <div><AnimatedLayout><AboutUs></AboutUs></AnimatedLayout></div>,
+      },
+      {
+        path: "/register",
+        element: <div><AnimatedLayout><Register></Register></AnimatedLayout></div>,
+      },
+      {
+        path: "/login",
+        element: <div><AnimatedLayout><Login></Login></AnimatedLayout></div>,
+      },
+      // privet Route 
+      {
+        path: "/bloodBank",
+        element: <div><AnimatedLayout> <PrivetRouter><BloodBank></BloodBank></PrivetRouter></AnimatedLayout></div>,
+      },
+      {
+        path: "/dashBoard",
+        element: <div><AnimatedLayout> <PrivetRouter><DashBoard></DashBoard></PrivetRouter></AnimatedLayout></div>,
+      },
+      {
+        path: "/donateBlood",
+        element: <div><AnimatedLayout> <PrivetRouter><DonateBlood></DonateBlood></PrivetRouter></AnimatedLayout></div>,
       },
       {
         path: "/donateBlood/user/editProfile",
         element: <div><AnimatedLayout> <PrivetRouter><EditProfile></EditProfile></PrivetRouter></AnimatedLayout></div>,
-    },
-    
-      ]
-    },
-  ]);
+      },
 
-  export default router
+    ]
+  },
+]);
+
+export default router
