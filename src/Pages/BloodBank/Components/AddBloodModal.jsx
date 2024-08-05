@@ -8,7 +8,7 @@ import useUser from '../../../CustomHocks/useUser';
 
 
 
-const AddBloodModal = ({ modalIsOpen, closeModal }) => {
+const AddBloodModal = ({refetch, modalIsOpen, closeModal }) => {
     const {user}=useUser()
     const { register, handleSubmit, reset  } = useForm({
         defaultValues: {
@@ -36,6 +36,7 @@ const AddBloodModal = ({ modalIsOpen, closeModal }) => {
             const res = await AxiosSecure.post('/bloodBank/addBloodDonor', bloodData);
             if (res.data.insertedId) {
                 reset()
+                refetch()
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -106,6 +107,7 @@ export default AddBloodModal;
 AddBloodModal.propTypes = {
     modalIsOpen: PropTypes.bool.isRequired,
     closeModal: PropTypes.func.isRequired,
+    refetch: PropTypes.func.isRequired,
 };
 
 const customStyles = {

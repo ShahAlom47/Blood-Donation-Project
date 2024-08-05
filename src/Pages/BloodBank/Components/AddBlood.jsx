@@ -3,8 +3,9 @@ import { TbDropletPlus } from "react-icons/tb";
 import { Link } from "react-router-dom";
 import AddBloodModal from "./AddBloodModal";
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
-const AddBlood = () => {
+const AddBlood = ({refetch}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const openModal = () => {
@@ -36,10 +37,13 @@ const AddBlood = () => {
         </div>
 
         {/* modal */}
-        <AddBloodModal modalIsOpen={modalIsOpen} closeModal={closeModal} />
+        <AddBloodModal refetch={refetch} modalIsOpen={modalIsOpen} closeModal={closeModal} />
 
       </div>
     );
 };
 
 export default AddBlood;
+AddBlood.propTypes = {
+  refetch: PropTypes.func.isRequired,
+};
