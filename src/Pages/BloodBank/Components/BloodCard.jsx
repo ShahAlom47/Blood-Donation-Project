@@ -1,8 +1,17 @@
 import { FaDroplet } from "react-icons/fa6";
 import PropTypes from 'prop-types';
+import useAxios from "../../../CustomHocks/useAxiosSecure";
 
-const BloodCard = ({ data, group, handleBloodCardClick }) => {
-    console.log(data);
+const BloodCard = ({ data, group }) => {
+    const AxiosSecure=useAxios();
+
+
+    const handleBloodCard= async(group) => {
+       
+       const res=await AxiosSecure.get(`/bloodBank/blood-groupData/${group}`)
+       console.log(res.data);
+    };
+   
     return (
         <div className=" bg-gray-200 rounded-md shadow-2xl flex justify-between p-4 blood-card">
             <div className="">
@@ -15,7 +24,7 @@ const BloodCard = ({ data, group, handleBloodCardClick }) => {
             </div>
             <div className=" flex justify-between items-end flex-col ">
                 <h1 className=" lg:text-2xl text-xl flex items-center gap-1 font-bold">{group} <FaDroplet className=" text-color-p" /></h1>
-                <button onClick={() => handleBloodCardClick(data?.bloodGroup ? data?.bloodGroup : null)} style={{ height: '25px' }} className="btn-p"> View</button>
+                <button onClick={() => handleBloodCard(data?.bloodGroup ? data?.bloodGroup : null)} style={{ height: '25px' }} className="btn-p"> View</button>
             </div>
         </div>
     );

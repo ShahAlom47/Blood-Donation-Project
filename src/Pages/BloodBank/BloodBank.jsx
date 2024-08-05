@@ -1,4 +1,4 @@
-import { useState } from 'react';
+
 import PageHeading from "../../Components/PageHeading";
 import img from '../../assets/image/blood_bank.jpg';
 import BloodCard from "./Components/BloodCard";
@@ -10,7 +10,6 @@ import { useQuery } from '@tanstack/react-query';
 const BloodBank = () => {
     const { user } = useUser()
     const AxiosSecure = useAxios()
-    const [selectedGroup, setSelectedGroup] = useState('');
 
     const { data, isLoading, refetch } = useQuery({
         queryKey: ['bloodGroupSummary'],
@@ -21,11 +20,7 @@ const BloodBank = () => {
     });
    
 
-    const handleBloodCardClick = (group) => {
-        console.log(group);
-        setSelectedGroup(group);
-
-    };
+   
 
     const bloodGroupData = (group) => {
         if (!Array.isArray(data)) {
@@ -53,7 +48,7 @@ const BloodBank = () => {
                     isLoading?<isLoading></isLoading>:
                     <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-6 my-6 p-4">
                     {['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'].map((group) => (
-                        <BloodCard data={bloodGroupData(group)} key={group} group={group} handleBloodCardClick={handleBloodCardClick} />
+                        <BloodCard data={bloodGroupData(group)} key={group} group={group} />
                     ))}
                 </div>
                 }
