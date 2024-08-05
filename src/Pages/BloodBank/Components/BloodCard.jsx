@@ -1,5 +1,5 @@
 import { FaDroplet } from "react-icons/fa6";
-
+import PropTypes from 'prop-types';
 
 const BloodCard = ({ group ,handleBloodCardClick}) => {
     return (
@@ -19,3 +19,7 @@ const BloodCard = ({ group ,handleBloodCardClick}) => {
 };
 
 export default BloodCard;
+BloodCard.propTypes = {
+    group: PropTypes.string.isRequired,
+    handleBloodCardClick: PropTypes.func.isRequired,
+};

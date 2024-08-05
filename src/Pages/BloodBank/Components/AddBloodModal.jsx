@@ -2,13 +2,26 @@
 import Modal from 'react-modal';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
+import useAxios from '../../../CustomHocks/useAxiosSecure';
+import Swal from 'sweetalert2';
+import useUser from '../../../CustomHocks/useUser';
 
 
 
 const AddBloodModal = ({ modalIsOpen, closeModal }) => {
-    const { register, handleSubmit,  } = useForm();
+    const {user}=useUser()
+    const { register, handleSubmit, reset  } = useForm({
+        defaultValues: {
+            
+            phone: user?.phoneNumber,
+            email: user?.email,
+           
+        }
+    });
 
-    const onSubmit = (data) => {
+    const AxiosSecure=useAxios()
+
+    const onSubmit =async (data) => {
         const bloodData={
             email: data?.email,
             phoneNumber: data?.phone,
@@ -18,7 +31,33 @@ const AddBloodModal = ({ modalIsOpen, closeModal }) => {
             type:'blood',
             status:'Available'
         }
-        console.log(bloodData);
+      
+        try {
+            const res = await AxiosSecure.post('/bloodBank/addBloodDonor', bloodData);
+            if (res.data.insertedId) {
+                reset()
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Thank you for your donation!",
+                    text: "Your generous contribution has been successfully recorded. Together, we can save lives!",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                setTimeout(() => {
+                   closeModal()
+                }, 1500);
+            }
+            console.log(res.data);
+        } catch (error) {
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Submission Failed",
+                showConfirmButton: true
+            });
+            console.error(error);
+        }
 
 
 
