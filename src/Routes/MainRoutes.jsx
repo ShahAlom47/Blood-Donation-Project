@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       // privet Route 
       {
         path: "/bloodBank",
-        element: <div><AnimatedLayout> <PrivetRouter><BloodBank></BloodBank></PrivetRouter></AnimatedLayout></div>,
+        element: <div><AnimatedLayout><BloodBank></BloodBank></AnimatedLayout></div>,
       },
       {
         path: "/dashBoard",

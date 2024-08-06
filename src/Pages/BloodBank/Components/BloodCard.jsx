@@ -6,24 +6,44 @@ import ReactModal from "../../../Components/Modal/ReactModal";
 import Loading from "../../../SharedComponent/Loading";
 import { MdWaterDrop } from "react-icons/md";
 import { RiUserHeartFill } from "react-icons/ri";
+import { useLocation, useNavigate } from "react-router-dom";
+import useUser from "../../../CustomHocks/useUser";
+import Swal from "sweetalert2";
 
 const BloodCard = ({ data, group }) => {
+    const { user } = useUser()
     const AxiosSecure = useAxios();
     const [bloodGroupData, setBloodGroupData] = useState([])
     const [openModal, setOpenModal] = useState(false)
+    const navigate = useNavigate()
+    const location = useLocation()
 
     const handleBloodCard = async (group) => {
-      const res = await AxiosSecure.get(`/bloodBank/blood-groupData/${group}`)
+        console.log(group);
+        if (!user) {
+            Swal.fire('Please Login First')
+            setTimeout(() => {
+                navigate('/login', { state: { from: location.pathname } });
+            }, 1300);
+
+            return
+        }
+        if(!group){
+            Swal.fire('Empty')
+            return
+        }
+        const res = await AxiosSecure.get(`/bloodBank/blood-groupData/${group}`)
         setBloodGroupData(res.data)
         setOpenModal(true)
     };
 
+    console.log(bloodGroupData);
 
-    const handelRequest=async(id)=>{
+    const handelRequest = async (id) => {
         console.log(id);
 
     }
-   
+
     return (
         <div className=" bg-gray-200 rounded-md shadow-2xl flex justify-between p-4 blood-card">
             <div className="">
@@ -42,29 +62,38 @@ const BloodCard = ({ data, group }) => {
             {/* details modal */}
 
             <ReactModal setOpenModal={setOpenModal} openModal={openModal} label={'blood group details'}>
-               {
-                bloodGroupData?<div className=" flex flex-wrap gap-4 justify-center">
-                    {
-                        bloodGroupData.map((data,index)=><div className=" mb-4 bg-gray-200 shadow-lg p-3 space-y-2" key={index}>
-                            <h1><strong>Email: </strong>{data?.email}</h1>
-                            <h1><strong>Mobile: </strong>{data?.phoneNumber}</h1>
-                            <h1><strong>BloodGroup: </strong><span className="text-color-p font-bold">{data?.bloodGroup}</span></h1>
-                            {
-                                data?.bloodGroup==='blood'?
-                                <h1 className="flex gap-2"> <strong>Type: </strong><span className=" px-3 bg-gray-800 rounded-sm text-white flex items-center gap-2"><MdWaterDrop /> {data?.type}</span></h1>:
-                                <h1 className="flex gap-2"> <strong>Type: </strong><span className=" px-3 bg-gray-800 rounded-sm text-white flex items-center gap-2"><RiUserHeartFill /> {data?.type}</span></h1>
+                {
+                    bloodGroupData ? <div className=" flex flex-wrap gap-4 justify-center">
+                        {
+                            bloodGroupData.map((data, index) => <div className=" mb-4 bg-gray-200 shadow-lg p-3 space-y-2" key={index}>
+                                <h1><strong>Email: </strong>{data.status === "Available" ? <span className="text-red-600">---Request First--</span> : data?.email}</h1>
+                                <h1><strong>Mobile: </strong>{data.status === "Available" ? <span className="text-red-600">---Request First--</span> : data?.phoneNumber}</h1>
+                                <h1><strong>BloodGroup: </strong><span className="text-color-p font-bold">{data?.bloodGroup}</span></h1>
 
-                            }
-                            <h1><strong>Address: </strong><span className=" px-3">{data?.city}</span></h1>
-                            <button onClick={()=>handelRequest(data._id)}  style={{height:'30px'}} className=" btn-p">Request</button>
-                            
-                        </div>)
-                    }
-                </div>:
-                <Loading></Loading>
-               }
-                 
-                 </ReactModal>
+                                {
+                                    data?.type === 'blood' ?
+                                        <h1 className="flex gap-2"> <strong>Type: </strong><span className=" px-3 bg-gray-800 rounded-sm text-white flex items-center gap-2"><MdWaterDrop /> {data?.type}</span></h1> :
+                                        <h1 className="flex gap-2"> <strong>Type: </strong><span className=" px-3 bg-gray-800 rounded-sm text-white flex items-center gap-2"><RiUserHeartFill /> {data?.type}</span></h1>
+
+                                }
+                                {
+                                    data?.city ?
+                                        <h1><strong>Address: </strong><span className=" px-3">{data?.city}</span></h1> :
+                                        <h1><strong>Bag Size: </strong><span className=" px-3">{data?.size} ml</span></h1>
+                                }
+                                {
+                                    data.status === 'Available' &&
+                                    <h1 className="bg-green-500 px-2 rounded-sm ">{data?.status}</h1>
+                                }
+                                <button onClick={() => handelRequest(data._id)} style={{ height: '30px' }} className=" btn-p">Request</button>
+
+                            </div>)
+                        }
+                    </div> :
+                        <Loading></Loading>
+                }
+
+            </ReactModal>
         </div>
     );
 };

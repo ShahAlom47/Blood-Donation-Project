@@ -7,9 +7,11 @@ import useUser from '../../CustomHocks/useUser';
 import useAxios from '../../CustomHocks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 
+
 const BloodBank = () => {
     const { user } = useUser()
     const AxiosSecure = useAxios()
+   
 
     const { data, isLoading, refetch } = useQuery({
         queryKey: ['bloodGroupSummary'],
@@ -23,6 +25,7 @@ const BloodBank = () => {
    
 
     const bloodGroupData = (group) => {
+      
         if (!Array.isArray(data)) {
             return null;
         }
