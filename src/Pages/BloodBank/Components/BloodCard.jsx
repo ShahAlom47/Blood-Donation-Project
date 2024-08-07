@@ -17,7 +17,7 @@ const BloodCard = ({ data, group }) => {
     const [openModal, setOpenModal] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
-
+console.log(user);
     const handleBloodCard = async (group) => {
         console.log(group);
         if (!user) {
@@ -40,12 +40,14 @@ const BloodCard = ({ data, group }) => {
     console.log(bloodGroupData);
 
     const handelRequest = async (data) => {
-         if(data.status !== 'Available'){
-            Swal.fire('Request Denied', 'This blood is not available right now. Someone has already requested it.')
-            return
-         }
+        //  if(data.status !== 'Available'){
+        //     Swal.fire('Request Denied', 'This blood is not available right now. Someone has already requested it.')
+        //     return
+        //  }
+        
         const notificationData={
             requesterEmail:user?.email,
+            requesterPhone:user?.phoneNumber,
             donorEmail:data?.email,
             message:' New blood donation request received from the Blood Bank',
             type:'blood_bank_blood_request',
@@ -55,10 +57,15 @@ const BloodCard = ({ data, group }) => {
         }
         const res=await AxiosSecure.patch(`/bloodBank/blood-bank-updateState/${data?._id}`,{status:'Requested',notificationData})
         console.log(res.data);
-        if(res?.status){
+        if(res.data?.message==='Requester Exist'){
+            Swal.fire('Request Failed','You have already made a request with this email.');
+            return
+        }
+       else if(res?.status===true){
             Swal.fire('Request Completed', 'Please wait for admin approval.', 'success');
             handleBloodCard(data.bloodGroup)
         }
+      
     }
 
     return (

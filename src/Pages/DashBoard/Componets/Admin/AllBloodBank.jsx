@@ -2,8 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { ResponsiveTable } from 'responsive-table-react';
 import { useState } from 'react';
-import Modal from 'react-modal';
-import { AiOutlineWarning } from "react-icons/ai";
+
 import Swal from 'sweetalert2';
 import useAxios from '../../../../CustomHocks/useAxiosSecure';
 import Loading from '../../../../SharedComponent/Loading';
@@ -13,35 +12,35 @@ import { MdDeleteForever } from 'react-icons/md';
 const AllBloodBank = () => {
     const AxiosSecure = useAxios();
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [modalData, setModalData] = useState({})
     const [page, setPage] = useState(1);
 
 
     const handelPrev = () => {
+        refetch()
         if (page > 1) setPage(page - 1);
+       
     };
 
     const handelNext = () => {
+
         if (page < data.totalPages) setPage(page + 1);
+        refetch()
     };
 
-    const closeModal = () => {
-        setModalIsOpen(false);
-    };
+  console.log(page);
 
 
-    const { data, isLoading, error,refetch } = useQuery({
+    const { data, isLoading, error, refetch } = useQuery({
         queryKey: ['allBloodBankData'],
         queryFn: async () => {
-              const res = await AxiosSecure.get(`/bloodBank/admin/allBloodBankData?page=${page}&limit=8`);
+            const res = await AxiosSecure.get(`/bloodBank/admin/allBloodBankData?page=${page}&limit=8`);
             return res?.data;
         }
     });
 
-console.log('blood bank alll',data);
+console.log(data);
 
-    const handleComplete = async (requestId, name, email) => {
+    const handelAction = async (requestId, name, email) => {
         Swal.fire({
             title: "Are you sure?",
             showCancelButton: true,
@@ -54,12 +53,11 @@ console.log('blood bank alll',data);
                     donorName: name,
                     donorEmail: email,
                 };
-    
+
                 try {
                     const res = await AxiosSecure.patch(`/donation/user/confirmDonation/${requestId}`, confirmedDonorData);
-    
+
                     if (res.status === 200) {
-                        setModalIsOpen(false)
                         refetch()
                         Swal.fire({
                             title: "Completed",
@@ -82,7 +80,7 @@ console.log('blood bank alll',data);
             }
         });
     };
-    
+
 
     if (isLoading) return <div><Loading /></div>;
     if (error) return <div><ErrorPage /></div>;
@@ -96,66 +94,79 @@ console.log('blood bank alll',data);
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-          }).then(async(result) => {
+            confirmButtonText: "Yes, delete it-----!"
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                const res= await AxiosSecure.delete(`/donation/delete/bloodRequest/${id}`)
-                if(res?.data?.deletedCount>0){
+                const res = await AxiosSecure.delete(`/bloodBank/admin/delete-blood-bank-data/${id}`)
+                console.log(res);
+                if (res?.data?.deletedCount > 0) {
                     refetch()
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your file has been deleted.",
                         icon: "success"
-                      });
+                    });
                 }
             }
-          });
+        });
 
-      
+
         console.log(id);
 
     }
 
 
     const columns = [
-       
+
         { 'text': 'Donor Email', 'id': 'email' },
         { 'text': 'Phone', 'id': 'phone' },
         { 'text': 'Group', 'id': 'bloodGroup' },
         { 'text': 'Status', 'id': 'status' },
-        { 'text': 'Donors', 'id': 'donors' },
-        
+        { 'text': 'Action', 'id': 'action' },
+
+        { 'text': 'Reject', 'id': 'reject' },
         { 'text': 'Delete', 'id': 'delete' }
     ];
 
 
     const tableData = data ? data?.data?.map(request => ({
-      
+
         phone: request.phoneNumber,
         email: request.email,
         bloodGroup: request.bloodGroup,
         status: request.status,
 
 
-        donors: (
+        action: (
             <button
-                className="px-4 py-2 bg-blue-500 text-white rounded"
+            disabled={request.status==='Requested'?false:true}
+                style={{ height: '26px', backgroundColor: 'green' }}
+                className={`btn-p text-white rounded ${request.status !== 'Requested' ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={() => {
-                    setModalData(request)
-                    setModalIsOpen(true)
+                    handelAction(request._id,'Accepted')
                 }}
             >
-                Donors 
+                Accept
+            </button>
+        ),
+        reject: (
+            <button
+                className="  font-bold bg-color-p text-white hover:bg-red-700 px-2 rounded-sm "
+                onClick={() => {
+                    handelAction(request._id,'Rejected')
+                }}
+            >
+                Reject
             </button>
         ),
         delete: (
             <button
-                className=" text-2xl text-color-p hover:text-3xl "
+                className=" p-2 font-bold bg-red-600 text-white hover:bg-red-700 px-2 rounded-sm "
                 onClick={() => {
                     handelDelete(request._id)
                 }}
             >
-                <MdDeleteForever />
+                <MdDeleteForever/>
             </button>
         ),
     })) : [];
@@ -177,10 +188,10 @@ console.log('blood bank alll',data);
                 <button onClick={handelPrev} style={{ borderRadius: '0px 100%' }} className="btn btn-p rounded-r-full" disabled={page === 1}>Prev</button>
                 <button onClick={handelNext} style={{ borderRadius: ' 100% 0px' }} className="btn btn-p rounded-r-full" disabled={page === data?.totalPages}>Next</button>
             </div>
-           
+
         </div>
     );
 };
 
-export default AllBloodBank ;
+export default AllBloodBank;
 
