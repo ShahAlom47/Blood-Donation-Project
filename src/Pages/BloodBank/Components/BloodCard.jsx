@@ -39,9 +39,26 @@ const BloodCard = ({ data, group }) => {
 
     console.log(bloodGroupData);
 
-    const handelRequest = async (id) => {
-        console.log(id);
+    const handelRequest = async (data) => {
+         if(data.status !== 'Available'){
+            Swal.fire('Request Denied', 'This blood is not available right now. Someone has already requested it.')
+            return
+         }
+        const notificationData={
+            requesterEmail:user?.email,
+            donorEmail:data?.email,
+            message:' New blood donation request received from the Blood Bank',
+            type:'blood_bank_blood_request',
+            status:'unread',
+            timestamp: new Date().toLocaleString(),
 
+        }
+        const res=await AxiosSecure.patch(`/bloodBank/blood-bank-updateState/${data?._id}`,{status:'Requested',notificationData})
+        console.log(res.data);
+        if(res?.status){
+            Swal.fire('Request Completed', 'Please wait for admin approval.', 'success');
+            handleBloodCard(data.bloodGroup)
+        }
     }
 
     return (
@@ -82,10 +99,11 @@ const BloodCard = ({ data, group }) => {
                                         <h1><strong>Bag Size: </strong><span className=" px-3">{data?.size} ml</span></h1>
                                 }
                                 {
-                                    data.status === 'Available' &&
-                                    <h1 className="bg-green-500 px-2 rounded-sm ">{data?.status}</h1>
+                                    data.status === 'Available' ?
+                                    <h1 className="bg-green-500 px-2 rounded-sm ">{data?.status}</h1>:
+                                    <h1 className="bg-yellow-500 px-2 rounded-sm ">{data?.status}</h1>
                                 }
-                                <button onClick={() => handelRequest(data._id)} style={{ height: '30px' }} className=" btn-p">Request</button>
+                                <button onClick={() => handelRequest(data)} style={{ height: '30px' }} className=" btn-p">Request</button>
 
                             </div>)
                         }
