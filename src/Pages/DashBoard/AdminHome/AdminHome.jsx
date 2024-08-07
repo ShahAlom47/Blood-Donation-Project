@@ -1,6 +1,7 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react"; 
 import AllBloodRequest from "../Componets/Admin/AllBloodRequest";
+import AllBloodBank from "../Componets/Admin/AllBloodBank";
 
 const AdminHome = () => {
     const [value, setValue] = useState(0);
@@ -47,15 +48,15 @@ const AdminHome = () => {
                         }}
                     >
                         <Tab sx={tabStyle} label="All Blood Request" />
+                        <Tab sx={tabStyle} label="Blood Bank" />
                         <Tab sx={tabStyle} label="My Donation History" />
-                        <Tab sx={tabStyle} label="Tab 3" />
                         <Tab sx={tabStyle} label="Tab 4" />
                         <Tab sx={tabStyle} label="Tab 5" />
                         <Tab sx={tabStyle} label="Tab 6" />
                     </Tabs>
 
                     {value === 0 && <Box><AllBloodRequest></AllBloodRequest> </Box>}
-                    {value === 1 && <Box>Content for Tab 2</Box>}
+                    {value === 1 && <Box><AllBloodBank></AllBloodBank></Box>}
                     {value === 2 && <Box>Content for Tab 3</Box>}
                     {value === 3 && <Box>Content for Tab 4</Box>}
                     {value === 4 && <Box>Content for Tab 5</Box>}
