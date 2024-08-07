@@ -12,7 +12,11 @@ const NotificationIcon = () => {
   const { data, isLoading, } = useQuery({
     queryKey: ['getAllNotification'],
     queryFn: async () => {
+      if(user.role==='user'){
       const res = await AxiosSecure.get(`/notification/getUserNotification/${user?.email}`);
+      return res.data;
+      }
+      const res = await AxiosSecure.get(`/notification/getAllNotification`);
       return res.data;
     },
     refetchInterval: 60000, // 60 seconds
