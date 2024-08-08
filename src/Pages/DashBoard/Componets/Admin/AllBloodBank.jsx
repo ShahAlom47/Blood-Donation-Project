@@ -39,14 +39,6 @@ const AllBloodBank = () => {
 
 
 
-  
-
-
-   
-
-    
-
-
     const columns = [
 
         { 'text': 'requester Email', 'id': 'email' },
@@ -91,7 +83,8 @@ const AllBloodBank = () => {
             </button>
         ),
     })) : [];
-console.log(modalData);
+
+
     if (isLoading) return <div><Loading /></div>;
     if (error) return <div><ErrorPage /></div>;
 
@@ -116,6 +109,9 @@ console.log(modalData);
             setOpenModal={setOpenModal}
             label='all blood bank'
             > 
+            {
+                modalData?.requester?.length>0?
+           
                 <div>
                 {modalData?.requester?.map((requester, index) => (
                             <div key={index} className="bg-white p-6 rounded-lg shadow-md">
@@ -134,14 +130,16 @@ console.log(modalData);
                                     // disabled={modalData.status !== 'Pending'}
                                     style={{ width: '90px' }}
                                     className={`px-4 py-2 btn-p text-white rounded `}
-                                    onClick={() => rejectRequester(modalData._id,requester.requesterEmail,refetch)}
+                                    onClick={() => rejectRequester(modalData._id,requester.requesterEmail,refetch,setModalData)}
                                 >
                                     Reject
                                 </button>
                             </div>
                         ))}
 
-                </div>
+                </div>:
+                <h1 className=' text-2xl text-center font-bold '>Empty</h1>
+                 }
             </ReactModal>
         </div>
     );

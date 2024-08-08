@@ -61,9 +61,10 @@ console.log(user);
             Swal.fire('Request Failed','You have already made a request with this email.');
             return
         }
-       else if(res?.status===true){
+       else if(res?.data?.status===true){
             Swal.fire('Request Completed', 'Please wait for admin approval.', 'success');
             handleBloodCard(data.bloodGroup)
+            setOpenModal(false)
         }
       
     }
