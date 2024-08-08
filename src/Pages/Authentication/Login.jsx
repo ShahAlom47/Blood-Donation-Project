@@ -61,8 +61,8 @@ const Login = () => {
         <div>
             <ToastContainer />
             <PageHeading img={img} title={'Login As a Blood Donor'} />
-            <div className="max-w py-10">
-                <div className="border-2 lg:p-8 md:p-6 p-3 lg:w-8/12 md:w-10/12 w-full m-auto mb-8">
+            <div className="max-w   py-10 ">
+                <div className="border-2 lg:p-8 md:p-6 p-3 lg:w-8/12 md:w-10/12 w-11/12   mx-auto ">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-4">
                             <label className="block text-gray-700 font-medium">Email</label>
@@ -92,7 +92,7 @@ const Login = () => {
                                 placeholder='Your Password'
                                 className="my-auto w-full mt-2"
                             />
-                            <button className='absolute top-1/4 right-5' onClick={()=>setShowPass(!showPass)}>{showPass?<IoIosEyeOff />:<IoIosEye />}</button>
+                            <span className='absolute top-1/4 right-5' onClick={()=>setShowPass(!showPass)}>{showPass?<IoIosEyeOff />:<IoIosEye />}</span>
                             </div>
                             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
                             {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}

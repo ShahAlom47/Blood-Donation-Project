@@ -127,16 +127,16 @@ const Navbar = () => {
                         user ?
                             <div className=' flex items-center gap-4'>
                                 <div>
-                                    <NotificationIcon value={8 || 0} userEmail={user.email}></NotificationIcon>
+                                    <NotificationIcon value={8 || 0} userEmail={user?.email}></NotificationIcon>
                                 </div>
                                 <div className="dropdown dropdown-end p-0 m-0">
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar p-0 m-0">
                                         <div className="w-8 rounded-full">
-                                            <img alt="Tailwind CSS Navbar component" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                            <img alt="profile phot" src={user?.photoURL} />
                                         </div>
                                     </div>
                                     <ul tabIndex={0} className="-mt-1 z-[1] text-white p-2 shadow menu menu-sm dropdown-content bg-color-p rounded-sm w-32">
-                                        <li className='border-b-2 pl-2  uppercase' >{user.name} </li>
+                                        <li className='border-b-2 pl-2  uppercase' >{user?.name} </li>
                                         <li><Link to={'/dashBoard'}><a>My Profile</a></Link></li>
                                         <li><a onClick={() => logout()}>Logout</a></li>
                                     </ul>

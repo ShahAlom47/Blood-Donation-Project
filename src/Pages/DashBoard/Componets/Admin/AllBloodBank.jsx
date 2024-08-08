@@ -1,33 +1,32 @@
 import { useQuery } from '@tanstack/react-query';
-
 import { ResponsiveTable } from 'responsive-table-react';
 import { useState } from 'react';
-
-import Swal from 'sweetalert2';
 import useAxios from '../../../../CustomHocks/useAxiosSecure';
 import Loading from '../../../../SharedComponent/Loading';
 import ErrorPage from '../../../ErrorPage/ErrorPage';
 import { MdDeleteForever } from 'react-icons/md';
+import ReactModal from '../../../../Components/Modal/ReactModal';
+import useFunctions from './useFunctions';
 
 const AllBloodBank = () => {
     const AxiosSecure = useAxios();
 
     const [page, setPage] = useState(1);
+    const [openModal,setOpenModal]=useState(false);
+    const [modalData,setModalData]=useState([]);
+    const {handelDelete,rejectRequester}=useFunctions()
 
 
     const handelPrev = () => {
         refetch()
         if (page > 1) setPage(page - 1);
-       
     };
 
     const handelNext = () => {
-
         if (page < data.totalPages) setPage(page + 1);
         refetch()
     };
 
-  console.log(page);
 
 
     const { data, isLoading, error, refetch } = useQuery({
@@ -38,93 +37,23 @@ const AllBloodBank = () => {
         }
     });
 
-console.log(data);
-
-    const handelAction = async (requestId, name, email) => {
-        Swal.fire({
-            title: "Are you sure?",
-            showCancelButton: true,
-            confirmButtonColor: "#ea062b",
-            cancelButtonColor: "#000",
-            confirmButtonText: "Confirm"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const confirmedDonorData = {
-                    donorName: name,
-                    donorEmail: email,
-                };
-
-                try {
-                    const res = await AxiosSecure.patch(`/donation/user/confirmDonation/${requestId}`, confirmedDonorData);
-
-                    if (res.status === 200) {
-                        refetch()
-                        Swal.fire({
-                            title: "Completed",
-                            icon: "success"
-                        });
-                    } else {
-                        Swal.fire({
-                            title: "Error",
-                            text: "Something went wrong. Please try again.",
-                            icon: "error"
-                        });
-                    }
-                } catch (error) {
-                    Swal.fire({
-                        title: "Error",
-                        text: error.response?.data?.message || "An unexpected error occurred. Please try again.",
-                        icon: "error"
-                    });
-                }
-            }
-        });
-    };
 
 
-    if (isLoading) return <div><Loading /></div>;
-    if (error) return <div><ErrorPage /></div>;
-
-    const handelDelete = async (id) => {
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it-----!"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const res = await AxiosSecure.delete(`/bloodBank/admin/delete-blood-bank-data/${id}`)
-                console.log(res);
-                if (res?.data?.deletedCount > 0) {
-                    refetch()
-                    Swal.fire({
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
-                        icon: "success"
-                    });
-                }
-            }
-        });
+  
 
 
-        console.log(id);
+   
 
-    }
+    
 
 
     const columns = [
 
-        { 'text': 'Donor Email', 'id': 'email' },
+        { 'text': 'requester Email', 'id': 'email' },
         { 'text': 'Phone', 'id': 'phone' },
         { 'text': 'Group', 'id': 'bloodGroup' },
         { 'text': 'Status', 'id': 'status' },
-        { 'text': 'Action', 'id': 'action' },
-
-        { 'text': 'Reject', 'id': 'reject' },
+        { 'text': 'Requester', 'id': 'requester' },
         { 'text': 'Delete', 'id': 'delete' }
     ];
 
@@ -137,41 +66,34 @@ console.log(data);
         status: request.status,
 
 
-        action: (
+        requester: (
             <button
             disabled={request.status==='Requested'?false:true}
                 style={{ height: '26px', backgroundColor: 'green' }}
                 className={`btn-p text-white rounded ${request.status !== 'Requested' ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={() => {
-                    handelAction(request._id,'Accepted')
+                    setOpenModal(true)
+                    setModalData(request||{})
                 }}
             >
-                Accept
+               {request?.requester?.length>0?request?.requester?.length:0} Requester
             </button>
         ),
-        reject: (
-            <button
-                className="  font-bold bg-color-p text-white hover:bg-red-700 px-2 rounded-sm "
-                onClick={() => {
-                    handelAction(request._id,'Rejected')
-                }}
-            >
-                Reject
-            </button>
-        ),
+      
         delete: (
             <button
                 className=" p-2 font-bold bg-red-600 text-white hover:bg-red-700 px-2 rounded-sm "
                 onClick={() => {
-                    handelDelete(request._id)
+                    handelDelete(request._id,refetch)
                 }}
             >
                 <MdDeleteForever/>
             </button>
         ),
     })) : [];
-
-
+console.log(modalData);
+    if (isLoading) return <div><Loading /></div>;
+    if (error) return <div><ErrorPage /></div>;
 
     return (
         <div className="p-4">
@@ -189,6 +111,38 @@ console.log(data);
                 <button onClick={handelNext} style={{ borderRadius: ' 100% 0px' }} className="btn btn-p rounded-r-full" disabled={page === data?.totalPages}>Next</button>
             </div>
 
+            <ReactModal
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            label='all blood bank'
+            > 
+                <div>
+                {modalData?.requester?.map((requester, index) => (
+                            <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+                                <h1 className='text-xl font-bold mb-5 border-b-2'>Requester {index + 1}</h1>
+                                <h2 className="font-bold mb-1"> Requester Phone: {requester.requesterPhone}</h2>
+                                <p className="text-gray-700 mb-2"><span className='font-bold'> Requester Email:</span> {requester.requesterEmail}</p>
+                                <button
+                                    // disabled={modalData.status !== 'Pending'}
+                                    style={{ width: '90px' ,backgroundColor:'green'}}
+                                    className={`px-4 py-2 btn-p text-white rounded mr-4 `}
+                                    onClick={() => rejectRequester(modalData._id,)}
+                                >
+                                    Accept
+                                </button>
+                                <button
+                                    // disabled={modalData.status !== 'Pending'}
+                                    style={{ width: '90px' }}
+                                    className={`px-4 py-2 btn-p text-white rounded `}
+                                    onClick={() => rejectRequester(modalData._id,requester.requesterEmail,refetch)}
+                                >
+                                    Reject
+                                </button>
+                            </div>
+                        ))}
+
+                </div>
+            </ReactModal>
         </div>
     );
 };
