@@ -7,6 +7,7 @@ import ErrorPage from '../../../ErrorPage/ErrorPage';
 import { MdDeleteForever } from 'react-icons/md';
 import ReactModal from '../../../../Components/Modal/ReactModal';
 import useFunctions from './useFunctions';
+import DataNotAvailable from '../../../../SharedComponent/DataNotAvailable';
 
 const AllBloodBank = () => {
     const AxiosSecure = useAxios();
@@ -14,7 +15,7 @@ const AllBloodBank = () => {
     const [page, setPage] = useState(1);
     const [openModal,setOpenModal]=useState(false);
     const [modalData,setModalData]=useState([]);
-    const {handelDelete,rejectRequester}=useFunctions()
+    const {handelDelete,rejectRequester,acceptRequester}=useFunctions()
 
 
     const handelPrev = () => {
@@ -60,9 +61,9 @@ const AllBloodBank = () => {
 
         requester: (
             <button
-            disabled={request.status==='Requested'?false:true}
+            disabled={request.status==='Requested' || request.status==='Accepted'?false:true}
                 style={{ height: '26px', backgroundColor: 'green' }}
-                className={`btn-p text-white rounded ${request.status !== 'Requested' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`btn-p text-white rounded ${request.status === 'Requested'||request.status === 'Accepted' ? '' : 'opacity-50 cursor-not-allowed'}`}
                 onClick={() => {
                     setOpenModal(true)
                     setModalData(request||{})
@@ -119,10 +120,10 @@ const AllBloodBank = () => {
                                 <h2 className="font-bold mb-1"> Requester Phone: {requester.requesterPhone}</h2>
                                 <p className="text-gray-700 mb-2"><span className='font-bold'> Requester Email:</span> {requester.requesterEmail}</p>
                                 <button
-                                    // disabled={modalData.status !== 'Pending'}
+                                    disabled={modalData.status === 'Accepted'}
                                     style={{ width: '90px' ,backgroundColor:'green'}}
-                                    className={`px-4 py-2 btn-p text-white rounded mr-4 `}
-                                    onClick={() => rejectRequester(modalData._id,)}
+                                    className={`px-4 py-2 btn-p text-white rounded mr-4 ${modalData.status === 'Accepted'?'opacity-50 cursor-not-allowed':''} `}
+                                    onClick={() => acceptRequester(modalData._id,modalData,requester.requesterEmail,refetch,setModalData)}
                                 >
                                     Accept
                                 </button>
@@ -138,7 +139,7 @@ const AllBloodBank = () => {
                         ))}
 
                 </div>:
-                <h1 className=' text-2xl text-center font-bold '>Empty</h1>
+               <DataNotAvailable></DataNotAvailable>
                  }
             </ReactModal>
         </div>

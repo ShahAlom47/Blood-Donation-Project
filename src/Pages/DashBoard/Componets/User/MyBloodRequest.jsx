@@ -6,9 +6,9 @@ import useUser from '../../../../CustomHocks/useUser';
 import { ResponsiveTable } from 'responsive-table-react';
 import { useState } from 'react';
 import Modal from 'react-modal';
-import { AiOutlineWarning } from "react-icons/ai";
 import Swal from 'sweetalert2';
 import { MdDeleteForever } from "react-icons/md";
+import DataNotAvailable from '../../../../SharedComponent/DataNotAvailable';
 
 const MyBloodRequest = () => {
     const AxiosSecure = useAxios();
@@ -179,7 +179,7 @@ const MyBloodRequest = () => {
                 style={customStyles}
             >
                 {modalData?.donors?.length === 0 ? (
-                    <h1 className='text-xl font-bold text-center py-6 flex flex-col items-center justify-center gap-4'> <AiOutlineWarning className='text-5xl text-color-p' /><span> Donors Not Available</span> </h1>
+                   <DataNotAvailable></DataNotAvailable>
                 ) : (
                     <div className="space-y-4">
                         {modalData?.donors?.map((donor, index) => (
