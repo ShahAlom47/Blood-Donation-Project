@@ -9,6 +9,7 @@ import Modal from 'react-modal';
 import Swal from 'sweetalert2';
 import { MdDeleteForever } from "react-icons/md";
 import DataNotAvailable from '../../../../SharedComponent/DataNotAvailable';
+import MyBloodBankRequest from './MyBloodBankRequest';
 
 const MyBloodRequest = () => {
     const AxiosSecure = useAxios();
@@ -16,6 +17,7 @@ const MyBloodRequest = () => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalData, setModalData] = useState({})
+    const [requestPage,setRequestPage]=useState(false)
 
 
 
@@ -144,7 +146,7 @@ const MyBloodRequest = () => {
                     setModalIsOpen(true)
                 }}
             >
-                Donors <span> ({request.donors.length})</span>
+                Donors <span> ({request?.donors?.length})</span>
             </button>
         ),
         delete: (
@@ -162,8 +164,18 @@ const MyBloodRequest = () => {
 
 
     return (
-        <div className="p-4">
+        <div className="p-4 pt-0">
+            <div className=' w-full flex justify-end items-center mb-5'>
+                <button 
+                onClick={()=>setRequestPage(!requestPage)}
+                style={{width:'190px'}}
+                className=' btn-p font-semibold'
+                >{requestPage?'My Blood Request':'My Blood bank Request'}</button>
+            </div>
             <div className="overflow-x-auto">
+                {
+                    requestPage?<MyBloodBankRequest></MyBloodBankRequest>:
+              
                 <ResponsiveTable
                     columns={columns}
                     data={tableData}
@@ -171,6 +183,7 @@ const MyBloodRequest = () => {
                     cellClassName="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                     ClassName="bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 />
+            }
             </div>
             <Modal
                 isOpen={modalIsOpen}

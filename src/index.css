@@ -68,6 +68,11 @@
 
     color: white;
   }
+  .btn-p:active{
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+   
+  }
 
   .btn-p::before{
 
@@ -126,4 +131,10 @@ background-color: rgba(0, 0, 0, 0.261);
 }
 
 
+
+table.rtr-table tbody tr:hover td{
+ font-weight: 300 !important;
+ color: black !important;
+ background-color: rgba(100, 96, 96, 0.244) !important;
+}
 
