@@ -42,7 +42,7 @@ const AllBloodBank = () => {
 
     const columns = [
 
-        { 'text': 'requester Email', 'id': 'email' },
+        { 'text': 'Donor Email', 'id': 'email' },
         { 'text': 'Phone', 'id': 'phone' },
         { 'text': 'Group', 'id': 'bloodGroup' },
         { 'text': 'Status', 'id': 'status' },

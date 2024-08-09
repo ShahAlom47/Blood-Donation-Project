@@ -35,8 +35,10 @@ const MyBloodBankRequest = () => {
     ];
     const tableData = data ? data?.map(request => ({
 
-        phone: (<p> {request?.status === 'Requested' ? pending : request?.phoneNumber} </p>),
-        email: request?.status === 'Requested' ? pending : request?.email,
+      
+        phone: (<p> {request?.status === 'Accepted' && request?.requester?.some(req => req.requesterEmail === user.email && req.status === 'selected') ? request?.phoneNumber : pending } </p>),
+        email: (<p> {request?.status === 'Accepted' && request?.requester?.some(req => req.requesterEmail === user.email && req.status === 'selected') ? request?.email : pending } </p>),
+        // email: request?.status === 'Requested' ? pending : request?.email,
         bloodGroup: request?.bloodGroup,
         bloodType: request?.type,
         status: request?.status === 'Requested' ? pending :<div className="bg-green-500 px-2 inline-block ">{ request?.status}</div>,
@@ -44,7 +46,7 @@ const MyBloodBankRequest = () => {
 
         action: (
             <button
-                disabled={request?.status === 'Accepted'&&request?.requester?.status==="selected" ? false : true}
+                disabled={request?.status === 'Accepted' && request?.requester?.some(req => req.requesterEmail === user.email && req.status === 'selected') ? false :  true}
                 style={{ backgroundColor: 'green', height: '30px' }}
                 className={`btn-p ${request?.status === 'Accepted' && request?.requester?.some(req => req.requesterEmail === user.email && req.status === 'selected') ? '' : 'opacity-50 cursor-not-allowed'}`}
 

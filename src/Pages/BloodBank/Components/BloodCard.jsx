@@ -49,7 +49,7 @@ console.log(user);
             requesterEmail:user?.email,
             requesterPhone:user?.phoneNumber,
             donorEmail:data?.email,
-            message:' New blood donation request received from the Blood Bank',
+            message:' New blood donation data received from the Blood Bank',
             type:'blood_bank_blood_request',
             status:'unread',
             timestamp: new Date().toLocaleString(),
@@ -58,7 +58,7 @@ console.log(user);
         const res=await AxiosSecure.patch(`/bloodBank/blood-bank-updateState/${data?._id}`,{status:'Requested',notificationData})
         console.log(res.data);
         if(res.data?.message==='Requester Exist'){
-            Swal.fire('Request Failed','You have already made a request with this email.');
+            Swal.fire('Request Failed','You have already made a data with this email.');
             return
         }
        else if(res?.data?.status===true){
@@ -68,6 +68,9 @@ console.log(user);
         }
       
     }
+    const pending = (
+        <span className="text-red-500 font-medium rounded-sm px-2 ">Request First</span>
+    )
 
     return (
         <div className=" bg-gray-200 rounded-md shadow-2xl flex justify-between p-4 blood-card">
@@ -91,8 +94,8 @@ console.log(user);
                     bloodGroupData ? <div className=" flex flex-wrap gap-4 justify-center">
                         {
                             bloodGroupData.map((data, index) => <div className=" mb-4 bg-gray-200 shadow-lg p-3 space-y-2" key={index}>
-                                <h1><strong>Email: </strong>{data.status === "Available" ? <span className="text-red-600">---Request First--</span> : data?.email}</h1>
-                                <h1><strong>Mobile: </strong>{data.status === "Available" ? <span className="text-red-600">---Request First--</span> : data?.phoneNumber}</h1>
+                                <p> {data?.status === 'Accepted' && data?.requester?.some(req => req?.requesterEmail === user?.email && req.status === 'selected') ? data?.email : pending } </p>
+                                <p> {data?.status === 'Accepted' && data?.requester?.some(req => req?.requesterEmail === user?.email && req.status === 'selected') ? data?.phoneNumber : pending } </p>
                                 <h1><strong>BloodGroup: </strong><span className="text-color-p font-bold">{data?.bloodGroup}</span></h1>
 
                                 {
@@ -101,17 +104,24 @@ console.log(user);
                                         <h1 className="flex gap-2"> <strong>Type: </strong><span className=" px-3 bg-gray-800 rounded-sm text-white flex items-center gap-2"><RiUserHeartFill /> {data?.type}</span></h1>
 
                                 }
-                                {
+                              <div className=" flex flex-col">
+                              {
                                     data?.city ?
                                         <h1><strong>Address: </strong><span className=" px-3">{data?.city}</span></h1> :
                                         <h1><strong>Bag Size: </strong><span className=" px-3">{data?.size} ml</span></h1>
                                 }
                                 {
                                     data.status === 'Available' ?
-                                    <h1 className="bg-green-500 px-2 rounded-sm ">{data?.status}</h1>:
-                                    <h1 className="bg-yellow-500 px-2 rounded-sm ">{data?.status}</h1>
+                                    <h1 className="bg-green-500 px-2 rounded-sm inline ">{data?.status}</h1>:
+                                    <h1 className="bg-yellow-500 px-2 rounded-sm inline-block ">{data?.status}</h1>
                                 }
-                                <button onClick={() => handelRequest(data)} style={{ height: '30px' }} className=" btn-p">Request</button>
+                              </div>
+                                <button 
+                                disabled={data.status==='Accepted'}
+                                onClick={() => handelRequest(data)} 
+                                style={{ height: '30px' }} 
+                                className={`btn-p ${ data?.status==='Accepted'? 'opacity-50  cursor-not-allowed':''}`}
+                                    >Request</button>
 
                             </div>)
                         }
