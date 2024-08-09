@@ -44,9 +44,10 @@ const MyBloodBankRequest = () => {
 
         action: (
             <button
-                disabled={request?.status === 'Accepted' ? false : true}
+                disabled={request?.status === 'Accepted'&&request?.requester?.status==="selected" ? false : true}
                 style={{ backgroundColor: 'green', height: '30px' }}
-                className={`btn-p   ${request?.status !== 'Accepted' && 'opacity-50 cursor-not-allowed'}`}
+                className={`btn-p ${request?.status === 'Accepted' && request?.requester?.some(req => req.requesterEmail === user.email && req.status === 'selected') ? '' : 'opacity-50 cursor-not-allowed'}`}
+
             // onClick={() => {
             //     setModalData(request)
             //     setModalIsOpen(true)
