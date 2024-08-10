@@ -50,7 +50,7 @@ const Navbar = () => {
     };
 
     const nav = <>
-   
+    <button onClick={()=>playSound('click')}>click</button>
     <NavLink
         to="/"
         className={({ isActive }) =>
