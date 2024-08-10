@@ -48,75 +48,66 @@ const Navbar = () => {
     };
 
     const nav = <>
-        <NavLink
-            to="/"
-            className={({ isActive }) =>
-                `hover:underline px-3 rounded-sm animate__animated animate__bounceInUp ${isActive ? 'bg-gray-800 bg-opacity-50   text-white' : ''}`
-            }
-            style={({ isActive }) => ({
-                transition: 'background-color 0.3s ease-in-out, color 0.3s ease-in-out'
-            })}
-        >Home</NavLink>
-        <NavLink
-            to="/allRequest"
-            className={({ isActive }) =>
-                `hover:underline px-3 rounded-sm animate__animated animate__bounceInUp ${isActive ? 'bg-gray-800 bg-opacity-50 text-white' : ''}`
-            }
-            style={({ isActive }) => ({
-                transition: 'background-color 0.3s ease-in-out, color 0.3s ease-in-out'
-            })}
-        >Blood Request</NavLink>
+    <button>click</button>
+    <NavLink
+        to="/"
+        className={({ isActive }) =>
+            `nav-link hover:underline px-3 rounded-sm ${isActive ? 'bg-slide-animation is-active' : ''}`
+        }
+    >Home</NavLink>
 
-        <div className={`dropdown dropdown-bottom ${location.pathname === '/donateBlood' || location.pathname === '/donateMoney' ? 'bg-gray-800 bg-opacity-50 text-white' : ''}`}>
-            <div onClick={() => setDonateBtn(!donateBtn)} tabIndex={0} role="button" className={`hover:text-black px-3 rounded-sm animate__animated animate__bounceInUp flex items-center `}>
-                Donate <IoIosArrowDown />
-            </div>
-            <ul tabIndex={0} className="dropdown-content menu bg-color-p rounded-sm z-[1] w-40 mt-1 p-2 shadow">
-                <li><Link to="/donateBlood">Donate Blood</Link></li>
-                <li><Link to="/donateMoney">Donate Money</Link></li>
-            </ul>
+    <NavLink
+        to="/allRequest"
+        className={({ isActive }) =>
+            `nav-link hover:underline px-3 rounded-sm ${isActive ? 'bg-slide-animation is-active' : ''}`
+        }
+    >Blood Request</NavLink>
+
+    <div className={`nav-link dropdown dropdown-bottom ${location.pathname === '/donateBlood' || location.pathname === '/donateMoney' ? 'bg-slide-animation is-active' : ''}`}>
+        <div onClick={() => setDonateBtn(!donateBtn)} tabIndex={0} role="button" className={`hover:text-black px-3 rounded-sm flex items-center`}>
+            Donate <IoIosArrowDown />
         </div>
+        <ul tabIndex={0} className="dropdown-content menu bg-color-p rounded-sm z-[1] w-40 mt-1 p-2 shadow">
+            <li><Link to="/donateBlood">Donate Blood</Link></li>
+            <li><Link to="/donateMoney">Donate Money</Link></li>
+        </ul>
+    </div>
 
-        <NavLink
-            to="/bloodBank"
-            className={({ isActive }) =>
-                `hover:underline px-3 rounded-sm animate__animated animate__bounceInUp ${isActive ? 'bg-gray-800 bg-opacity-50 text-white' : ''}`
-            }
-            style={({ isActive }) => ({
-                transition: 'background-color 0.3s ease-in-out, color 0.3s ease-in-out'
-            })}
-        >Blood Bank</NavLink>
-      
+    <NavLink
+        to="/bloodBank"
+        className={({ isActive }) =>
+            `nav-link hover:underline px-3 rounded-sm ${isActive ? 'bg-slide-animation is-active' : ''}`
+        }
+    >Blood Bank</NavLink>
+
+    <NavLink
+        to="/contact"
+        className={({ isActive }) =>
+            `nav-link hover:underline px-3 rounded-sm ${isActive ? 'bg-slide-animation is-active' : ''}`
+        }
+    >Contact Us</NavLink>
+
+    <NavLink
+        to="/about"
+        className={({ isActive }) =>
+            `nav-link hover:underline px-3 rounded-sm ${isActive ? 'bg-slide-animation is-active' : ''}`
+        }
+    >About Us</NavLink>
+
+    <label onClick={themeControl} className="flex cursor-pointer gap-2 items-center ml-3 hover:text-black">
+        {themData === 'light' ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+            </svg>
+        ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        )}
+    </label>
+</>
 
 
-<NavLink
-          to="/contact"
-            className={({ isActive }) =>
-                `hover:underline px-3 rounded-sm animate__animated animate__bounceInUp ${isActive ? 'bg-gray-800 bg-opacity-50 text-white' : ''}`
-            }
-            style={({ isActive }) => ({
-                transition: 'background-color 0.3s ease-in-out, color 0.3s ease-in-out'
-            })}
-            >Contact Us</NavLink>
-<NavLink
-          to="/about"
-            className={({ isActive }) =>
-                `hover:underline px-3 rounded-sm animate__animated animate__bounceInUp ${isActive ? 'bg-gray-800 bg-opacity-50 text-white' : ''}`
-            }
-            style={({ isActive }) => ({
-                transition: 'background-color 0.3s ease-in-out, color 0.3s ease-in-out'
-            })}
-            >About Us</NavLink>
-
-       
-        <label onClick={themeControl} className="flex cursor-pointer gap-2 items-center ml-3 hover:text-black">
-            {themData === 'light' ? (
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5" /><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" /></svg>
-            ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            )}
-        </label>
-    </>
     return (
         <div className={` flex lg:h-[50px] md:h-[40px] h-[35px] border-b- shadow-md shadow-black  bg-gradient-to-t from-[#00000000] to-[#0000004f]  w-full m-auto" p-0  z-50 fixed  ${visible ? 'top-0 transition-all' : '-top-20 transition-all'} duration-1000 `}>
             <div className=" bg-gray-100 w-3/12 flex justify-evenly items-center"><img className=' h-full' src={logo} alt="" /></div>

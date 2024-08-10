@@ -138,3 +138,15 @@ table.rtr-table tbody tr:hover td{
  background-color: rgba(100, 96, 96, 0.244) !important;
 }
 
+
+/* navbar button animated style  */
+.bg-slide-animation {
+  background: linear-gradient(to right, transparent 50%, #2d3748 30%);
+  background-size: 200% 100%;
+  transition: background-position 0.8s ease-in-out;
+}
+
+.nav-link.is-active {
+  background-position: -100% 0%; /* Left to right animation */
+  color: white;
+}
