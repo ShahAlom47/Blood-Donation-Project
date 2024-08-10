@@ -37,5 +37,5 @@ ProcessCard.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
     position: PropTypes.string,
-    index: PropTypes.string,
+    index: PropTypes.number,
 };

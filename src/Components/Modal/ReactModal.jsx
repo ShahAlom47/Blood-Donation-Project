@@ -28,7 +28,7 @@ ReactModal.propTypes = {
     setOpenModal: PropTypes.func.isRequired,
     children: PropTypes.node, 
     label: PropTypes.string.isRequired ,
-    openModal:PropTypes.bool.isRequired,
+    openModal:PropTypes.func,
 };
 
 export default ReactModal;

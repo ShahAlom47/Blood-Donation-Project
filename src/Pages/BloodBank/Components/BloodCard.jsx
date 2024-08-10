@@ -37,14 +37,10 @@ console.log(user);
         setOpenModal(true)
     };
 
-    console.log(bloodGroupData);
+    
 
     const handelRequest = async (data) => {
-        //  if(data.status !== 'Available'){
-        //     Swal.fire('Request Denied', 'This blood is not available right now. Someone has already requested it.')
-        //     return
-        //  }
-        
+       
         const notificationData={
             requesterEmail:user?.email,
             requesterPhone:user?.phoneNumber,
@@ -137,7 +133,7 @@ console.log(user);
 export default BloodCard;
 BloodCard.propTypes = {
     group: PropTypes.string.isRequired,
-    data: PropTypes.object.isRequired,
+    data: PropTypes.object,
     handleBloodCardClick: PropTypes.func.isRequired,
 };
 

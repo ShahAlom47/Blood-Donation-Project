@@ -52,6 +52,7 @@ const Navbar = () => {
     const nav = <>
    
     <NavLink
+ 
         to="/"
         className={({ isActive }) =>
             `nav-link hover:underline px-3 rounded-sm ${isActive ? 'bg-slide-animation is-active' : ''}`
@@ -59,13 +60,14 @@ const Navbar = () => {
     >Home</NavLink>
 
     <NavLink
+
         to="/allRequest"
         className={({ isActive }) =>
             `nav-link hover:underline px-3 rounded-sm ${isActive ? 'bg-slide-animation is-active' : ''}`
         }
     >Blood Request</NavLink>
 
-    <div className={`nav-link dropdown dropdown-bottom ${location.pathname === '/donateBlood' || location.pathname === '/donateMoney' ? 'bg-slide-animation is-active' : ''}`}>
+    <div  className={`nav-link dropdown dropdown-bottom ${location.pathname === '/donateBlood' || location.pathname === '/donateMoney' ? 'bg-slide-animation is-active' : ''}`}>
         <div onClick={() => setDonateBtn(!donateBtn)} tabIndex={0} role="button" className={`hover:text-black px-3 rounded-sm flex items-center`}>
             Donate <IoIosArrowDown />
         </div>
@@ -113,8 +115,10 @@ const Navbar = () => {
     return (
         <div className={` flex lg:h-[50px] md:h-[40px] h-[35px] border-b- shadow-md shadow-black  bg-gradient-to-t from-[#00000000] to-[#0000004f]  w-full m-auto" p-0  z-50 fixed  ${visible ? 'top-0 transition-all' : '-top-20 transition-all'} duration-1000 `}>
             <div className=" bg-gray-100 w-3/12 flex justify-evenly items-center"><img className=' h-full' src={logo} alt="" /></div>
-            <div className=' bg-color-p flex justify-end items-center w-full font-medium'>
-                <div className=" hidden bg-color- max-w flex-1 lg:flex md:flex text-white justify-center font-light items-center gap-4 pl-5 lg:text-xl md:text-sm">{nav}</div>
+            <div onClick={()=>playSound('click')} className=' bg-color-p flex justify-end items-center w-full font-medium'>
+                <div  className=" hidden bg-color- max-w flex-1 lg:flex md:flex text-white justify-center font-light items-center gap-4 pl-5 lg:text-xl md:text-sm">
+                    {nav}
+                    </div>
                 <div className=' mr-4'>
                     {
                         user ?
@@ -150,7 +154,7 @@ const Navbar = () => {
 
 
 
-                <div id="drop-down" className={` text-white font-light overflow-hidden flex flex-col absolute bg-color-p p-2 top-[100%] w-0.5  
+                <div  id="drop-down" className={` text-white font-light overflow-hidden flex flex-col absolute bg-color-p p-2 top-[100%] w-0.5  
              ${isOpen ? ' lg:w-0 md:w-0 lg:-left-16 md:-left-16  top-10 left-0 w-[150px] max-w-full transition-all duration-1000 ease-in-out' : '-left-10 top-10 max-w-0 transition-all duration-1000 ease-in-out'}`}
                 >
                     {nav}
