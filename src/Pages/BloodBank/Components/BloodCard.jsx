@@ -9,6 +9,7 @@ import { RiUserHeartFill } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
 import useUser from "../../../CustomHocks/useUser";
 import Swal from "sweetalert2";
+import useSound from "../../../CustomHocks/useSound";
 
 const BloodCard = ({ data, group }) => {
     const { user } = useUser()
@@ -17,10 +18,14 @@ const BloodCard = ({ data, group }) => {
     const [openModal, setOpenModal] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
-console.log(user);
+
+    const { playSound } = useSound()
+
     const handleBloodCard = async (group) => {
+        playSound('click')
         console.log(group);
         if (!user) {
+            playSound('error')
             Swal.fire('Please Login First')
             setTimeout(() => {
                 navigate('/login', { state: { from: location.pathname } });
@@ -28,7 +33,8 @@ console.log(user);
 
             return
         }
-        if(!group){
+        if (!group) {
+            playSound('error')
             Swal.fire('Empty')
             return
         }
@@ -37,32 +43,34 @@ console.log(user);
         setOpenModal(true)
     };
 
-    
+
 
     const handelRequest = async (data) => {
-       
-        const notificationData={
-            requesterEmail:user?.email,
-            requesterPhone:user?.phoneNumber,
-            donorEmail:data?.email,
-            message:' New blood donation data received from the Blood Bank',
-            type:'blood_bank_blood_request',
-            status:'unread',
+        playSound('click')
+        const notificationData = {
+            requesterEmail: user?.email,
+            requesterPhone: user?.phoneNumber,
+            donorEmail: data?.email,
+            message: ' New blood donation data received from the Blood Bank',
+            type: 'blood_bank_blood_request',
+            status: 'unread',
             timestamp: new Date().toLocaleString(),
 
         }
-        const res=await AxiosSecure.patch(`/bloodBank/blood-bank-updateState/${data?._id}`,{status:'Requested',notificationData})
+        const res = await AxiosSecure.patch(`/bloodBank/blood-bank-updateState/${data?._id}`, { status: 'Requested', notificationData })
         console.log(res.data);
-        if(res.data?.message==='Requester Exist'){
-            Swal.fire('Request Failed','You have already made a data with this email.');
+        if (res.data?.message === 'Requester Exist') {
+            playSound('error')
+            Swal.fire('Request Failed', 'You have already made a data with this email.');
             return
         }
-       else if(res?.data?.status===true){
+        else if (res?.data?.status === true) {
             Swal.fire('Request Completed', 'Please wait for admin approval.', 'success');
             handleBloodCard(data.bloodGroup)
             setOpenModal(false)
+            playSound('success')
         }
-      
+
     }
     const pending = (
         <span className="text-red-500 font-medium rounded-sm px-2 ">Request First</span>
@@ -90,8 +98,8 @@ console.log(user);
                     bloodGroupData ? <div className=" flex flex-wrap gap-4 justify-center">
                         {
                             bloodGroupData.map((data, index) => <div className=" mb-4 bg-gray-200 shadow-lg p-3 space-y-2" key={index}>
-                                <p> {data?.status === 'Accepted' && data?.requester?.some(req => req?.requesterEmail === user?.email && req.status === 'selected') ? data?.email : pending } </p>
-                                <p> {data?.status === 'Accepted' && data?.requester?.some(req => req?.requesterEmail === user?.email && req.status === 'selected') ? data?.phoneNumber : pending } </p>
+                                <p> {data?.status === 'Accepted' && data?.requester?.some(req => req?.requesterEmail === user?.email && req.status === 'selected') ? data?.email : pending} </p>
+                                <p> {data?.status === 'Accepted' && data?.requester?.some(req => req?.requesterEmail === user?.email && req.status === 'selected') ? data?.phoneNumber : pending} </p>
                                 <h1><strong>BloodGroup: </strong><span className="text-color-p font-bold">{data?.bloodGroup}</span></h1>
 
                                 {
@@ -100,24 +108,24 @@ console.log(user);
                                         <h1 className="flex gap-2"> <strong>Type: </strong><span className=" px-3 bg-gray-800 rounded-sm text-white flex items-center gap-2"><RiUserHeartFill /> {data?.type}</span></h1>
 
                                 }
-                              <div className=" flex flex-col">
-                              {
-                                    data?.city ?
-                                        <h1><strong>Address: </strong><span className=" px-3">{data?.city}</span></h1> :
-                                        <h1><strong>Bag Size: </strong><span className=" px-3">{data?.size} ml</span></h1>
-                                }
-                                {
-                                    data.status === 'Available' ?
-                                    <h1 className="bg-green-500 px-2 rounded-sm inline ">{data?.status}</h1>:
-                                    <h1 className="bg-yellow-500 px-2 rounded-sm inline-block ">{data?.status}</h1>
-                                }
-                              </div>
-                                <button 
-                                disabled={data.status==='Accepted'}
-                                onClick={() => handelRequest(data)} 
-                                style={{ height: '30px' }} 
-                                className={`btn-p ${ data?.status==='Accepted'? 'opacity-50  cursor-not-allowed':''}`}
-                                    >Request</button>
+                                <div className=" flex flex-col">
+                                    {
+                                        data?.city ?
+                                            <h1><strong>Address: </strong><span className=" px-3">{data?.city}</span></h1> :
+                                            <h1><strong>Bag Size: </strong><span className=" px-3">{data?.size} ml</span></h1>
+                                    }
+                                    {
+                                        data.status === 'Available' ?
+                                            <h1 className="bg-green-500 px-2 rounded-sm inline ">{data?.status}</h1> :
+                                            <h1 className="bg-yellow-500 px-2 rounded-sm inline-block ">{data?.status}</h1>
+                                    }
+                                </div>
+                                <button
+                                    disabled={data.status === 'Accepted'}
+                                    onClick={() => handelRequest(data)}
+                                    style={{ height: '30px' }}
+                                    className={`btn-p ${data?.status === 'Accepted' ? 'opacity-50  cursor-not-allowed' : ''}`}
+                                >Request</button>
 
                             </div>)
                         }
