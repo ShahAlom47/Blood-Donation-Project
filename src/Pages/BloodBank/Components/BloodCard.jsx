@@ -23,7 +23,7 @@ const BloodCard = ({ data, group }) => {
 
     const handleBloodCard = async (group) => {
         playSound('click')
-        console.log(group);
+       
         if (!user) {
             playSound('error')
             Swal.fire('Please Login First')
@@ -58,7 +58,7 @@ const BloodCard = ({ data, group }) => {
 
         }
         const res = await AxiosSecure.patch(`/bloodBank/blood-bank-updateState/${data?._id}`, { status: 'Requested', notificationData })
-        console.log(res.data);
+     
         if (res.data?.message === 'Requester Exist') {
             playSound('error')
             Swal.fire('Request Failed', 'You have already made a data with this email.');

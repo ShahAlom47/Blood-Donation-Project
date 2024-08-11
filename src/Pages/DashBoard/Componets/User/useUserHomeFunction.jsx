@@ -56,7 +56,7 @@ const useUserHomeFunction = () => {
                      requesterEmail: user?.email 
                 }
                 const res = await AxiosSecure.patch(`/bloodBank/user/completeBloodBankRequest/${data._id}`, completedData)
-                console.log(res);
+            
                 if (res.data.status === true) {
                     Swal.fire({
                         title: "Completed!",
@@ -73,7 +73,7 @@ const useUserHomeFunction = () => {
                 playSound('error')
             }
         })
-        console.log(data);
+       
 
 
     }

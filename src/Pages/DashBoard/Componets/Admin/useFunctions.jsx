@@ -9,7 +9,7 @@ const useFunctions = () => {
 
 
     const acceptRequester = async (id, data,requesterEmail, refetch, setModalData) => {
-        console.log(data);
+   
         Swal.fire({
             title: "Are you sure?",
             icon: "warning",
@@ -33,7 +33,7 @@ const useFunctions = () => {
                 }
                
                 const res = await AxiosSecure.patch(`/bloodBank/admin/accept-requester/${id}`, notificationData)
-                console.log(res);
+             
                 if (res?.data?.status == true) {
 
                     Swal.fire({
@@ -75,9 +75,9 @@ const useFunctions = () => {
                     timestamp: new Date().toLocaleString(),
 
                 }
-                console.log(id, requesterEmail);
+              
                 const res = await AxiosSecure.patch(`/bloodBank/admin/reject-requester/${id}`, notificationData)
-                console.log(res);
+         
                 if (res?.data?.status == true) {
 
                     Swal.fire({
@@ -111,7 +111,7 @@ const useFunctions = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const res = await AxiosSecure.delete(`/bloodBank/admin/delete-blood-bank-data/${id}`)
-                console.log(res);
+           
                 if (res?.data?.deletedCount > 0) {
                     refetch()
                     Swal.fire({

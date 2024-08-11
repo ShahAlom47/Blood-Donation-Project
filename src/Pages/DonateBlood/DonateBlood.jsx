@@ -50,7 +50,7 @@ const DonateBlood = () => {
                     navigate(-1)
                 }, 2000);
             }
-            console.log(res.data);
+         
         } catch (error) {
             Swal.fire({
                 position: "top-end",

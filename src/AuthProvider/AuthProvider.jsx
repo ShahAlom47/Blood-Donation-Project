@@ -88,6 +88,7 @@ const AuthProvider = ({ children }) => {
                     }
                     setLoading(false);
                 } catch (error) {
+                   
                     if (error.response && (error.response.status === 403 || error.response.status === 401)) {
                         logout();
                     } else {

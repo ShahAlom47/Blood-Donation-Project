@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import useUser from "../../../../CustomHocks/useUser";
 import useAxios from "../../../../CustomHocks/useAxiosSecure";
 import PropTypes from 'prop-types';
+import useSound from "../../../../CustomHocks/useSound";
 
 const RequestForm = ({ setRefetchData, refetchData }) => {
     const { user } = useUser();
@@ -14,6 +15,7 @@ const RequestForm = ({ setRefetchData, refetchData }) => {
     const [requireDate, setRequireDate] = useState(null);
     const { register, handleSubmit, reset, setValue } = useForm();
     const axiosSecure = useAxios();
+    const {playSound}=useSound()
 
     const handleDate = (date) => {
         setRequireDate(date);
@@ -65,6 +67,7 @@ const RequestForm = ({ setRefetchData, refetchData }) => {
             const res = await axiosSecure.post('/donation/bloodRequest', formData);
             if (res.data.insertedId) {
                 Swal.fire('Completed');
+                playSound('success')
                 localStorage.removeItem('RequFormData');
                 setRequireDate(null);
                 reset();
@@ -72,7 +75,8 @@ const RequestForm = ({ setRefetchData, refetchData }) => {
                 setRefetchData(!refetchData);
             }
         } catch (error) {
-            console.log(error);
+           Swal.error('Failed');
+           playSound('error')
         }
     };
 

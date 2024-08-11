@@ -10,12 +10,7 @@ const PrivetRouter = ({ children }) => {
     const { user} = useUser();
     const location = useLocation()
 
- console.log(location);
 
-    // if (loading) {
-
-    //     return <Loading></Loading>
-    // }
     if (user) {
         return (
             <> {children} </>)

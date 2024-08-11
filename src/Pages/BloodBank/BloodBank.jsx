@@ -35,7 +35,7 @@ const BloodBank = () => {
     }
 
 
-    // console.log(data);
+ 
     return (
         <div className="pb-10">
             <PageHeading title={"Blood Bank"} img={img}></PageHeading>

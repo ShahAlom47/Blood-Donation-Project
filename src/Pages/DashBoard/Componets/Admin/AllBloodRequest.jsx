@@ -112,7 +112,7 @@ const AllBloodRequest = () => {
           });
 
       
-        console.log(id);
+      
 
     }
 

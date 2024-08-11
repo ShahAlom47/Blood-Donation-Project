@@ -11,7 +11,6 @@ const BloodRequest = () => {
 const [refetchData,setRefetchData]=useState(false)
 const location= useLocation()
 const {playSound}=useSound()
-console.log(location);
 
 useEffect(()=>{
 

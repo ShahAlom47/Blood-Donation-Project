@@ -55,7 +55,7 @@ const EditProfile = () => {
             }, 2000);
         }
 
-       console.log(res);
+  
     };
 
     const handleDateChange = (date) => {

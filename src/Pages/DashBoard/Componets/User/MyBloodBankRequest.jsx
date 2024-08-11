@@ -22,7 +22,7 @@ const MyBloodBankRequest = () => {
     const pending = (
         <span className="bg-yellow-400 font-medium rounded-sm px-2 ">Pending</span>
     )
-    console.log(data);
+
     const columns = [
 
         { 'text': 'Phone', 'id': 'phone' },

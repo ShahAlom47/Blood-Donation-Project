@@ -17,7 +17,7 @@ const Login = () => {
     const [showPass,setShowPass]=useState(false)
     const navigate =useNavigate()
     const location = useLocation();
-    console.log(location);
+ 
     const onSubmit = async (data) => {
         setEmailError('');
         setPasswordError('');

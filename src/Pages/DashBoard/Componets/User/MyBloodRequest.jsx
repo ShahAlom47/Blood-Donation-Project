@@ -106,7 +106,7 @@ const MyBloodRequest = () => {
           });
 
       
-        console.log(id);
+   
 
     }
 

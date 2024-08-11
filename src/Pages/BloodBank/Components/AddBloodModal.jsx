@@ -49,7 +49,7 @@ const AddBloodModal = ({refetch, modalIsOpen, closeModal }) => {
                    closeModal()
                 }, 1500);
             }
-            console.log(res.data);
+        
         } catch (error) {
             Swal.fire({
                 position: "top-end",

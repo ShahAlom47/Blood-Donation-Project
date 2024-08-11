@@ -28,7 +28,7 @@ const PhotoForm = ({closeModal}) => {
       setReLoad(true)
 
      }
-      console.log(updateProfilePhoto?.data?.matchedCount);
+    
     }
   
 
