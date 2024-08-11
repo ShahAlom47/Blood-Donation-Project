@@ -10,7 +10,7 @@ import useUserHomeFunction from "./useUserHomeFunction";
 const MyBloodBankRequest = () => {
     const { user } = useUser()
     const AxiosSecure = useAxios()
-    const { cancelMyBloodBankRequest } = useUserHomeFunction()
+    const { cancelMyBloodBankRequest,completeDonation } = useUserHomeFunction()
 
     const { data, isLoading, error, refetch } = useQuery({
         queryKey: ['userAllBloodBankRequest'],
@@ -50,10 +50,9 @@ const MyBloodBankRequest = () => {
                 style={{ backgroundColor: 'green', height: '30px' }}
                 className={`btn-p ${request?.status === 'Accepted' && request?.requester?.some(req => req.requesterEmail === user.email && req.status === 'selected') ? '' : 'opacity-50 cursor-not-allowed'}`}
 
-            // onClick={() => {
-            //     setModalData(request)
-            //     setModalIsOpen(true)
-            // }}
+            onClick={() => {
+                completeDonation(request,refetch)
+            }}
             >
                 Complete
             </button>
