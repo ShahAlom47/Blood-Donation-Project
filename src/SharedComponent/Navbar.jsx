@@ -3,6 +3,8 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import logo from '../assets/logo/blood logo2.png';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { AiOutlineMenuFold } from "react-icons/ai";
+
 import { useEffect, useRef, useState } from 'react';
 import 'animate.css';
 import { BiLogIn } from 'react-icons/bi';
@@ -15,6 +17,7 @@ import useSound from '../CustomHocks/useSound';
 
 const Navbar = () => {
     const [isOpen, setOpen] = useState(false);
+    const [btn,setBtn]=useState(false)
     const [visible, setVisible] = useState(true);
     const [theme, setTheme] = useState(true);
     const [themData, setThemeData] = useState(null);
@@ -40,11 +43,8 @@ const Navbar = () => {
 
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                isOpen && setOpen(false);
-                !isOpen && setOpen(true);
+              setOpen(false)
             }
-
-            console.log(dropdownRef.current && !dropdownRef.current.contains(event.target));
         };
 
 
@@ -172,12 +172,12 @@ const Navbar = () => {
                     }
 
                 </div>
-                {
-                !isOpen ?
-                    <button onClick={() => setOpen(false)} className=' md:hidden lg:hidden flex  mx-1 px-1 hover:text-black  rounded-sm bg-opacity-5 text-white text-2xl btn btn-sm bg-transparent border-none '><RxHamburgerMenu className='' /></button>
-                    : <button onClick={() => setOpen(true)} className=' md:hidden lg:hidden flex  mx-1 px-1 hover:text-black  rounded-sm bg-opacity-5 text-white text-2xl btn btn-sm bg-transparent border-none '><RxHamburgerMenu className='' /></button>
-                }
+      {!isOpen?      
+                    <button onClick={() => setOpen(!isOpen)} className=' md:hidden lg:hidden flex  mx-1 px-1 hover:text-black  rounded-sm bg-opacity-5 text-white text-2xl btn btn-sm bg-transparent border-none '><RxHamburgerMenu className='' /></button>
+           :         <p  className=' md:hidden lg:hidden text-white flex  mx-1 px-1 hover:text-black  rounded-sm bg-opacity-5 text-2xl btn btn-sm bg-transparent border-none '><AiOutlineMenuFold className='' /></p>
 
+
+                }
                 <div ref={dropdownRef} id="drop-down" className={` text-white font-light overflow-hidden flex flex-col absolute bg-color-p p-2 top-[100%] w-0.5  
              ${isOpen ? ' lg:w-0 md:w-0 lg:-left-16 md:-left-16  top-10 left-0 w-[150px] max-w-full transition-all duration-1000 ease-in-out' : '-left-10 top-10 max-w-0 transition-all duration-1000 ease-in-out'}`}
                 >

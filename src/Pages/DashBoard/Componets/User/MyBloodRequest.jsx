@@ -140,7 +140,7 @@ const MyBloodRequest = () => {
 
         donors: (
             <button
-                className="px-4 py-2 bg-blue-500 text-white rounded"
+                className="px-4 py- bg-green-500 text-white rounded"
                 onClick={() => {
                     setModalData(request)
                     setModalIsOpen(true)
@@ -179,9 +179,11 @@ const MyBloodRequest = () => {
                 <ResponsiveTable
                     columns={columns}
                     data={tableData}
-                    className="min-w-full divide-y divide-gray-200"
-                    cellClassName="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                    ClassName="bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    cellClassName="px-6 py-8 whitespace-nowrap text-sm text-gray-500"
+
+                    className="min-w-full "
+                   
+                    ClassName=" px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
                 />
             }
             </div>

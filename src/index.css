@@ -150,3 +150,11 @@ table.rtr-table tbody tr:hover td{
   background-position: -100% 0%; /* Left to right animation */
   color: white;
 }
+
+
+
+tbody .open td {
+  padding: 10px !important;
+  min-height: 65px !important;
+  background-color: none !important;
+}

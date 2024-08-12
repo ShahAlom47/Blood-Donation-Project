@@ -57,6 +57,15 @@ const BloodCard = ({ data, group }) => {
             timestamp: new Date().toLocaleString(),
 
         }
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, "
+        }).then(async (result) => {
+            if (result.isConfirmed) {
         const res = await AxiosSecure.patch(`/bloodBank/blood-bank-updateState/${data?._id}`, { status: 'Requested', notificationData })
      
         if (res.data?.message === 'Requester Exist') {
@@ -70,6 +79,7 @@ const BloodCard = ({ data, group }) => {
             setOpenModal(false)
             playSound('success')
         }
+    }})
 
     }
     const pending = (
@@ -95,9 +105,9 @@ const BloodCard = ({ data, group }) => {
 
             <ReactModal setOpenModal={setOpenModal} openModal={openModal} label={'blood group details'}>
                 {
-                    bloodGroupData ? <div className=" flex flex-wrap gap-4 justify-center">
+                    bloodGroupData ? <div className=" grid gap-4 lg:grid-cols-4 md:grid-cols-3 grid-cols-1">
                         {
-                            bloodGroupData.map((data, index) => <div className=" mb-4 bg-gray-200 shadow-lg p-3 space-y-2" key={index}>
+                            bloodGroupData.map((data, index) => <div className=" mb-4 bg-gray-00 w-full shadow-lg p-3 space-y-2" key={index}>
                                 <p> {data?.status === 'Accepted' && data?.requester?.some(req => req?.requesterEmail === user?.email && req.status === 'selected') ? data?.email : pending} </p>
                                 <p> {data?.status === 'Accepted' && data?.requester?.some(req => req?.requesterEmail === user?.email && req.status === 'selected') ? data?.phoneNumber : pending} </p>
                                 <h1><strong>BloodGroup: </strong><span className="text-color-p font-bold">{data?.bloodGroup}</span></h1>

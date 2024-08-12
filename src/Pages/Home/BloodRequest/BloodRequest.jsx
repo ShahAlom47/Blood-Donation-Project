@@ -27,7 +27,7 @@ useEffect(()=>{
                 </div>
             </div>
             <div className={`max-w  justify-end lg:pt-10 md:pt-5 pt-3 pr-5   ${location.pathname.includes('allRequest')?'flex':'hidden'}`}>
-                <Link onClick={()=>playSound('click')} to={'/bloodBank'}><button className=" btn-p mr-8" style={{width:'200px'}} >Check Blood Bank</button></Link>
+                <Link onClick={()=>playSound('click')} to={'/bloodBank'}><button className=" btn-p lg:mr-8 md:mr-8 mr-0" style={{width:'200px'}} >Check Blood Bank</button></Link>
             </div>
             <div className="max-w lg:p-10 md:p-5 p-2 gap-5 flex lg:flex-row md:flex-row flex-col pt-0 ">
                 <div className="flex-1  bg-white shadow-xl min-h-full ">

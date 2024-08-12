@@ -23,7 +23,7 @@ const UserProfileLayout = () => {
 
     return (
         <div className="lg:p-5 md:p-4 py-7">
-            <div className="border-b-2 pb-4 px- flex  lg:flex-row md:flex-row flex-col lg:justify-between    items-end justify-center gap-5">
+            <div className="border-b-2 pb-4 px- flex  lg:flex-row md:flex-row flex-col lg:justify-between    lg:items-end md:items-end items-start justify-center gap-5">
                 <div className=" flex gap-5 lg:flex-row md:flex-row  lg:justify-start flex-row   items-center justify-center ">
                     <div className="relative">
                         <button
@@ -46,7 +46,7 @@ const UserProfileLayout = () => {
 
 
                 </div>
-                <div className="flex items-end">
+                <div className="flex justify-end items-end  lg:w-2/12 md:w-2/12 w-full">
 
                     <Link to={'/donateBlood/user/editProfile'}><button style={{ width: '130px' }} className="btn-p flex justify-center gap-3 items-center "><FiEdit /> Edit Profile</button></Link>
                 </div>
