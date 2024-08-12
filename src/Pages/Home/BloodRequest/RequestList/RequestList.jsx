@@ -113,6 +113,7 @@ const customStyles = {
       minWidth: '80%', 
       height: 'auto', 
       maxHeight: '90vh', 
-      overflow: 'auto' 
+      overflow: 'auto' ,
+      padding: '5px'
     }
   };
