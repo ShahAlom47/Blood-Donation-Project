@@ -2,8 +2,8 @@
 import axios from "axios";
 
 const axiosPublic=axios.create({
-    // baseURL: 'http://localhost:3000',
-    baseURL: 'https://blood-donation-server-zeta.vercel.app',
+    baseURL:import.meta.env.VITE_BASE_URL,
+    
 
   // withCredentials: true,
 })

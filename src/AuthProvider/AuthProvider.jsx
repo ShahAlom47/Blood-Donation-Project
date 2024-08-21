@@ -64,6 +64,7 @@ const AuthProvider = ({ children }) => {
                 setUser(userWithoutPassword); 
                 return res.data;
             } else {
+                
                 return res.data;
             }
         } catch (error) {

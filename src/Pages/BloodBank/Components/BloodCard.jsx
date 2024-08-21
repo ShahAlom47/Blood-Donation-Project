@@ -43,7 +43,7 @@ const BloodCard = ({ data, group }) => {
         setOpenModal(true)
     };
 
-
+console.log(bloodGroupData);
 
     const handelRequest = async (data) => {
         playSound('click')

@@ -138,14 +138,14 @@ const Navbar = () => {
         <div className={` flex lg:h-[50px] md:h-[40px] h-[35px] border-b- shadow-md shadow-black  bg-gradient-to-t from-[#00000000] to-[#0000004f]  w-full m-auto" p-0  z-50 fixed  ${visible ? 'top-0 transition-all' : '-top-20 transition-all'} duration-1000 `}>
             <div className=" bg-gray-100 w-3/12 flex justify-evenly items-center"><img className=' h-full' src={logo} alt="" /></div>
             <div onClick={() => playSound('click')} className=' bg-color-p flex justify-end items-center w-full font-medium'>
-                <div className=" hidden bg-color- max-w flex-1 lg:flex md:flex text-white justify-center font-light items-center gap-4 pl-5 lg:text-xl md:text-sm">
+                <div className="  hidden bg-color- text-white max-w flex-1 lg:flex md:flex  justify-center font-light items-center gap-2 md:gap-1 pl-5 lg:text-xl md:text-sm">
                     {nav}
                 </div>
-                <div className=' mr-4'>
+                <div className=' lg:mr-5 md:mr-5 mr-0'>
                     {
                         user ?
-                            <div className=' flex items-center gap-4'>
-                                <div>
+                            <div className=' flex items-center justify-end gap-4'>
+                                <div className='pt-2'>
                                     <NotificationIcon value={8 || 0} userEmail={user?.email}></NotificationIcon>
                                 </div>
                                 <div className="dropdown dropdown-end p-0 m-0">

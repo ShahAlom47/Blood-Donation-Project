@@ -154,7 +154,13 @@ table.rtr-table tbody tr:hover td{
 
 
 tbody .open td {
-  padding: 10px !important;
   min-height: 65px !important;
   background-color: none !important;
+  padding-top:25px !important;
+}
+
+
+table.rtr-table tbody td:before {
+
+  top: 9px !important;
 }

@@ -151,7 +151,7 @@ const MyBloodRequest = () => {
         ),
         delete: (
             <button
-                className=" text-2xl text-color-p hover:text-3xl "
+                className=" text-2xl text-color-p hover:text-3xl  "
                 onClick={() => {
                     handelDelete(request._id)
                 }}

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Modal from 'react-modal';
 import RequestDetails from "./RequestDetails";
 import PropTypes from 'prop-types';
+import DataNotAvailable from "../../../../SharedComponent/DataNotAvailable";
 
 const RequestList = ({refetchData}) => {
     const axiosPublic = useAxiosPublic();
@@ -27,7 +28,7 @@ const RequestList = ({refetchData}) => {
             return res.data;
         }
     });
-
+console.log(data);
     useEffect(() => {
         if (refetchData) {
             refetch();
@@ -54,7 +55,7 @@ const RequestList = ({refetchData}) => {
 
             <div className="lg:p-5 md:p-4  p-1  h-full">
                 {isLoading ? <Loading /> :
-                    data?.data?.map((data, index) => (
+                    data?.data?.length>0? data?.data?.map((data, index) => (
                         <div key={index + 1}>
                             <div
                                 onClick={() => handelRequest(data)}
@@ -69,7 +70,7 @@ const RequestList = ({refetchData}) => {
                                 <span className={`text-right ${data.status === 'In Progress' ? 'text-color-p' : ''}`}>{data.status}</span>
                             </div>
                         </div>
-                    ))
+                    )):<DataNotAvailable></DataNotAvailable>
                 }
                 <Tooltip id="my-tooltip" /> 
                  <Modal
