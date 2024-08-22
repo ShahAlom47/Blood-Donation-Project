@@ -1,15 +1,28 @@
+import { useState } from 'react';
+import { Zoom } from 'react-awesome-reveal';
+import { BsPlayBtnFill } from 'react-icons/bs';
+import ModalVideo from 'react-modal-video';
+// eslint-disable-next-line react/prop-types
+const VideoModal = ({title}) => {
 
-const ModalVideo = ({isOpenModal,setOpenModal,videoId}) => {
+    
+    const [isOpenModal, setOpenModal] = useState(false)
+
+
     return (
         <div>
-
-           
-
-               {/* Modal */}
+            <div className='flex gap-3 items-center'>
+                <Zoom>
+                    <button onClick={() => setOpenModal(!isOpenModal)} className='zoom-btn hover:bg-transparent hover:border border-black text-color-p text-5xl'>
+                        <BsPlayBtnFill />
+                    </button>
+                </Zoom>
+                <p className='text-3xl'>{title}</p>
+            </div>
                <ModalVideo
                     channel='youtube'
-                    isOpenModal={isOpenModal}
-                    videoId={videoId}
+                    isOpen={isOpenModal}
+                    videoId='YHxdhI5ZrHc'
                     onClose={() => setOpenModal(false)}
                 />
 
@@ -17,4 +30,4 @@ const ModalVideo = ({isOpenModal,setOpenModal,videoId}) => {
     );
 };
 
-export default ModalVideo;
+export default VideoModal;

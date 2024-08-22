@@ -16,8 +16,9 @@ const DonateMoney = () => {
 
 
                     </aside>
-                    <div className='flex-1 border border-black min-h-screen p-3'>
+                    <div className='flex-1  p-3'>
                         <ContentInfo></ContentInfo>
+                        
                         <MoneyDonationForm></MoneyDonationForm>
 
                     </div>
