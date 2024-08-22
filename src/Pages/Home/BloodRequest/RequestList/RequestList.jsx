@@ -28,7 +28,7 @@ const RequestList = ({refetchData}) => {
             return res.data;
         }
     });
-console.log(data);
+
     useEffect(() => {
         if (refetchData) {
             refetch();

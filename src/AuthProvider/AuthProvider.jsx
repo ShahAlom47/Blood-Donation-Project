@@ -84,12 +84,13 @@ const AuthProvider = ({ children }) => {
             if (token) {
                 try {
                     const response = await axiosPublic.post('/user/is-login', { token });
+                    console.log('log in issu ', response.data);
                     if (response?.data?.user) {
                         setUser(response.data.user);
                     }
                     setLoading(false);
                 } catch (error) {
-                   
+                   console.log('login error ',error);
                     if (error.response && (error.response.status === 403 || error.response.status === 401)) {
                         logout();
                     } else {

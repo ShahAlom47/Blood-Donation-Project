@@ -21,10 +21,10 @@ const NotificationIcon = () => {
     },
     refetchInterval: 60000, // 60 seconds
   });
-console.log( data );
+
   const handelRead = async (id) => {
     const res = await AxiosSecure.patch(`/notification/updateNotificationStatus/${id}`)
-    console.log(res.data);
+    
     if(res.data?.state===true)
       refetch()
   }
@@ -43,19 +43,19 @@ console.log( data );
         </div>
       </label>
 
-      <div className="drawer drawer-end">
+      <div className="drawer drawer-end  ">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-side top-12">
+        <div className="drawer-side top-10">
           <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-          <ul className="menu bg-white border-8 border-color-p text-base-content min-h-screen  w-80 p-4">
+          <ul className="menu bg-white  text-base-content min-h-screen  w-80 p-4 pt-0  border-8 border-color-p">
             {isLoading ? <Loading /> : (
               <div>
                 <h1 className=" text-xl font-bold mb-4">Notifications</h1>
                 {data?.map(notification => (
                   <li
                    onClick={() => handelRead(notification?._id)}
-                   className={` ${notification?.status === 'unread' && 'bg-slate-200'} hover:border border-black pl-1 text-l shadow-lg mb-2 py-2`} key={notification._id}>
-                    <p className="">{notification.message}</p>
+                   className={` ${notification?.status === 'unread' && 'bg-slate-200'} border hover:border-black rounded-sm pl-2 text-l shadow-lg mb-2 py-2`} key={notification._id}>
+                    {notification.message}
                     </li>
                 ))}
               </div>
