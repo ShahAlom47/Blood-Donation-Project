@@ -1,10 +1,13 @@
 
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
-import { FaTimes } from 'react-icons/fa'; // React Icons ব্যবহার করে cancel button icon
+import { FaTimes } from 'react-icons/fa'; // cancel button icon
+
+
+    // const [openModal,setOpenModal]=useState(false)  
 
 const ReactModal = ({ setOpenModal, openModal, children, label }) => {
-   
+ 
     return (
         <Modal
             isOpen={openModal}

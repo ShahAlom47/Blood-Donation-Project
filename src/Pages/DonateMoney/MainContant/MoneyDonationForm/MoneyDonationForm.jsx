@@ -7,8 +7,8 @@ const MoneyDonationForm = () => {
  
 
     return (
-        <div className="my-6 bg-gray-600 bg-opacity-10 p-4">
-            <h1 className="text-2xl font-semibold text-gray-700">Donate Now</h1>
+        <div className="my-6 bg-gray-500 bg-opacity-10 p-4">
+            <h1 className="text-2xl font-semibold ">Donate Now</h1>
         
 
             <div className="flex justify-start my-6">

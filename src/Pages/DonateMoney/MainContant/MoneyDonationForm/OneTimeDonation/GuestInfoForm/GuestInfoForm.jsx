@@ -1,0 +1,119 @@
+
+import { useForm } from "react-hook-form";
+
+const GuestInfoForm = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = (data) => {
+        console.log("Donation Data:", data);
+    };
+
+    return (
+        <div className="max-w-md mx-auto mt-10">
+            <h2 className="text-2xl font-semibold text-center mb-5">
+                Donate as a Guest  </h2>
+            <p className="text-center mb-4"> Please Submit Your Information</p>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+            >
+                {/* Name */}
+                <div className="mb-4">
+                    <label
+                        htmlFor="name"
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                    >
+                        Full Name
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        {...register("name", { required: true })}
+                        className={`shadow appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.name ? "border-red-500" : ""
+                            }`}
+                        placeholder="Your Full Name"
+                    />
+                    {errors.name && (
+                        <p className="text-red-500 text-xs italic">Name is required.</p>
+                    )}
+                </div>
+
+                {/* Email */}
+                <div className="mb-4">
+                    <label
+                        htmlFor="email"
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                    >
+                        Email Address
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        {...register("email", {
+                            required: "Email is required",
+                            pattern: {
+                                value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
+                                message: "Invalid email address",
+                            },
+                        })}
+                        className={`shadow appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email ? "border-red-500" : ""
+                            }`}
+                        placeholder="Your Email Address"
+                    />
+                    {errors.email && (
+                        <p className="text-red-500 text-xs italic">
+                            {errors.email.message}
+                        </p>
+                    )}
+                </div>
+
+                {/* Phone */}
+                <div className="mb-4">
+                    <label
+                        htmlFor="phone"
+                        className="block text-gray-700 text-sm font-bold mb-2"
+                    >
+                        Phone Number
+                    </label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        {...register("phone", {
+                            required: "Phone number is required",
+                            pattern: {
+                                value: /^[0-9]{10,15}$/,
+                                message: "Invalid phone number",
+                            },
+                        })}
+                        className={`shadow appearance-none border rounded-sm w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.phone ? "border-red-500" : ""
+                            }`}
+                        placeholder="Your Phone Number"
+                    />
+                    {errors.phone && (
+                        <p className="text-red-500 text-xs italic">
+                            {errors.phone.message}
+                        </p>
+                    )}
+                </div>
+
+
+
+                {/* Submit Button */}
+                <div className="flex items-center justify-between">
+                    <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-none focus:shadow-outline"
+                    >
+                        Donate
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
+};
+
+export default GuestInfoForm;

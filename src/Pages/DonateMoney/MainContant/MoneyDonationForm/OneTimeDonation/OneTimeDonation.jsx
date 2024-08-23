@@ -1,10 +1,20 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import useUser from "../../../../../CustomHocks/useUser";
+import CheckUserModal from "./CheckUserModal/CheckUserModal";
+import ReactModal from "../../../../../Components/Modal/ReactModal";
+import GuestInfoForm from "./GuestInfoForm/GuestInfoForm";
 
 const OneTimeDonation = () => {
+    const { user } = useUser()
     const [amount, setAmount] = useState(50);
     const [customInputValue, setCustomInputValue] = useState('');
+    const [finalDonationAmount, setFinalDonationAmount] = useState(0)
+    const [openModal, setOpenModal] = useState(false)
+    const [openGuestForm, setGuestForm] = useState(false)
+
+
 
     const handleDonate = (e) => {
         e.preventDefault();
@@ -14,11 +24,19 @@ const OneTimeDonation = () => {
             return;
         }
 
-       
+        setFinalDonationAmount(finalAmount)
         e.target.reset();
-        setCustomInputValue(''); 
-        console.log("Donation Amount:", finalAmount);
+        setCustomInputValue('');
+
+        if (!user) { setOpenModal(true) }
     };
+
+
+
+
+  
+
+
 
     return (
         <div className="my-2">
@@ -28,7 +46,7 @@ const OneTimeDonation = () => {
                         key={money}
                         onClick={() => setAmount(money)}
                         className={`border border-color-p px-3 py-1 ${amount === money ? 'bg-color-p text-white' : ''}`}
-                    >{money}</button>)
+                    >{money} TK</button>)
                 }
             </div>
             <div className="my-3">
@@ -44,7 +62,7 @@ const OneTimeDonation = () => {
                         <input
                             disabled={amount !== 'Custom Amount'}
                             required={amount === 'Custom Amount'}
-                            className="flex-1 input input-bordered w-full rounded-sm py-1 outline-none border-none"
+                            className="flex-1 input input-bordered w-full rounded-sm py-1 outline-none border-non"
                             type="number"
                             name="amount"
                             placeholder="Your Amount"
@@ -55,6 +73,8 @@ const OneTimeDonation = () => {
                     <button className="btn-p flex items-center justify-center gap-2" type="submit">Next <IoIosArrowRoundForward className="text-xl" /></button>
                 </form>
             </div>
+            <CheckUserModal setOpenModal={setOpenModal} openModal={openModal} setGuestForm={setGuestForm}></CheckUserModal>
+            <ReactModal openModal={openGuestForm} setOpenModal={setGuestForm} label="guestForm"  > <GuestInfoForm/></ReactModal>
         </div>
     );
 };
