@@ -4,32 +4,16 @@ import MonthlyDonation from "./MonthlyDonation/MonthlyDonation";
 
 const MoneyDonationForm = () => {
     const [donationOption, setDonationOption] = useState('oneTime');
-    console.log(donationOption);
-
-    // Handle change event
-    const handleOptionChange = (event) => {
-        setDonationOption(event.target.value);
-    };
+ 
 
     return (
-        <div className="my-6">
-            <h1 className="text-xl font-semibold text-gray-700">Donate Now</h1>
-            <div className=" space-x-5 my-3">
-                <label><input
-                    className="mr-1 radio radio-primary w-4 h-4 p-0"
-                    type="radio"
-                    value="oneTime"
-                    checked={donationOption === 'oneTime'}
-                    onChange={handleOptionChange}
-                />  One Time  </label>
+        <div className="my-6 bg-gray-600 bg-opacity-10 p-4">
+            <h1 className="text-2xl font-semibold text-gray-700">Donate Now</h1>
+        
 
-                <label > <input
-                     className="mr-1 radio radio-primary w-4 h-4 p-0"
-                    type="radio"
-                    value="monthly"
-                    checked={donationOption === 'monthly'}
-                    onChange={handleOptionChange}
-                />  Monthly</label>
+            <div className="flex justify-start my-6">
+                <button onClick={()=>setDonationOption('oneTime')} className={`border border-color-p px-3 ${donationOption==='oneTime'?'bg-color-p text-white':''}`}>One Time</button>
+                <button onClick={()=>setDonationOption('monthly')} className={`border border-color-p px-3 ${donationOption==='monthly'?'bg-color-p text-white':''}`}>Monthly</button>   
             </div>
 
             {
