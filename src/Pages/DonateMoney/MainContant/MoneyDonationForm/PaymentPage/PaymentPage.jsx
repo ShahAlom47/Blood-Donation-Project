@@ -1,6 +1,11 @@
+import { useLocation } from "react-router-dom";
 
 
 const PaymentPage = () => {
+    const location=useLocation()
+    const donationData = location.state?.donationData || {};
+
+    console.log(donationData);
     return (
         <div className="p-8 ">
         <div className=" border-b-2 pb-3">

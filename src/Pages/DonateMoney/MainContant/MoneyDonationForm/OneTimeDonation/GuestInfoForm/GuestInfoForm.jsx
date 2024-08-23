@@ -1,7 +1,11 @@
 
 import { useForm } from "react-hook-form";
+import { IoIosArrowRoundForward } from "react-icons/io";
+import {  useNavigate } from "react-router-dom";
 
-const GuestInfoForm = () => {
+// eslint-disable-next-line react/prop-types
+const GuestInfoForm = ({ amount }) => {
+    const navigate=useNavigate();
     const {
         register,
         handleSubmit,
@@ -9,11 +13,22 @@ const GuestInfoForm = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        console.log("Donation Data:", data);
+        const donationData = {
+            DonorName: data.name,
+            DonorEmail: data.email,
+            DonorPhone:data.phone,
+            date: new Date().toLocaleDateString(),
+            amount: parseInt(amount),
+            category: "moneyDonation",
+            userType: "guest",
+        }
+        
+
+        navigate('/paymentPage', { state: { donationData } });
     };
 
     return (
-        <div className="max-w-md mx-auto mt-10">
+        <div className="max-w-md mx-auto mt-10 py-5">
             <h2 className="text-2xl font-semibold text-center mb-5">
                 Donate as a Guest  </h2>
             <p className="text-center mb-4"> Please Submit Your Information</p>
@@ -104,12 +119,7 @@ const GuestInfoForm = () => {
 
                 {/* Submit Button */}
                 <div className="flex items-center justify-between">
-                    <button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm focus:outline-none focus:shadow-outline"
-                    >
-                        Donate
-                    </button>
+                    <button className="btn-p flex items-center justify-center gap-2" type="submit">Next <IoIosArrowRoundForward className="text-xl" /></button>
                 </div>
             </form>
         </div>

@@ -74,7 +74,7 @@ const OneTimeDonation = () => {
                 </form>
             </div>
             <CheckUserModal setOpenModal={setOpenModal} openModal={openModal} setGuestForm={setGuestForm}></CheckUserModal>
-            <ReactModal openModal={openGuestForm} setOpenModal={setGuestForm} label="guestForm"  > <GuestInfoForm/></ReactModal>
+            <ReactModal openModal={openGuestForm} setOpenModal={setGuestForm}  label="guestForm"  > <GuestInfoForm amount={finalDonationAmount} /></ReactModal>
         </div>
     );
 };

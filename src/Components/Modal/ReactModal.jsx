@@ -1,37 +1,32 @@
-
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 import { FaTimes } from 'react-icons/fa'; // cancel button icon
 
-
-    // const [openModal,setOpenModal]=useState(false)  
-
 const ReactModal = ({ setOpenModal, openModal, children, label }) => {
- 
     return (
         <Modal
             isOpen={openModal}
             onRequestClose={openModal}
             contentLabel={label}
             style={customStyles}
-            shouldCloseOnOverlayClick={true} 
+            shouldCloseOnOverlayClick={true}
         >
-            <div style={headerStyles}>
-                <button onClick={()=>setOpenModal(false)} style={closeButtonStyles}>
-                    <FaTimes />
-                </button>
-            </div>
+            <button 
+                onClick={() => setOpenModal(false)} 
+                style={closeButtonStyles}
+            >
+                <FaTimes />
+            </button>
             {children}
         </Modal>
     );
 };
 
-
 ReactModal.propTypes = {
     setOpenModal: PropTypes.func.isRequired,
-    children: PropTypes.node, 
-    label: PropTypes.string.isRequired ,
-    openModal:PropTypes.func,
+    children: PropTypes.node,
+    label: PropTypes.string.isRequired,
+    openModal: PropTypes.func,
 };
 
 export default ReactModal;
@@ -39,7 +34,8 @@ export default ReactModal;
 const customStyles = {
     overlay: {
         zIndex: '50',
-        backgroundColor: 'rgba(0, 0, 0, 0.75)'
+        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        
     },
     content: {
         top: '50%',
@@ -54,20 +50,19 @@ const customStyles = {
         height: 'auto',
         maxHeight: '90vh',
         overflow: 'auto',
-        position: 'relative'
-    }
-};
-
-const headerStyles = {
-    display: 'flex',
-    justifyContent: 'flex-end',
+        position: 'relative',
+        margin: '2rem',
+    },
 };
 
 const closeButtonStyles = {
+    position: 'sticky',  
+    top: '-1%', 
+    right: '-13%', 
     background: 'none',
-    border: 'none',
+    // border: 'none',
     fontSize: '1.5rem',
     cursor: 'pointer',
     padding: '0',
-    margin: '0'
+    margin: '0',
 };

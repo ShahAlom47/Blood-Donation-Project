@@ -16,6 +16,7 @@ import EditProfile from "../Pages/DashBoard/Componets/EditProfile/EditProfile";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import BloodBank from "../Pages/BloodBank/BloodBank";
 import DonateMoney from "../Pages/DonateMoney/DonateMoney";
+import PaymentPage from "../Pages/DonateMoney/MainContant/MoneyDonationForm/PaymentPage/PaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/donateMoney",
         element: <div><AnimatedLayout> <DonateMoney></DonateMoney></AnimatedLayout></div>,
+      },
+      {
+        path: "/paymentPage",
+        element: <div><AnimatedLayout><PaymentPage></PaymentPage></AnimatedLayout></div>,
       },
       {
         path: "/donateBlood",
