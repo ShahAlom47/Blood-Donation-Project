@@ -5,17 +5,19 @@ import useUser from "../../../../../CustomHocks/useUser";
 import CheckUserModal from "./CheckUserModal/CheckUserModal";
 import ReactModal from "../../../../../Components/Modal/ReactModal";
 import GuestInfoForm from "./GuestInfoForm/GuestInfoForm";
+import { useNavigate } from "react-router-dom";
 
 const OneTimeDonation = () => {
-    const { user } = useUser()
+    const { user } = useUser();
+    const navigate=useNavigate();
     const [amount, setAmount] = useState(50);
     const [customInputValue, setCustomInputValue] = useState('');
-    const [finalDonationAmount, setFinalDonationAmount] = useState(0)
-    const [openModal, setOpenModal] = useState(false)
-    const [openGuestForm, setGuestForm] = useState(false)
+    const [finalDonationAmount, setFinalDonationAmount] = useState(0);
+    const [openModal, setOpenModal] = useState(false);
+    const [openGuestForm, setGuestForm] = useState(false);
 
 
-
+console.log(user);
     const handleDonate = (e) => {
         e.preventDefault();
         const finalAmount = amount === 'Custom Amount' ? customInputValue : amount;
@@ -29,6 +31,20 @@ const OneTimeDonation = () => {
         setCustomInputValue('');
 
         if (!user) { setOpenModal(true) }
+
+        const donationData = {
+            DonorName: user?.name,
+            DonorEmail: user?.email,
+            DonorPhone:user?.phoneNumber,
+            date: new Date().toLocaleDateString(),
+            amount: parseInt(finalAmount),
+            category: "moneyDonation",
+            userType: "user",
+        }
+        
+
+        navigate('/paymentPage', { state: { donationData } });
+
     };
 
 
