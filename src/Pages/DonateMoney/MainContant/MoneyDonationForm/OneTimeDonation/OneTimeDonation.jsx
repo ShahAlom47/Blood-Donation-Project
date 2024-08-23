@@ -30,7 +30,10 @@ console.log(user);
         e.target.reset();
         setCustomInputValue('');
 
-        if (!user) { setOpenModal(true) }
+        if (!user) {
+             setOpenModal(true)
+             return
+             }
 
         const donationData = {
             DonorName: user?.name,
