@@ -3,14 +3,14 @@
 
 import PropTypes from 'prop-types';
 import Loader from 'react-js-loader';
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-
-
-import Swal from "sweetalert2";
-import useUser from '../../../../../../CustomHocks/useUser';
 import useAxiosPublic from '../../../../../../CustomHocks/useAxiosPublic';
+import usePaymentFunc from '../../Utilities Payment Func/usePaymentFunc';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import useEmailJs from '../../../../../../CustomHocks/useEmailJs';
 
 
 
@@ -18,18 +18,35 @@ import useAxiosPublic from '../../../../../../CustomHocks/useAxiosPublic';
 const CheckOutForm = ({donationData}) => {
     const stripe = useStripe();
   const elements = useElements();
-const AxiosPublic=useAxiosPublic()
-
-const { user } =useUser()
-const navigate = useNavigate();
+const AxiosPublic=useAxiosPublic();
+const navigate =useNavigate();
 
 const [errMsg, setErrMsg] = useState('');
 const [clientSecret, setClientSecret] = useState('');
 const [transactionId, setTransactionId] = useState('');
-const [amount,setAmount]=useState(0)
-const [btnLoading,setBtnLoading]=useState(false)
+const [btnLoading,setBtnLoading]=useState(false);
+const {addDonation}=usePaymentFunc();
+  const {sendEmail}=useEmailJs()
 
+const emailData = {
+  name: donationData.donorName,
+  email: donationData.donorEmail,
+  subject: `Thank You for Your Generous Donation of TK${donationData.amount}`,
+  message: `
+    Dear ${donationData.donorName},
 
+    We are incredibly grateful for your generous donation of TK${donationData.amount}. Your support helps us continue our vital work and make a meaningful impact in the community.
+
+    Your kindness and generosity will go a long way in helping those in need, and we deeply appreciate your contribution.
+
+    If you have any questions or would like to learn more about how your donation is being used, feel free to contact us at any time.
+
+    Once again, thank you for your support!
+
+    Best regards,
+    The Blood Donation Team
+  `
+};
 
 
 
@@ -39,7 +56,7 @@ const [btnLoading,setBtnLoading]=useState(false)
 
     useEffect(() => {
         if (donationData) {
-          setAmount(parseFloat(donationData?.amount));
+          
     
           const createPaymentIntent = async () => {
             try {
@@ -82,9 +99,7 @@ const [btnLoading,setBtnLoading]=useState(false)
         if (error) {
             setErrMsg(error.message)
             setBtnLoading(false)
-        } else {
-            // console.log('[PaymentMethod]', paymentMethod);
-        }
+        } 
 
         const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret,
             {
@@ -98,10 +113,9 @@ const [btnLoading,setBtnLoading]=useState(false)
             }
         )
 
-      
-
         if (confirmError) {
             setErrMsg('Something Is Wrong')
+            setBtnLoading(false)
         }
         else {
             if (paymentIntent.status === 'succeeded') {
@@ -114,24 +128,26 @@ const [btnLoading,setBtnLoading]=useState(false)
                     paymentType:'card'
                 }
 
-                // const response = await AxiosPublic.post('/paymentHistory', paymentData)
+                const res= await addDonation(paymentData)
+                if(res.success===true){
+                  toast.success(res.message)
+                  sendEmail(emailData)
+                  setTimeout(() => {
+                    navigate('/donateMoney')
+                  }, 2200);
+                  return
+                }
+                toast.success(res.message)
             
-                // if (response.data?.modifiedCount===1) {
-                 
-                //     Swal.fire("Payment Completed");
-                //     navigate('/dashBoard/myBoughtProperty')
-                // }
             }
-
         }
-
-
     }
 
     
 
     return (
         <div className='my-10'>
+          <ToastContainer></ToastContainer>
             <form 
             onSubmit={handelForm} 
             className=" flex flex-col gap-3 w-6/12 mx-auto p-5 shadow-xl rounded-sm " >
@@ -175,3 +191,6 @@ export default CheckOutForm;
 CheckOutForm.propTypes = {
     propertyId: PropTypes.string
   };
+
+
+  
