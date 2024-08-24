@@ -17,7 +17,7 @@ const OneTimeDonation = () => {
     const [openGuestForm, setGuestForm] = useState(false);
 
 
-console.log(user);
+
     const handleDonate = (e) => {
         e.preventDefault();
         const finalAmount = amount === 'Custom Amount' ? customInputValue : amount;
@@ -36,9 +36,9 @@ console.log(user);
              }
 
         const donationData = {
-            DonorName: user?.name,
-            DonorEmail: user?.email,
-            DonorPhone:user?.phoneNumber,
+            donorName: user?.name,
+            donorEmail: user?.email,
+            donorPhone:user?.phoneNumber,
             date: new Date().toLocaleDateString(),
             amount: parseInt(finalAmount),
             category: "moneyDonation",

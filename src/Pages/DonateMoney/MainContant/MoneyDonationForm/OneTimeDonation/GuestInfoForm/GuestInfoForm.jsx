@@ -14,9 +14,9 @@ const GuestInfoForm = ({ amount }) => {
 
     const onSubmit = (data) => {
         const donationData = {
-            DonorName: data.name,
-            DonorEmail: data.email,
-            DonorPhone:data.phone,
+            donorName: data.name,
+            donorEmail: data.email,
+            donorPhone:data.phone,
             date: new Date().toLocaleDateString(),
             amount: parseInt(amount),
             category: "moneyDonation",
