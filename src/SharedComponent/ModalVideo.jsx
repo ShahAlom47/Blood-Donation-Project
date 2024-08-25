@@ -17,7 +17,7 @@ const VideoModal = ({title}) => {
                         <BsPlayBtnFill />
                     </button>
                 </Zoom>
-                <p className='text-3xl'>{title}</p>
+                <p className='lg:text-3xl md:text-3xl text-xl'>{title}</p>
             </div>
                <ModalVideo
                     channel='youtube'

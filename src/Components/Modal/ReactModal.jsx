@@ -42,7 +42,7 @@ const customStyles = {
         left: '50%',
         right: 'auto',
         bottom: 'auto',
-        marginRight: '-50%',
+        // marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
         width: '90%',
         maxWidth: '90%',
@@ -51,7 +51,7 @@ const customStyles = {
         maxHeight: '90vh',
         overflow: 'auto',
         position: 'relative',
-        margin: '2rem',
+        // margin: 'auto',
     },
 };
 

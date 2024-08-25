@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const OneTimeDonation = () => {
     const { user } = useUser();
     const navigate=useNavigate();
-    const [amount, setAmount] = useState(50);
+    const [amount, setAmount] = useState(100);
     const [customInputValue, setCustomInputValue] = useState('');
     const [finalDonationAmount, setFinalDonationAmount] = useState(0);
     const [openModal, setOpenModal] = useState(false);
@@ -60,7 +60,7 @@ const OneTimeDonation = () => {
     return (
         <div className="my-2">
             <div className="flex gap-4 flex-wrap">
-                {[50, 100, 200, 400, 500, 1000].map((money) =>
+                {[ 100, 200, 400, 500, 1000].map((money) =>
                     <button
                         key={money}
                         onClick={() => setAmount(money)}
@@ -84,6 +84,7 @@ const OneTimeDonation = () => {
                             className="flex-1 input input-bordered w-full rounded-sm py-1 outline-none border-non"
                             type="number"
                             name="amount"
+                            min={100}
                             placeholder="Your Amount"
                             value={customInputValue}
                             onChange={(e) => setCustomInputValue(e.target.value)}

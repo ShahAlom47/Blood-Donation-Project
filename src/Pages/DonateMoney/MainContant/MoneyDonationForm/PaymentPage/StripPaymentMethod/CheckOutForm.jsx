@@ -150,7 +150,7 @@ const emailData = {
           <ToastContainer></ToastContainer>
             <form 
             onSubmit={handelForm} 
-            className=" flex flex-col gap-3 w-6/12 mx-auto p-5 shadow-xl rounded-sm " >
+            className=" flex flex-col gap-3 lg:w-6/12 md:w-8/12 w-full mx-auto p-5 shadow-xl rounded-sm " >
               <div  className='  shadow-xl p-3'>
               <CardElement
                     options={{
