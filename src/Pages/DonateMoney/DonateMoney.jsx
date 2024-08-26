@@ -12,10 +12,10 @@ const DonateMoney = () => {
         <div>
             <PageHeading title={'Donate Now'} img={bg}> </PageHeading>
 
-            <div className='max-w p-1 lg:p-4 md:p-3 min-h-screen'>
+            <div className='max-w p-1 lg:p-4 md:p-3 min-h-screen '>
 
-                <div className=' flex lg:flex-row md:flex-row flex-col-reverse gap-3'>
-                    <aside className='lg:w-4/12 md:w-4/12 w-full  min-h-scree overflow-y-scroll min-h-full max-h-dvh'>
+                <div className=' flex lg:flex-row md:flex-row flex-col-reverse gap-3 mb-8'>
+                    <aside className='lg:w-4/12 md:w-4/12 w-full   overflow-y-scroll  max-h-full  m-3'>
                         <YearlyTotalDonation></YearlyTotalDonation>
                         <UseDonationInfo></UseDonationInfo>
                         <PhotoGallery></PhotoGallery>

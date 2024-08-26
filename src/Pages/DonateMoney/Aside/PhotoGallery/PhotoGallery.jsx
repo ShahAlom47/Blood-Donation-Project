@@ -68,7 +68,7 @@ console.log(photoIndex);
             
             <ReactModal label={'photoGalleryModal'} openModal={openModal} setOpenModal={setOpenModal}>
                 <div className="relative flex flex-col justify-center items-center">
-                    <button className="absolute left-0 z-10 p-2 text-4xl hover:bg-slate-300 rounded-full text-color-p " onClick={prevSlide}>
+                    <button className="absolute lg:left-0 md:left-0 -left-9 z-10 p-2 text-4xl bg-gray-200 bg-opacity-40 hover:bg-slate-300 rounded-full text-color-p " onClick={prevSlide}>
                     <IoIosArrowBack />
 
                     </button>
@@ -94,7 +94,7 @@ console.log(photoIndex);
                         </div>
                     </div>
 
-                    <button className="absolute right-0 z-10 p-2  text-color-p text-4xl hover:bg-slate-300 rounded-full" onClick={nextSlide}>
+                    <button className="absolute lg:right-0 md:right-0 -right-9 z-10 p-2  text-color-p text-4xl bg-gray-200 bg-opacity-40 hover:bg-slate-300 rounded-full" onClick={nextSlide}>
                     <IoIosArrowForward />
                     </button>
                 </div>

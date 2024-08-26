@@ -20,7 +20,7 @@ const YearlyTotalDonation = () => {
     if (isLoading) return <div><Loading></Loading></div>;
     if (error) return <div className="text-center font-bold text-red-600 mt-10">Error </div>;
     return (
-        <div className=" m-3 p-3 bg-gray-500 bg-opacity-10">
+        <div className=" m-3 mt-0 p-3 bg-gray-500 bg-opacity-10">
             <div className=" relative flex justify-center items-center mx-auto p-4 w-48 h-48  rounded-lg">
                 <div className="relative flex justify-center items-center w-10/12 h-5/6 m-auto  border-4 border-color-p rounded-full">
                     <div className="absolute top-1 flex justify-center text-center items-center">

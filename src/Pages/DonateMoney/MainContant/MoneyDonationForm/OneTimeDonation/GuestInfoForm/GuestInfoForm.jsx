@@ -19,6 +19,7 @@ const GuestInfoForm = ({ amount }) => {
             donorPhone:data.phone,
             date: new Date().toLocaleDateString(),
             amount: parseInt(amount),
+            donationType:'oneTimeDonation',
             category: "moneyDonation",
             userType: "guest",
         }

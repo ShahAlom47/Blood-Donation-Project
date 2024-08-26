@@ -42,6 +42,7 @@ const OneTimeDonation = () => {
             date: new Date().toLocaleDateString(),
             amount: parseInt(finalAmount),
             category: "moneyDonation",
+            donationType:'oneTimeDonation',
             userType: "user",
         }
         
