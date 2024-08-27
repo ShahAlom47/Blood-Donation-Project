@@ -3,15 +3,18 @@ import Swal from "sweetalert2";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import useUser from "../../../../../CustomHocks/useUser";
+import useSound from "../../../../../CustomHocks/useSound";
 
 const OneTimeDonation = () => {
     const { user } = useUser();
     const navigate = useNavigate();
+    const {playSound}=useSound();
     const date = new Date().toLocaleDateString();
     const month = new Date().getMonth()
     const year = new Date().getFullYear()
     const [amount, setAmount] = useState(100);
     const [customInputValue, setCustomInputValue] = useState('');
+    const [totalAmount, setTotalAmount] = useState(amount);
 
     const months = [
         "January", "February", "March", "April", "May", "June",
@@ -19,7 +22,7 @@ const OneTimeDonation = () => {
     ];
     const [selectedMonths, setSelectedMonths] = useState([months[month]]);
 
-
+console.log(customInputValue, typeof customInputValue, typeof selectedMonths.length);
 
     const handleMonthToggle = (month) => {
         setSelectedMonths(prev =>
@@ -36,7 +39,15 @@ const OneTimeDonation = () => {
             Swal.fire('Please enter a valid donation amount');
             return;
         }
-
+        if (selectedMonths.length <= 0) {
+            playSound('error');
+            Swal.fire({
+                icon: 'warning', 
+                text: 'Please select a month'
+            });
+            return;
+        }
+      
         const totalMonths = selectedMonths.length || 1; 
         const totalDonationAmount = parseInt(finalAmount) * totalMonths;
 
@@ -54,7 +65,7 @@ const OneTimeDonation = () => {
                 month: month,
                 year: year,
                 amount: parseInt(finalAmount),
-                date: new Date().toLocaleDateString(),  // এখানে প্রতিটি মাসের জন্য একটি একই তারিখ দেয়া হচ্ছে। 
+                date: new Date().toLocaleDateString(),  
             }))
         };
         
@@ -100,7 +111,10 @@ const OneTimeDonation = () => {
                             min={100}
                             placeholder="Your Amount"
                             value={customInputValue}
-                            onChange={(e) => setCustomInputValue(e.target.value)}
+                            onChange={(e) =>{ 
+                                setCustomInputValue(parseFloat(e.target.value))
+                                setTotalAmount(parseFloat(e.target.value) || 0)
+                            }}
                         />
                     </div>
 
@@ -127,7 +141,10 @@ const OneTimeDonation = () => {
                     </div>
                     <div className="my-4">
                         <h1 className="text-xl font-bold">Total Month : <span>{selectedMonths.length}</span></h1>
-                        <h1 className=" text-xl font-bold ">Total Amount : <span className=" text-color-p  text-2xl">{amount * selectedMonths.length}</span> TK</h1>
+                        <h1 className=" text-xl font-bold ">Total Amount : <span className=" text-color-p  text-2xl">{
+                       amount==="Custom Amount"?totalAmount*selectedMonths.length : parseFloat(amount )* selectedMonths.length
+                        
+                        }</span> TK</h1>
                     </div>
                     <button className="btn-p flex items-center justify-center gap-2" type="submit">
                         Next <IoIosArrowRoundForward className="text-xl" />

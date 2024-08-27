@@ -9,12 +9,17 @@ import { useNavigate } from "react-router-dom";
 
 const OneTimeDonation = () => {
     const { user } = useUser();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [amount, setAmount] = useState(100);
     const [customInputValue, setCustomInputValue] = useState('');
     const [finalDonationAmount, setFinalDonationAmount] = useState(0);
     const [openModal, setOpenModal] = useState(false);
     const [openGuestForm, setGuestForm] = useState(false);
+
+   
+
+
+
 
 
 
@@ -31,21 +36,21 @@ const OneTimeDonation = () => {
         setCustomInputValue('');
 
         if (!user) {
-             setOpenModal(true)
-             return
-             }
+            setOpenModal(true)
+            return
+        }
 
         const donationData = {
             donorName: user?.name,
             donorEmail: user?.email,
-            donorPhone:user?.phoneNumber,
+            donorPhone: user?.phoneNumber,
             date: new Date().toLocaleDateString(),
             amount: parseInt(finalAmount),
             category: "moneyDonation",
-            donationType:'oneTimeDonation',
+            donationType: 'oneTimeDonation',
             userType: "user",
         }
-        
+
 
         navigate('/paymentPage', { state: { donationData } });
 
@@ -54,14 +59,14 @@ const OneTimeDonation = () => {
 
 
 
-  
+
 
 
 
     return (
         <div className="my-2">
             <div className="flex gap-4 flex-wrap">
-                {[ 100, 200, 400, 500, 1000].map((money) =>
+                {[100, 200, 400, 500, 1000].map((money) =>
                     <button
                         key={money}
                         onClick={() => setAmount(money)}
@@ -94,8 +99,10 @@ const OneTimeDonation = () => {
                     <button className="btn-p flex items-center justify-center gap-2" type="submit">Next <IoIosArrowRoundForward className="text-xl" /></button>
                 </form>
             </div>
+        
+
             <CheckUserModal setOpenModal={setOpenModal} openModal={openModal} setGuestForm={setGuestForm}></CheckUserModal>
-            <ReactModal openModal={openGuestForm} setOpenModal={setGuestForm}  label="guestForm"  > <GuestInfoForm amount={finalDonationAmount} /></ReactModal>
+            <ReactModal openModal={openGuestForm} setOpenModal={setGuestForm} label="guestForm"  > <GuestInfoForm amount={finalDonationAmount} /></ReactModal>
         </div>
     );
 };

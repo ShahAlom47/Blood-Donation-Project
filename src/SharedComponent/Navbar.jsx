@@ -158,6 +158,8 @@ const Navbar = () => {
                                         <li className='border-b-2 pl-2  uppercase' >{user?.name} </li>
                                         <li><Link to={'/dashBoard'}><a>My Profile</a></Link></li>
                                         <li><a onClick={() => logout()}>Logout</a></li>
+                                        <li>D: {user?.monthlyDonation}</li>
+                                        <li>A: {user?.donationAmount}</li>
                                     </ul>
                                 </div>
 

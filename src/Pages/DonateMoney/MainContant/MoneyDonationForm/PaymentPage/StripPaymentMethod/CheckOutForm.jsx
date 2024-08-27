@@ -48,6 +48,25 @@ const emailData = {
   `
 };
 
+const emailData2 = {
+  name: donationData.donorName,
+  email: donationData.donorEmail,
+  subject: `Thank You for Your Ongoing Monthly Donation of TK${donationData.monthlyAmount}`,
+  message: `
+    Dear ${donationData.donorName},
+
+    We are deeply thankful for your continued support through your monthly donation of TK${donationData.monthlyAmount}. Your consistent generosity plays a crucial role in sustaining our efforts and ensuring that we can continue to serve those in need.
+
+    Each month, your contributions help us save lives, provide vital resources, and support our mission to make a lasting impact in the community. Your dedication to our cause is truly appreciated.
+
+    If you have any questions or would like to adjust your monthly donation, please don't hesitate to reach out to us. We are always here to assist you.
+
+    Thank you again for being such an important part of our community and for making a difference every month!
+
+    Best regards,
+    The Blood Donation Team
+  `
+};
 
 
 
@@ -129,8 +148,16 @@ const emailData = {
                 }
 
                 const res= await addDonation(paymentData)
+                console.log(res);
                 if(res.success===true){
                   toast.success(res.message)
+                  if (donationData.donationType === 'monthlyDonation') {
+                    sendEmail(emailData2)
+                    setTimeout(() => {
+                      navigate('/donateMoney')
+                    }, 2200);
+                    return
+                  }
                   sendEmail(emailData)
                   setTimeout(() => {
                     navigate('/donateMoney')
