@@ -22,7 +22,7 @@ const PaymentPage = () => {
 
     }
 
-    // console.log(donationData);
+    console.log(donationData);
     return (
         <div className="p-8 max-w ">
         <div className=" border-b-2 pb-3">

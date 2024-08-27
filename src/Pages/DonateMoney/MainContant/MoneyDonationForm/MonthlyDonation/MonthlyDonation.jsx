@@ -58,12 +58,8 @@ const OneTimeDonation = () => {
             }))
         };
         
-        console.log(donationData);
-        
 
-    
-
-        // navigate('/paymentPage', { state: { donationData } });
+        navigate('/paymentPage', { state: { donationData } });
     };
 
     return (

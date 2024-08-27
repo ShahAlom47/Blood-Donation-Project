@@ -1,13 +1,9 @@
 import { useState } from "react";
-import Gallery from "react-photo-gallery";
 import { motion, AnimatePresence } from "framer-motion";
-import "react-image-lightbox/style.css";
 import ReactModal from "../../../../Components/Modal/ReactModal";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const photos = [
-   
-  
     {
         src: "https://ntrtrust.org/wp-content/uploads/2022/03/275928051_1960786190796304_153000678166209493_n-1024x768.jpg",
         width: 2,
@@ -36,18 +32,17 @@ const photos = [
         title: "Health Check-Up Campaign",
         description: "We organized a free health check-up campaign for the local community."
     },
-
 ];
 
 const PhotoGallery = () => {
     const [openModal, setOpenModal] = useState(false);
     const [photoIndex, setPhotoIndex] = useState(0);
 
-    const openLightbox = (event, { index }) => {
+    const openLightbox = (index) => {
         setPhotoIndex(index);
         setOpenModal(true);
     };
-console.log(photoIndex);
+
     const nextSlide = () => {
         setPhotoIndex((prevIndex) => (prevIndex + 1) % photos.length);
     };
@@ -58,19 +53,19 @@ console.log(photoIndex);
 
     return (
         <div className="p-3 m-3 bg-gray-500 bg-opacity-10 mb-0">
-            <h2 className="text-2xl font-bold text-center mb-4">
-                Our Latest Work
-            </h2>
+            <h2 className="text-2xl font-bold text-center mb-4">Our Latest Work</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                {photos.map((photo, index) => (
+                    <div key={index} className="cursor-pointer" onClick={() => openLightbox(index)}>
+                        <img src={photo.src} alt={photo.title} className="w-full h-full object-cover" />
+                    </div>
+                ))}
+            </div>
 
-          
-            <Gallery photos={photos} onClick={openLightbox} />
-
-            
             <ReactModal label={'photoGalleryModal'} openModal={openModal} setOpenModal={setOpenModal}>
                 <div className="relative flex flex-col justify-center items-center">
-                    <button className="absolute lg:left-0 md:left-0 -left-9 z-10 p-2 text-4xl bg-gray-200 bg-opacity-40 hover:bg-slate-300 rounded-full text-color-p " onClick={prevSlide}>
-                    <IoIosArrowBack />
-
+                    <button className="absolute lg:left-0 md:left-0 -left-9 z-10 p-2 text-4xl bg-gray-200 bg-opacity-40 hover:bg-slate-300 rounded-full text-color-p" onClick={prevSlide}>
+                        <IoIosArrowBack />
                     </button>
 
                     <div className="relative w-full h-full flex flex-col items-center">
@@ -87,15 +82,14 @@ console.log(photoIndex);
                             />
                         </AnimatePresence>
 
-                        {/* Photo Details */}
                         <div className="mt-4 text-center">
                             <h3 className="text-xl font-bold">{photos[photoIndex].title}</h3>
                             <p className="mt-2 text-sm">{photos[photoIndex].description}</p>
                         </div>
                     </div>
 
-                    <button className="absolute lg:right-0 md:right-0 -right-9 z-10 p-2  text-color-p text-4xl bg-gray-200 bg-opacity-40 hover:bg-slate-300 rounded-full" onClick={nextSlide}>
-                    <IoIosArrowForward />
+                    <button className="absolute lg:right-0 md:right-0 -right-9 z-10 p-2 text-color-p text-4xl bg-gray-200 bg-opacity-40 hover:bg-slate-300 rounded-full" onClick={nextSlide}>
+                        <IoIosArrowForward />
                     </button>
                 </div>
             </ReactModal>

@@ -60,7 +60,7 @@ const emailData = {
     
           const createPaymentIntent = async () => {
             try {
-              const response = await AxiosPublic.post("/payment/create-payment-intent", { price: parseFloat(donationData?.amount) });
+              const response = await AxiosPublic.post("/payment/create-payment-intent", { price: parseFloat(donationData?.amount|| donationData?.monthlyAmount) });
             console.log(response);
               setClientSecret(response.data.clientSecret);
               setErrMsg('')
