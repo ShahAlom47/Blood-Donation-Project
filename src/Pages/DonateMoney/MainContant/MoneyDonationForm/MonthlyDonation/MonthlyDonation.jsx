@@ -1,28 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import useUser from "../../../../../CustomHocks/useUser";
 import useSound from "../../../../../CustomHocks/useSound";
+import MonthlyDonationActivePage from "./MonthlyDonationActivePage/MonthlyDonationActivePage";
 
 const OneTimeDonation = () => {
     const { user } = useUser();
     const navigate = useNavigate();
-    const {playSound}=useSound();
-    const date = new Date().toLocaleDateString();
+    const { playSound } = useSound();
+
     const month = new Date().getMonth()
     const year = new Date().getFullYear()
-    const [amount, setAmount] = useState(100);
+    const [amount, setAmount] = useState(user?.monthlyDonation==='active'?user?.donationAmount:100);
     const [customInputValue, setCustomInputValue] = useState('');
     const [totalAmount, setTotalAmount] = useState(amount);
+    const [lastDonateMonth,setLastDonationMonth]=useState('')
 
     const months = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
-    const [selectedMonths, setSelectedMonths] = useState([months[month]]);
+    const [selectedMonths, setSelectedMonths] = useState( [months[month]]);
 
-console.log(customInputValue, typeof customInputValue, typeof selectedMonths.length);
+    useEffect(() => {
+        if (user?.monthlyDonation === 'active') {
+            const lastMonthIndex = months.indexOf(lastDonateMonth);
+            const nextMonthIndex = (lastMonthIndex + 1) % months.length;
+
+            // Set selectedMonths with the next month
+            setSelectedMonths([months[nextMonthIndex]]);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [lastDonateMonth, user]);
+    
+
 
     const handleMonthToggle = (month) => {
         setSelectedMonths(prev =>
@@ -42,14 +55,13 @@ console.log(customInputValue, typeof customInputValue, typeof selectedMonths.len
         if (selectedMonths.length <= 0) {
             playSound('error');
             Swal.fire({
-                icon: 'warning', 
+                icon: 'warning',
                 text: 'Please select a month'
             });
             return;
         }
+
       
-        const totalMonths = selectedMonths.length || 1; 
-        const totalDonationAmount = parseInt(finalAmount) * totalMonths;
 
         const donationData = {
             donorName: user?.name,
@@ -57,80 +69,96 @@ console.log(customInputValue, typeof customInputValue, typeof selectedMonths.len
             donorPhone: user?.phoneNumber,
             startingDate: new Date().toLocaleDateString(),
             lastDonationDate: new Date().toLocaleDateString(),
-            monthlyAmount: totalDonationAmount,
+            monthlyAmount: parseFloat(finalAmount),
             donationType: 'monthlyDonation',
             category: "moneyDonation",
             userType: "user",
-            donationHistory: selectedMonths.map((month, ) => ({
-                month: month,
-                year: year,
-                amount: parseInt(finalAmount),
-                date: new Date().toLocaleDateString(),  
-            }))
+            donationHistory: selectedMonths.map((month) => {
+                const monthIndex = new Date(`${month} 1, ${year}`).getMonth() + 1;
+                const formattedMonth = monthIndex < 10 ? `0${monthIndex}` : monthIndex;
+                return {
+                    donationMonth: `${year}-${formattedMonth}`,
+                    amount: parseInt(finalAmount),
+                    donateDate: new Date().toISOString().split('T')[0], 
+                };
+            })
         };
         
+console.log(donationData);
 
         navigate('/paymentPage', { state: { donationData } });
     };
 
     return (
         <div className="my-2">
-            <div className="mb-6">
-                <h1 className="text-xl font-bold">Today: <span>{date}</span></h1>
-            </div>
-            <h3 className="text-lg font-bold mb-1">Select Amount </h3>
-            <p className="text-color-p mb-2">
-                * You can update your monthly donation amount at any time.
-            </p>
-            <div className="flex gap-4 flex-wrap">
-                {[100, 200, 400, 500, 1000].map((money) =>
-                    <button
-                        key={money}
-                        onClick={() => setAmount(money)}
-                        className={`border border-color-p px-3 py-1 ${amount === money ? 'bg-color-p text-white' : ''}`}
-                    >{money} TK</button>)
-                }
-                <button
-                    type="button"
-                    onClick={() => setAmount('Custom Amount')}
-                    className={`lg:w-4/12 md:w-4/12 w-full py-1 border border-color-p px-3 ${amount === 'Custom Amount' ? 'bg-color-p text-white' : ''}`}
-                >
-                    Custom Amount
-                </button>
-            </div>
+
+
             <div className="my-3">
                 <form onSubmit={handleDonate}>
-                    <div className="flex gap-4 lg:flex-row md:flex-row flex-col mb-5 border border-black border-opacity-20">
+                    {
+                        user?.monthlyDonation === 'active' ?
 
-                        <input
-                            disabled={amount !== 'Custom Amount'}
-                            required={amount === 'Custom Amount'}
-                            className="flex-1 input input-bordered w-full rounded-sm py-1 outline-none "
-                            type="number"
-                            name="amount"
-                            min={100}
-                            placeholder="Your Amount"
-                            value={customInputValue}
-                            onChange={(e) =>{ 
-                                setCustomInputValue(parseFloat(e.target.value))
-                                setTotalAmount(parseFloat(e.target.value) || 0)
-                            }}
-                        />
-                    </div>
+                            <MonthlyDonationActivePage setLastDonationMonth={setLastDonationMonth}></MonthlyDonationActivePage>
+
+                            : <>
+                                <h3 className="text-lg font-bold mb-1">Select Amount </h3>
+                                <p className="text-color-p mb-2">
+                                    * You can update your monthly donation amount at any time.
+                                </p>
+
+                                {/* amount select button */}
+                                <div className="flex gap-4 flex-wrap">
+                                    {[100, 200, 400, 500, 1000].map((money) =>
+                                        <button
+                                            key={money}
+                                            type="button"
+                                            onClick={() => setAmount(money)}
+                                            className={`border border-color-p px-3 py-1 ${amount === money ? 'bg-color-p text-white' : ''}`}
+                                        >{money} TK</button>)
+                                    }
+                                    <button
+                                        type="button"
+                                        onClick={() => setAmount('Custom Amount')}
+                                        className={`lg:w-4/12 md:w-4/12 w-full py-1 border border-color-p px-3 ${amount === 'Custom Amount' ? 'bg-color-p text-white' : ''}`}
+                                    >
+                                        Custom Amount
+                                    </button>
+                                </div>
+
+                                {/* custom amount  */}
+                                <div className="flex gap-4 lg:flex-row md:flex-row flex-col mb-5 border border-black border-opacity-20">
+
+                                    <input
+                                        disabled={amount !== 'Custom Amount'}
+                                        required={amount === 'Custom Amount'}
+                                        className="flex-1 input input-bordered w-full rounded-sm py-1 outline-none "
+                                        type="number"
+                                        name="amount"
+                                        min={100}
+                                        placeholder="Your Amount"
+                                        value={customInputValue}
+                                        onChange={(e) => {
+                                            setCustomInputValue(parseFloat(e.target.value))
+                                            setTotalAmount(parseFloat(e.target.value) || 0)
+                                        }}
+                                    />
+                                </div>
+                            </>
+                    }
 
                     {/* Month selection section */}
                     <div className="mb-5">
                         <h3 className="text-lg font-bold mb-4">Select Month(s)</h3>
-                        <div className=" flex gap-4">
+                        <div className=" flex gap-2">
 
                             <h1 className="border px-4 py-1 bg-color-p font-bold text-white  flex justify-center items-center rounded-r-full ">{year}</h1>
-                            <div className="flex gap-2 flex-wrap">
+                            <div className="grid gap-2 lg:grid-cols-6 md:grid-cols-4 grid-cols-2 mx-aut flex-1">
                                 {months.map((month) => (
                                     <button
                                         key={month}
                                         type="button"
                                         onClick={() => handleMonthToggle(month)}
-                                        className={`border border-color-p px-3 py-1 ${selectedMonths.includes(month) ? 'bg-color-p text-white' : ''}`}
+                                        className={`border border-color-p px-auto  py-1 ${selectedMonths.includes(month) ? 'bg-color-p text-white' : ''}`}
                                     >
                                         {month}
                                     </button>
@@ -142,8 +170,8 @@ console.log(customInputValue, typeof customInputValue, typeof selectedMonths.len
                     <div className="my-4">
                         <h1 className="text-xl font-bold">Total Month : <span>{selectedMonths.length}</span></h1>
                         <h1 className=" text-xl font-bold ">Total Amount : <span className=" text-color-p  text-2xl">{
-                       amount==="Custom Amount"?totalAmount*selectedMonths.length : parseFloat(amount )* selectedMonths.length
-                        
+                            amount === "Custom Amount" ? totalAmount * selectedMonths.length : parseFloat(amount) * selectedMonths.length
+
                         }</span> TK</h1>
                     </div>
                     <button className="btn-p flex items-center justify-center gap-2" type="submit">
