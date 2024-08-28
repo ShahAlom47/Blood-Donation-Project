@@ -5,11 +5,14 @@ import { useNavigate } from "react-router-dom";
 import useUser from "../../../../../CustomHocks/useUser";
 import useSound from "../../../../../CustomHocks/useSound";
 import MonthlyDonationActivePage from "./MonthlyDonationActivePage/MonthlyDonationActivePage";
+import useAxios from "../../../../../CustomHocks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const OneTimeDonation = () => {
     const { user } = useUser();
     const navigate = useNavigate();
     const { playSound } = useSound();
+    const AxiosSecure = useAxios();
 
     const month = new Date().getMonth()
     const year = new Date().getFullYear()
@@ -17,6 +20,21 @@ const OneTimeDonation = () => {
     const [customInputValue, setCustomInputValue] = useState('');
     const [totalAmount, setTotalAmount] = useState(amount);
     const [lastDonateMonth,setLastDonationMonth]=useState('')
+   
+
+    const { data } = useQuery({
+        queryKey: 'getSingleMonthlyDonationData',
+        queryFn: async () => {
+            if (user?.monthlyDonation === 'active') {
+                const res = await AxiosSecure.get(`/moneyDonation/getUserMonthlyDonationData/${user?.email}`);
+                return res.data;
+            }
+            return {}; 
+        },
+        enabled: user?.monthlyDonation === 'active', 
+    });
+
+  
 
     const months = [
         "January", "February", "March", "April", "May", "June",
@@ -29,7 +47,7 @@ const OneTimeDonation = () => {
             const lastMonthIndex = months.indexOf(lastDonateMonth);
             const nextMonthIndex = (lastMonthIndex + 1) % months.length;
 
-            // Set selectedMonths with the next month
+           
             setSelectedMonths([months[nextMonthIndex]]);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -37,13 +55,35 @@ const OneTimeDonation = () => {
     
 
 
+ 
     const handleMonthToggle = (month) => {
+        const donatedMonths = data?.donationHistory.map(item => {
+            const [year, monthNumber] = item.donationMonth.split('-');
+            return {
+                monthName: months[parseInt(monthNumber, 10) - 1],
+                year: parseInt(year, 10)
+            };
+        });
+        
+    
+        if (user?.monthlyDonation === 'active') {
+            const isDonated = donatedMonths?.some(donated => 
+                donated.monthName === month && donated.year >= year
+            );
+    
+            if (isDonated) {
+                Swal.fire(`You have already donated for ${month} in ${year} or a later year.`);
+                return; // Stop further execution
+            }
+        }
+    
         setSelectedMonths(prev =>
             prev.includes(month)
                 ? prev.filter(m => m !== month)
                 : [...prev, month]
         );
     };
+    
 
     const handleDonate = (e) => {
         e.preventDefault();
@@ -98,7 +138,7 @@ console.log(donationData);
                     {
                         user?.monthlyDonation === 'active' ?
 
-                            <MonthlyDonationActivePage setLastDonationMonth={setLastDonationMonth}></MonthlyDonationActivePage>
+                            <MonthlyDonationActivePage setLastDonationMonth={setLastDonationMonth} data={data}></MonthlyDonationActivePage>
 
                             : <>
                                 <h3 className="text-lg font-bold mb-1">Select Amount </h3>

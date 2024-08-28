@@ -1,11 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useQuery } from "@tanstack/react-query";
-import useAxios from "../../../../../../CustomHocks/useAxiosSecure";
-import useUser from "../../../../../../CustomHocks/useUser";
 
-const MonthlyDonationActivePage = ({setLastDonationMonth}) => {
-    const { user } = useUser();
-    const AxiosSecure = useAxios();
+
+const MonthlyDonationActivePage = ({setLastDonationMonth,data}) => {
+  
 
     // Array of month names
     const months = [
@@ -13,26 +10,26 @@ const MonthlyDonationActivePage = ({setLastDonationMonth}) => {
         "July", "August", "September", "October", "November", "December"
     ];
 
-    const { data } = useQuery({
-        queryKey: 'getSingleMonthlyDonationData',
-        queryFn: async () => {
-            const res = await AxiosSecure.get(`/moneyDonation/getUserMonthlyDonationData/${user?.email}`);
-            return res.data;
-        }
-    });
+    // const { data } = useQuery({
+    //     queryKey: 'getSingleMonthlyDonationData',
+    //     queryFn: async () => {
+    //         const res = await AxiosSecure.get(`/moneyDonation/getUserMonthlyDonationData/${user?.email}`);
+    //         return res.data;
+    //     }
+    // });
 
     
 
-    // Sorting donationHistory to get the latest donationMonth
+    
     const sortedDonations = data?.donationHistory?.sort((a, b) => {
         return new Date(b.donationMonth + '-01') - new Date(a.donationMonth + '-01');
     });
 
-    // Extracting the latest donationMonth and donateDate
+    
     const latestDonation = sortedDonations?.[0];
     const latestMonth = latestDonation?.donationMonth;
-    
-    // Convert the donationMonth to a human-readable month name
+   
+  
     const formatMonth = (month) => {
         const [year, monthIndex] = month.split('-');
         const monthName = months[parseInt(monthIndex, 10) - 1]; 
