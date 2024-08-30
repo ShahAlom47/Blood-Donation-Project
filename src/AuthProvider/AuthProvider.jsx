@@ -81,6 +81,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const checkToken = async () => {
             const token = localStorage.getItem('token');
+            
             if (token) {
                 try {
                     const response = await axiosPublic.post('/user/is-login', { token });
@@ -114,6 +115,8 @@ const AuthProvider = ({ children }) => {
     const userInfo = {
         user,
         loading,
+        setLoading,
+        
         setReLoad,
         addUser,
         login,

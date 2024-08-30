@@ -9,6 +9,13 @@ import useAxios from "../../../../../CustomHocks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 
 const OneTimeDonation = () => {
+
+    const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+
     const { user } = useUser();
     const navigate = useNavigate();
     const { playSound } = useSound();
@@ -16,13 +23,10 @@ const OneTimeDonation = () => {
 
     const month = new Date().getMonth()
     const year = new Date().getFullYear()
-    const [amount, setAmount] = useState(user?.monthlyDonation==='active'?user?.donationAmount:100);
-    const [customInputValue, setCustomInputValue] = useState('');
-    const [totalAmount, setTotalAmount] = useState(amount);
-    const [lastDonateMonth,setLastDonationMonth]=useState('')
+    
    
 
-    const { data } = useQuery({
+    const { data,refetch } = useQuery({
         queryKey: 'getSingleMonthlyDonationData',
         queryFn: async () => {
             if (user?.monthlyDonation === 'active') {
@@ -34,22 +38,25 @@ const OneTimeDonation = () => {
         enabled: user?.monthlyDonation === 'active', 
     });
 
-    const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ];
+    const [customInputValue, setCustomInputValue] = useState('');
+    const [lastDonateMonth,setLastDonationMonth]=useState('')
+    const [amount, setAmount] = useState(user?.monthlyDonation==='active'?data?.monthlyAmount:100);
+    const [totalAmount, setTotalAmount] = useState(amount);
     const [selectedMonths, setSelectedMonths] = useState( [months[month]]);
     const lastMonthIndex = months.indexOf(lastDonateMonth); 
+    
     
 
 
     useEffect(() => {
+        setAmount(user?.monthlyDonation==='active'?data?.monthlyAmount:100)
         if (user?.monthlyDonation === 'active') {
             const nextMonthIndex = (lastMonthIndex + 1) % months.length;
             setSelectedMonths([months[nextMonthIndex]]);
+          
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [lastDonateMonth, user]);
+    }, [lastDonateMonth, user,data]);
     
 
 
@@ -124,11 +131,13 @@ const OneTimeDonation = () => {
             })
         };
         
-
+// console.log(donationData);
 
         navigate('/paymentPage', { state: { donationData } });
     };
 
+
+   
 
 
     return (
@@ -140,7 +149,7 @@ const OneTimeDonation = () => {
                     {
                         user?.monthlyDonation === 'active' ?
 
-                            <MonthlyDonationActivePage setLastDonationMonth={setLastDonationMonth} data={data}></MonthlyDonationActivePage>
+                            <MonthlyDonationActivePage setLastDonationMonth={setLastDonationMonth} data={data} refetch={refetch} ></MonthlyDonationActivePage>
 
                             : <>
                                 <h3 className="text-lg font-bold mb-1">Select Amount </h3>
@@ -168,12 +177,12 @@ const OneTimeDonation = () => {
                                 </div>
 
                                 {/* custom amount  */}
-                                <div className="flex gap-4 lg:flex-row md:flex-row flex-col mb-5 border border-black border-opacity-20">
+                                <div className="mt-3 flex gap-4 lg:flex-row md:flex-row flex-col mb-5 border border-black border-opacity-20">
 
                                     <input
                                         disabled={amount !== 'Custom Amount'}
                                         required={amount === 'Custom Amount'}
-                                        className="flex-1 input input-bordered w-full rounded-sm py-1 outline-none "
+                                        className="flex-1 input input-bordered w-full rounded-sm py-1 outline-none  "
                                         type="number"
                                         name="amount"
                                         min={100}
