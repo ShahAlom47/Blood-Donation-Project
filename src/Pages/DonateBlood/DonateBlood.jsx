@@ -12,27 +12,28 @@ import { useNavigate } from 'react-router-dom';
 const DonateBlood = () => {
     const { user } = useUser();
     const AxiosSecure = useAxios();
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const { register, handleSubmit, control, reset, formState: { errors } } = useForm({
         defaultValues: {
             name: user?.name,
             email: user?.email,
             phoneNumber: user?.phoneNumber,
             bloodGroup: user?.bloodGroup,
-            lastDonate: user?.lastDonate ? new Date(user?.lastDonate) : null,
+            lastDonate: user?.lastDonate 
+                ? new Date(user?.lastDonate.split('/')[2], user?.lastDonate.split('/')[1] - 1, user?.lastDonate.split('/')[0]) 
+                : null,
             city: user?.city,
             country: user?.country,
             age: user?.age,
             gender: user?.gender,
         }
     });
-
     const onSubmit = async (data) => {
 
-        const donorData={
+        const donorData = {
             ...data,
-            type:'donor',
-            status:'Available'
+            type: 'donor',
+            status: 'Available'
         }
         try {
             const res = await AxiosSecure.post('/bloodBank/addBloodDonor', donorData);
@@ -50,7 +51,7 @@ const DonateBlood = () => {
                     navigate(-1)
                 }, 2000);
             }
-         
+
         } catch (error) {
             Swal.fire({
                 position: "top-end",
@@ -82,11 +83,11 @@ const DonateBlood = () => {
                         <div className='mt-3'>
                             <label className="block font-semibold">Email:</label>
                             <input
-                            {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
-                            className="w-full p-2 border border-gray-300 rounded"
-                            type="email"
-                        />
-                        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+                                {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
+                                className="w-full p-2 border border-gray-300 rounded"
+                                type="email"
+                            />
+                            {errors.email && <p className="text-red-500">{errors.email.message}</p>}
                         </div>
                         <div className='mt-3'>
                             <label className="block font-semibold">Phone Number:</label>
@@ -110,7 +111,7 @@ const DonateBlood = () => {
                         </div>
                         <div className='mt-3 '>
                             <label className="block font-semibold">Last Donate Date:</label>
-                            <div className=" p-2 border border-gray-300 rounded">
+                            <div className="p-2 border border-gray-300 rounded">
                                 <Controller
                                     control={control}
                                     name="lastDonate"
@@ -118,7 +119,7 @@ const DonateBlood = () => {
                                     render={({ field }) => (
                                         <DatePicker
                                             className="w-full outline-none"
-                                            selected={field.value}
+                                            selected={field.value || null} // Null চেক
                                             onChange={(date) => field.onChange(date)}
                                             dateFormat="dd/MM/yyyy"
                                         />

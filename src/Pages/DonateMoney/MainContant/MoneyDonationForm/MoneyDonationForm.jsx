@@ -12,9 +12,7 @@ const MoneyDonationForm = () => {
     const location = useLocation();
 
     useEffect(() => {
-
         setDonationOption(localStorage.getItem('donationOption'))
-
     }, [])
 
     const storeDonationOption = (option) => {
