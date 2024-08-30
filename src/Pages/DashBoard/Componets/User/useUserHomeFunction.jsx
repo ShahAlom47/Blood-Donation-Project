@@ -3,12 +3,14 @@ import Swal from "sweetalert2";
 import useAxios from "../../../../CustomHocks/useAxiosSecure";
 import useUser from "../../../../CustomHocks/useUser";
 import useSound from "../../../../CustomHocks/useSound";
+import { useNavigate } from "react-router-dom";
 
 
 const useUserHomeFunction = () => {
     const { user } = useUser()
     const AxiosSecure = useAxios()
     const { playSound } = useSound()
+    const navigate=useNavigate()
 
     const cancelMyBloodBankRequest = async (id, refetch) => {
         Swal.fire({
@@ -79,10 +81,19 @@ const useUserHomeFunction = () => {
     }
 
 
+    //   update amount 
+    const handelUpdateAmount=async()=>{
+     localStorage.setItem('donationOption','monthly')
+     localStorage.setItem('amountUpdateForm','open')
+        navigate('/donateMoney')
+
+
+    }
 
     return {
         cancelMyBloodBankRequest,
         completeDonation,
+        handelUpdateAmount,
     }
 };
 

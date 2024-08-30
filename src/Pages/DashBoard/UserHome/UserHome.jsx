@@ -1,6 +1,8 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react"; 
 import MyBloodRequest from "../Componets/User/MyBloodRequest";
+import MoneyDonationHistory from "../Componets/User/MoneyDonationHistory";
+import PrivetRouter from "../../../Routes/PrivetRouter/PrivetRouter";
 
 const UserHome = () => {
     const [value, setValue] = useState(0);
@@ -47,19 +49,17 @@ const UserHome = () => {
                         }}
                     >
                         <Tab sx={tabStyle} label="My Blood Request" />
-                        <Tab sx={tabStyle} label="My Donation History" />
-                        <Tab sx={tabStyle} label="Tab 3" />
+                        <Tab sx={tabStyle} label="Blood Donation History" />
+                        <Tab sx={tabStyle} label="Money Donation History" />
                         <Tab sx={tabStyle} label="Tab 4" />
                         <Tab sx={tabStyle} label="Tab 5" />
-                        <Tab sx={tabStyle} label="Tab 6" />
                     </Tabs>
 
-                    {value === 0 && <Box className=''><MyBloodRequest></MyBloodRequest></Box>}
-                    {value === 1 && <Box>Content for Tab 2</Box>}
-                    {value === 2 && <Box>Content for Tab 3</Box>}
-                    {value === 3 && <Box>Content for Tab 4</Box>}
-                    {value === 4 && <Box>Content for Tab 5</Box>}
-                    {value === 5 && <Box>Content for Tab 6</Box>}
+                    {value === 0 && <Box><PrivetRouter><MyBloodRequest></MyBloodRequest></PrivetRouter></Box>}
+                    {value === 1 && <Box><PrivetRouter>BLOOD</PrivetRouter></Box>}
+                    {value === 2 && <Box><PrivetRouter><MoneyDonationHistory></MoneyDonationHistory></PrivetRouter></Box>}
+                    {value === 3 && <Box>Content for Tab 3</Box>}
+                    {value === 4 && <Box>Content for Tab 4</Box>}
                 </Box>
             </div>
         </div>

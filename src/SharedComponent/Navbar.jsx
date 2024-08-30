@@ -36,6 +36,7 @@ const Navbar = () => {
             setVisible(isVisible);
             if (isOpen) {
                 setOpen(false);
+                
             }
             prevSPos = currentSPos;
         };

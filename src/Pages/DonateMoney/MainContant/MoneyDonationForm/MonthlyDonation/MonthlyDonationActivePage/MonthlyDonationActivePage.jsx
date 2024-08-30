@@ -3,15 +3,23 @@
 
 import useMonthlyDonateFunc from "../ActionFunctions/useMonthlyDonateFunc";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactModal from "../../../../../../Components/Modal/ReactModal";
 
-const MonthlyDonationActivePage = ({ setLastDonationMonth, data,refetch, }) => {
+const MonthlyDonationActivePage = ({ setLastDonationMonth, data, refetch, }) => {
 
     const [openModal, setOpenModal] = useState(false)
-    const [updateErr,setUpdateErr]=useState('')
+    const [updateErr, setUpdateErr] = useState('')
     const { updateDonationAmount } = useMonthlyDonateFunc()
 
+    useEffect(() => {
+      const amountFormStatus=  localStorage.getItem('amountUpdateForm')
+        if(amountFormStatus==='open'){
+            setOpenModal(true)
+            localStorage.removeItem('amountUpdateForm')
+        }
+
+    }, [])
 
     // Array of month names
     const months = [
@@ -35,22 +43,22 @@ const MonthlyDonationActivePage = ({ setLastDonationMonth, data,refetch, }) => {
         return `${monthName} ${year}`;
     };
 
-const handelUpdateForm =async(e)=>{
+    const handelUpdateForm = async (e) => {
 
-    e.preventDefault();
-    e.stopPropagation();
-    setUpdateErr('')
+        e.preventDefault();
+        e.stopPropagation();
+        setUpdateErr('')
 
-    const amount = parseInt(e.target.amount.value);
-    console.log(amount,data?.monthlyAmount);
-   if(amount===data?.monthlyAmount){
-    setUpdateErr("You must change the amount to update.");
-    return
-   }
-   updateDonationAmount(amount,refetch,setOpenModal,)
-   setUpdateErr('')
+        const amount = parseInt(e.target.amount.value);
+        console.log(amount, data?.monthlyAmount);
+        if (amount === data?.monthlyAmount) {
+            setUpdateErr("You must change the amount to update.");
+            return
+        }
+        updateDonationAmount(amount, refetch, setOpenModal,)
+        setUpdateErr('')
 
-}
+    }
 
     return (
         <div className="my-4 mb-6 space-y-2">
@@ -73,15 +81,15 @@ const handelUpdateForm =async(e)=>{
             )}
 
             <ReactModal setOpenModal={setOpenModal} openModal={openModal} label={'update  donation amount '}>
-               <div className=" flex justify-center items-center flex-col py-6">
-               <h1 className="text-xl font-semibold mb-4">Update Your Donation Amount</h1>
-                <form onSubmit={handelUpdateForm} className="shadow-lg rounded-sm  flex items-center flex-wrap " >
-                    <input className="h-full flex-1 px-4 outline-none border border-color-p min-h-10 rounded-sm" type="number" name="amount" defaultValue={data?.monthlyAmount} min={100} placeholder="Your Amount (min 100 Tk" />
+                <div className=" flex justify-center items-center flex-col py-6">
+                    <h1 className="text-xl font-semibold mb-4">Update Your Donation Amount</h1>
+                    <form onSubmit={handelUpdateForm} className="shadow-lg rounded-sm  flex items-center flex-wrap " >
+                        <input className="h-full flex-1 px-4 outline-none border border-color-p min-h-10 rounded-sm" type="number" name="amount" defaultValue={data?.monthlyAmount} min={100} placeholder="Your Amount (min 100 Tk" />
 
-                    <button className="btn-p w-full" type="submit"> Update</button>
-                </form>
-                <p className="text-color-p text-sm mt-2">{updateErr}</p>
-               </div>
+                        <button className="btn-p w-full" type="submit"> Update</button>
+                    </form>
+                    <p className="text-color-p text-sm mt-2">{updateErr}</p>
+                </div>
             </ReactModal>
         </div>
     );
