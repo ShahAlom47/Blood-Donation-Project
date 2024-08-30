@@ -34,20 +34,18 @@ const OneTimeDonation = () => {
         enabled: user?.monthlyDonation === 'active', 
     });
 
-  
-
     const months = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
     const [selectedMonths, setSelectedMonths] = useState( [months[month]]);
+    const lastMonthIndex = months.indexOf(lastDonateMonth); 
+    
+
 
     useEffect(() => {
         if (user?.monthlyDonation === 'active') {
-            const lastMonthIndex = months.indexOf(lastDonateMonth);
             const nextMonthIndex = (lastMonthIndex + 1) % months.length;
-
-           
             setSelectedMonths([months[nextMonthIndex]]);
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,6 +55,8 @@ const OneTimeDonation = () => {
 
  
     const handleMonthToggle = (month) => {
+        const targetedMonthIndex = months.indexOf(month); 
+
         const donatedMonths = data?.donationHistory.map(item => {
             const [year, monthNumber] = item.donationMonth.split('-');
             return {
@@ -64,14 +64,14 @@ const OneTimeDonation = () => {
                 year: parseInt(year, 10)
             };
         });
-        
+       
     
         if (user?.monthlyDonation === 'active') {
             const isDonated = donatedMonths?.some(donated => 
                 donated.monthName === month && donated.year >= year
             );
     
-            if (isDonated) {
+            if (isDonated ||  lastMonthIndex > targetedMonthIndex) {
                 Swal.fire(`You have already donated for ${month} in ${year} or a later year.`);
                 return; // Stop further execution
             }
@@ -124,10 +124,12 @@ const OneTimeDonation = () => {
             })
         };
         
-console.log(donationData);
+
 
         navigate('/paymentPage', { state: { donationData } });
     };
+
+
 
     return (
         <div className="my-2">
@@ -193,11 +195,11 @@ console.log(donationData);
 
                             <h1 className="border px-4 py-1 bg-color-p font-bold text-white  flex justify-center items-center rounded-r-full ">{year}</h1>
                             <div className="grid gap-2 lg:grid-cols-6 md:grid-cols-4 grid-cols-2 mx-aut flex-1">
-                                {months.map((month) => (
+                                {months.map((month,index) => (
                                     <button
                                         key={month}
                                         type="button"
-                                        onClick={() => handleMonthToggle(month)}
+                                        onClick={() => handleMonthToggle(month,index)}
                                         className={`border border-color-p px-auto  py-1 ${selectedMonths.includes(month) ? 'bg-color-p text-white' : ''}`}
                                     >
                                         {month}

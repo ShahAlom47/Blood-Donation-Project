@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { FaTimes } from 'react-icons/fa'; // cancel button icon
 
 const ReactModal = ({ setOpenModal, openModal, children, label }) => {
+
+// const [openModal,setOpenModal]=useState(false)   
+
+
     return (
         <Modal
             isOpen={openModal}

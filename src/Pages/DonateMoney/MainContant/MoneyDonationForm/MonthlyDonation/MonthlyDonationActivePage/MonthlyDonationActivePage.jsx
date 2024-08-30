@@ -1,8 +1,16 @@
 /* eslint-disable react/prop-types */
 
 
-const MonthlyDonationActivePage = ({setLastDonationMonth,data}) => {
-  
+import useMonthlyDonateFunc from "../ActionFunctions/useMonthlyDonateFunc";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { useState } from "react";
+import ReactModal from "../../../../../../Components/Modal/ReactModal";
+
+const MonthlyDonationActivePage = ({ setLastDonationMonth, data }) => {
+
+    const [openModal, setOpenModal] = useState(false)
+    const { updateDonationAmount } = useMonthlyDonateFunc()
+
 
     // Array of month names
     const months = [
@@ -10,31 +18,19 @@ const MonthlyDonationActivePage = ({setLastDonationMonth,data}) => {
         "July", "August", "September", "October", "November", "December"
     ];
 
-    // const { data } = useQuery({
-    //     queryKey: 'getSingleMonthlyDonationData',
-    //     queryFn: async () => {
-    //         const res = await AxiosSecure.get(`/moneyDonation/getUserMonthlyDonationData/${user?.email}`);
-    //         return res.data;
-    //     }
-    // });
-
-    
-
-    
     const sortedDonations = data?.donationHistory?.sort((a, b) => {
         return new Date(b.donationMonth + '-01') - new Date(a.donationMonth + '-01');
     });
 
-    
     const latestDonation = sortedDonations?.[0];
     const latestMonth = latestDonation?.donationMonth;
-   
-  
+
+
     const formatMonth = (month) => {
         const [year, monthIndex] = month.split('-');
-        const monthName = months[parseInt(monthIndex, 10) - 1]; 
+        const monthName = months[parseInt(monthIndex, 10) - 1];
         setLastDonationMonth(monthName)
-      
+
         return `${monthName} ${year}`;
     };
 
@@ -42,7 +38,15 @@ const MonthlyDonationActivePage = ({setLastDonationMonth,data}) => {
 
     return (
         <div className="my-4 mb-6 space-y-2">
-            <h1 className="text-xl font-bold border-b-2 border-color-p">Monthly Donation Active</h1>
+            <div className=" flex justify-between border-b-2 border-color-p pb-3">
+                <h1 className="text-xl font-bold -pb-3  ">Monthly Donation Active</h1>
+                <button
+                    type="button"
+                    style={{ height: '30px' }}
+                    className=" btn-p flex items-center justify-center gap-2 font-semibold  "
+                    onClick={() => setOpenModal(true)}
+                > <HiOutlinePencilSquare />Edit </button>
+            </div>
             <h1 className="text-xl font-semibold">
                 Your Monthly Donation Amount: <span className="text-color-p text-2xl">{data?.monthlyAmount}</span> Tk
             </h1>
@@ -51,6 +55,17 @@ const MonthlyDonationActivePage = ({setLastDonationMonth,data}) => {
                     Your donation is complete until: <span className="text-color-p text-xl">{formatMonth(latestMonth)}</span>
                 </h1>
             )}
+
+            <ReactModal setOpenModal={setOpenModal} openModal={openModal} label={'update  donation amount '}>
+               <div className=" flex justify-center items-center flex-col py-6">
+               <h1 className="text-xl font-semibold mb-4">Update Your Donation Amount</h1>
+                <form onSubmit={updateDonationAmount} className="shadow-lg rounded-sm  flex items-center flex-wrap " >
+                    <input className="h-full flex-1 px-4 outline-none border border-color-p min-h-10 rounded-sm" type="number" name="amount" defaultValue={data?.monthlyAmount} min={100} placeholder="Your Amount (min 100 Tk" />
+
+                    <button className="btn-p w-full" type="submit"> Update</button>
+                </form>
+               </div>
+            </ReactModal>
         </div>
     );
 };
