@@ -1,7 +1,7 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react"; 
-import MyBloodRequest from "../Componets/User/MyBloodRequest";
-import MoneyDonationHistory from "../Componets/User/MoneyDonationHistory";
+import MyBloodRequest from "./BloodRequest/MyBloodRequest";
+import MoneyDonationHistory from "./MoneyDonationHistory/MoneyDonationHistory";
 import PrivetRouter from "../../../Routes/PrivetRouter/PrivetRouter";
 
 const UserHome = () => {
@@ -56,7 +56,7 @@ const UserHome = () => {
                     </Tabs>
 
                     {value === 0 && <Box><PrivetRouter><MyBloodRequest></MyBloodRequest></PrivetRouter></Box>}
-                    {value === 1 && <Box><PrivetRouter>BLOOD</PrivetRouter></Box>}
+                    {value === 1 && <Box><PrivetRouter> Loading.... . Under developing </PrivetRouter></Box>}
                     {value === 2 && <Box><PrivetRouter><MoneyDonationHistory></MoneyDonationHistory></PrivetRouter></Box>}
                     {value === 3 && <Box>Content for Tab 3</Box>}
                     {value === 4 && <Box>Content for Tab 4</Box>}

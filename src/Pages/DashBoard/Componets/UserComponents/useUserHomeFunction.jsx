@@ -86,8 +86,6 @@ const useUserHomeFunction = () => {
      localStorage.setItem('donationOption','monthly')
      localStorage.setItem('amountUpdateForm','open')
         navigate('/donateMoney')
-
-
     }
 
     return {

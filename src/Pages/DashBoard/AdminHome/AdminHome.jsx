@@ -1,7 +1,8 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react"; 
-import AllBloodRequest from "../Componets/Admin/AllBloodRequest";
-import AllBloodBank from "../Componets/Admin/AllBloodBank";
+import AllBloodBank from "../Componets/AdminComponents/AllBloodBank";
+import AllBloodRequest from "../Componets/AdminComponents/AllBloodRequest";
+
 
 const AdminHome = () => {
     const [value, setValue] = useState(0);
