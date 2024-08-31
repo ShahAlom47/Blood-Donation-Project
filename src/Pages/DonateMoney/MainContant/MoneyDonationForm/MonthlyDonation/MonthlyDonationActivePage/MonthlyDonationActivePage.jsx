@@ -69,7 +69,7 @@ const MonthlyDonationActivePage = ({ setLastDonationMonth, data, refetch, }) => 
                     style={{ height: '30px' }}
                     className=" btn-p flex items-center justify-center gap-2 font-semibold  "
                     onClick={() => setOpenModal(true)}
-                > <HiOutlinePencilSquare />Edit </button>
+                > <HiOutlinePencilSquare />Update </button>
             </div>
             <h1 className="text-xl font-semibold">
                 Your Monthly Donation Amount: <span className="text-color-p text-2xl">{data?.monthlyAmount}</span> Tk
