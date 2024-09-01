@@ -8,12 +8,13 @@ import { FaRegEdit } from "react-icons/fa";
 import { useState } from "react";
 import Modal from 'react-modal';
 import PhotoForm from "./PhotoForm/PhotoForm";
+import useUserMonthlyDonationData from "../../../CustomHocks/useUserMonthlyDonationData";
 
 
 const UserProfileLayout = () => {
     const { user } = useUser()
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
+    const {data}=useUserMonthlyDonationData();
 
 
     const closeModal = () => {
@@ -52,7 +53,10 @@ const UserProfileLayout = () => {
                 </div>
 
             </div>
+            <div className="border-2 border-color-p p-4">
+            <h1> {data.lastDonation}</h1>
 
+            </div>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}

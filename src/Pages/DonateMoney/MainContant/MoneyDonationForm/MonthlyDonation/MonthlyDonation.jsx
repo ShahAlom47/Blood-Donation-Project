@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useUser from "../../../../../CustomHocks/useUser";
 import useSound from "../../../../../CustomHocks/useSound";
 import MonthlyDonationActivePage from "./MonthlyDonationActivePage/MonthlyDonationActivePage";
-import useAxios from "../../../../../CustomHocks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import useUserMonthlyDonationData from "../../../../../CustomHocks/useUserMonthlyDonationData";
 
 const OneTimeDonation = () => {
 
@@ -19,27 +18,14 @@ const OneTimeDonation = () => {
     const { user } = useUser();
     const navigate = useNavigate();
     const { playSound } = useSound();
-    const AxiosSecure = useAxios();
 
-    const month = new Date().getMonth()
-    const year = new Date().getFullYear()
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear();
     
-   
-
-    const { data,refetch } = useQuery({
-        queryKey: 'getSingleMonthlyDonationData',
-        queryFn: async () => {
-            if (user?.monthlyDonation === 'active') {
-                const res = await AxiosSecure.get(`/moneyDonation/getUserMonthlyDonationData/${user?.email}`);
-                return res.data;
-            }
-            return {}; 
-        },
-        enabled: user?.monthlyDonation === 'active', 
-    });
-
+   const {data,refetch}=useUserMonthlyDonationData();
+    
     const [customInputValue, setCustomInputValue] = useState('');
-    const [lastDonateMonth,setLastDonationMonth]=useState('')
+    const [lastDonateMonth,setLastDonationMonth]=useState('');
     const [amount, setAmount] = useState(user?.monthlyDonation==='active'?data?.monthlyAmount:100);
     const [totalAmount, setTotalAmount] = useState(amount);
     const [selectedMonths, setSelectedMonths] = useState( [months[month]]);
