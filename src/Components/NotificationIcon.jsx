@@ -4,6 +4,7 @@ import useAxios from "../CustomHocks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useUser from "../CustomHocks/useUser";
 import Loading from "../SharedComponent/Loading";
+import { IoIosArrowForward } from "react-icons/io";
 
 const NotificationIcon = () => {
   const AxiosSecure = useAxios();
@@ -24,8 +25,8 @@ const NotificationIcon = () => {
 
   const handelRead = async (id) => {
     const res = await AxiosSecure.patch(`/notification/updateNotificationStatus/${id}`)
-    
-    if(res.data?.state===true)
+
+    if (res.data?.state === true)
       refetch()
   }
 
@@ -45,22 +46,27 @@ const NotificationIcon = () => {
 
       <div className="drawer drawer-end  ">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-side top-10">
+        <div className="drawer-side top-10  ">
+       
           <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
-          <ul className="menu bg-white  text-base-content min-h-screen  w-80 p-4 pt-0  border-8 border-color-p">
+         <div className="flex">
+         <label htmlFor="my-drawer-4" className="drawer-button absolute left-0 top-1/2 h-10 w-4 rounded-r-md bg-color-p flex items-center text-white text-xl cursor-pointer"> <IoIosArrowForward /> </label>
+          <ul className=" menu bg-white  text-base-content min-h-screen max-h-dvh overflow-x-scroll  w-80 p-4 pt-0  border-l-4 border-color-p">
             {isLoading ? <Loading /> : (
-              <div>
+              <div className="">
                 <h1 className=" text-xl font-bold mb-4">Notifications</h1>
                 {data?.map(notification => (
                   <li
-                   onClick={() => handelRead(notification?._id)}
-                   className={` ${notification?.status === 'unread' && 'bg-slate-200'} border hover:border-black rounded-sm pl-2 text-l shadow-lg mb-2 py-2`} key={notification._id}>
+                    onClick={() => handelRead(notification?._id)}
+                    className={` ${notification?.status === 'unread' && 'bg-slate-200'} border hover:border-black rounded-sm pl-2 text-l shadow-lg mb-2 py-2 cursor-pointer`} key={notification._id}>
                     {notification.message}
-                    </li>
+                  </li>
                 ))}
               </div>
             )}
           </ul>
+         </div>
+
         </div>
       </div>
     </div>

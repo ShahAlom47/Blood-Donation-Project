@@ -5,6 +5,7 @@ import Loading from "../../../../SharedComponent/Loading";
 import ErrorPage from "../../../ErrorPage/ErrorPage";
 import { ResponsiveTable } from "responsive-table-react";
 import useUserHomeFunction from "../../Componets/UserComponents/useUserHomeFunction";
+import DataNotAvailable from "../../../../SharedComponent/DataNotAvailable";
 
 
 const MyBloodBankRequest = () => {
@@ -70,20 +71,22 @@ const MyBloodBankRequest = () => {
         ),
     })) : [];
 
-
+console.log(data.length);
 
     if (isLoading) return <div><Loading /></div>;
     if (error) return <div><ErrorPage /></div>;
     return (
         <div>
 
-            <ResponsiveTable
-                columns={columns}
-                data={tableData}
-                className="min-w-full divide-y divide-gray-200"
-                cellClassName="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                ClassName="bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            />
+           { data?.length > 0?
+             <ResponsiveTable
+             columns={columns}
+             data={tableData}
+             className="min-w-full divide-y divide-gray-200"
+             cellClassName="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+             ClassName="bg-gray-50 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+         />:<DataNotAvailable></DataNotAvailable>
+           }
         </div>
     );
 };

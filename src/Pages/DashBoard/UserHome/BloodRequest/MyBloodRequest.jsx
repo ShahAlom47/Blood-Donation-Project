@@ -27,7 +27,7 @@ const MyBloodRequest = () => {
 
 
     const { data, isLoading, error, refetch } = useQuery({
-        queryKey: ['userAllBloodRequest'],
+        queryKey: ['userAllBloodRequest', user?.email],
         queryFn: async () => {
             const res = await AxiosSecure.get(`/donation/user/allRequest/${user.email}`);
             return res.data;
@@ -176,7 +176,7 @@ const MyBloodRequest = () => {
                 {
                     requestPage?<MyBloodBankRequest></MyBloodBankRequest>:
               
-                <ResponsiveTable
+             data?.length>0?   <ResponsiveTable
                     columns={columns}
                     data={tableData}
                     cellClassName="px-6 py-8 whitespace-nowrap text-sm text-gray-500"
@@ -184,7 +184,7 @@ const MyBloodRequest = () => {
                     className="min-w-full "
                    
                     ClassName=" px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                />
+                />:<DataNotAvailable></DataNotAvailable>
             }
             </div>
             <Modal

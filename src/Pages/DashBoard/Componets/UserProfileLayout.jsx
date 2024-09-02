@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useUser from "../../../CustomHocks/useUser";
 import img from '../../../assets/image/user-fake-profile-img.png'
 import { FiEdit } from "react-icons/fi";
@@ -9,18 +9,23 @@ import { useState } from "react";
 import Modal from 'react-modal';
 import PhotoForm from "./PhotoForm/PhotoForm";
 import useUserMonthlyDonationData from "../../../CustomHocks/useUserMonthlyDonationData";
-
+import { BiMessageAltError } from "react-icons/bi";
 
 const UserProfileLayout = () => {
-    const { user } = useUser()
+    const { user } = useUser();
+    const navigate =useNavigate();
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const {data}=useUserMonthlyDonationData();
+    const { latestDonationMonth, isDonationTime } = useUserMonthlyDonationData();
 
+
+const handelDonate=()=>{
+    localStorage.setItem('donationOption','monthly')
+    navigate('/donateMoney')
+}
 
     const closeModal = () => {
         setModalIsOpen(false);
     };
-
 
     return (
         <div className="lg:p-5 md:p-4 py-7">
@@ -53,8 +58,14 @@ const UserProfileLayout = () => {
                 </div>
 
             </div>
-            <div className="border-2 border-color-p p-4">
-            <h1> {data.lastDonation}</h1>
+            <div className=" ">
+               {
+                isDonationTime? <div className="text-color-p flex items-center gap-2 px-1 py-2">
+                 <BiMessageAltError /> 
+                  Your last donation was on <strong>{latestDonationMonth}</strong>. It`s time to donate again.
+                  <button onClick={handelDonate} className="btn btn-link" >Donate Now</button>
+             </div>:''
+               }
 
             </div>
             <Modal
