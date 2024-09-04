@@ -54,7 +54,7 @@ const BloodCard = ({ data, group }) => {
             message: ' New blood donation data received from the Blood Bank',
             type: 'blood_bank_blood_request',
             status: 'unread',
-            timestamp: new Date().toLocaleString(),
+            timestamp: new Date().toISOString(),
 
         }
         Swal.fire({

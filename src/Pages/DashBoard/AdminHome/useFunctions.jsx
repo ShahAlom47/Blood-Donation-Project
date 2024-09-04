@@ -1,6 +1,5 @@
 import Swal from "sweetalert2";
 import useAxios from "../../../CustomHocks/useAxiosSecure";
-import { data } from "autoprefixer";
 
 
 const useFunctions = () => {
@@ -29,7 +28,7 @@ const useFunctions = () => {
                             , now you can contact the donor if you want. Please contact the blood bank for further assistance`  ,
                     type: 'blood_bank_blood_request',
                     status: 'unread',
-                    timestamp: new Date().toLocaleString(),
+                    timestamp: new Date().toISOString(),
 
                 }
                
@@ -73,7 +72,7 @@ const useFunctions = () => {
                     message: 'Your blood request has been rejected by the admin. Please contact the Blood Bank for further assistance.',
                     type: 'blood_bank_blood_request',
                     status: 'unread',
-                    timestamp: new Date().toLocaleString(),
+                    timestamp: new Date().toISOString(),
 
                 }
               
@@ -130,12 +129,16 @@ const useFunctions = () => {
 
     // user role change 
 
-    const changeUserRole = async(value,email,refetch)=>{
-        const notificationData={
-
-
-        }
-
+    const changeUserRole = async(value,email,name,refetch)=>{
+        const notificationData = {
+            userEmail: email,
+            userName: name,
+            message: `Dear ${name}, your role has been successfully updated to ${value}. We are pleased to inform you that you are now an ${value === 'admin' ? 'Administrator' : value}. Please log in to your account to explore the new features and responsibilities associated with your role.`,
+            type: 'userDataUpdate',
+            status: 'unread',
+            timestamp: new Date().toISOString(),
+          };
+          
         Swal.fire({
             title: "Are you sure?",
             showCancelButton: true,
@@ -147,16 +150,17 @@ const useFunctions = () => {
 
                 const res = await AxiosSecure.patch(`/user/updateUserRole/${email}`,{value,notificationData})
                 if(res.data.success===true){
+                    refetch()
                     Swal.fire({
                         title: "Changed",
-                        text: "User Role Updated",
+                        text:res?.data?.message,
                         icon: "success"
                       });
                       return
                 }
                 Swal.fire({
                     title: "oops",
-                    text: "",
+                    text:res?.data?.message,
                     icon: "error"
                   });
            
@@ -166,11 +170,51 @@ const useFunctions = () => {
 
     }
 
+    // delete user 
+    const handelUserDelete = async(value,email,name,refetch)=>{
+      
+          
+        Swal.fire({
+            title: "Are you sure?",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+
+                const res = await AxiosSecure.delete(`/user/updateUserRole/${email}`)
+                if(res.data.success===true){
+                    refetch()
+                    Swal.fire({
+                        title: "Deleted",
+                        text:res?.data?.message,
+                        icon: "success"
+                      });
+                      return
+                }
+                Swal.fire({
+                    title: "oops",
+                    text:res?.data?.message,
+                    icon: "error"
+                  });
+           
+            }
+          });
+
+
+    }
+
+
+
+
+
     return {
         acceptRequester,
         rejectRequester,
         handelDelete,
         changeUserRole,
+        handelUserDelete,
     }
 };
 

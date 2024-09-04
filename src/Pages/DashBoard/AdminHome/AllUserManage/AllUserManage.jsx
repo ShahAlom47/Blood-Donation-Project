@@ -14,7 +14,7 @@ import Select from 'react-select';
 const AllUserManage = () => {
     const { user } = useUser();
     const AxiosSecure = useAxios();
-    const { changeUserRole } = useFunctions()
+    const { changeUserRole,handelUserDelete } = useFunctions()
     const [page, setPage] = useState(1);
     const limit = 10;
 
@@ -27,10 +27,11 @@ const AllUserManage = () => {
         keepPreviousData: true,
     });
 
- 
+    console.log(data?.totalPages);
     const options = [
         { value: 'user', label: 'User' },
-        { value: 'admin', label: 'Admin' }
+        { value: 'admin', label: 'Admin' },
+        { value: 'rescinded', label: 'Rescinded' }
     ];
 
     const columns = [
@@ -40,22 +41,32 @@ const AllUserManage = () => {
         { 'text': 'Monthly Donation', 'id': 'monthlyDonation' },
         { 'text': 'Donation Amount', 'id': 'donationAmount' },
         { 'text': 'User Role', 'id': 'userRole' },
+        { 'text': 'Delete', 'id': 'delete' },
 
     ];
 
-    const tableData = data?.data ? data.data.map(user => ({
-        userName: user.name,
-        userEmail: user.email,
-        userPhone: user.phoneNumber,
+    const tableData = data?.data ? data.data.map(userData => ({
+        userName: userData.name,
+        userEmail: userData.email,
+        userPhone: userData.phoneNumber,
 
-        monthlyDonation: user.monthlyDonation ? (<p className="uppercase font-bold">{user.monthlyDonation}</p>) : 'NO',
-        donationAmount: user.donationAmount ? user.donationAmount : '0',
-        userRole: (<Select
-            options={options}
-            defaultValue={options.find(option => option.value === user.role)}
-            onChange={(selectedOption) => changeUserRole(selectedOption.value,user.email,refetch)}
-        />),
+        monthlyDonation: userData.monthlyDonation ? (<p className="uppercase font-bold">{userData.monthlyDonation}</p>) : 'NO',
+        donationAmount: userData.donationAmount ? userData.donationAmount : '0',
+        userRole: (
+            <Select
+                className={`min-w-full font-semibold ${userData?.email === user.email ? "cursor-not-allowed" : " cursor-pointer"}`}
+                isDisabled={userData?.email === user.email}
+                options={options}
+                defaultValue={options.find(option => option.value === userData.role)}
+                onChange={(selectedOption) => changeUserRole(selectedOption.value, userData.email, userData.name, refetch)}
+            />
+        ),
+        delete:(<button
+             className={`btn btn-sm btn-error rounded-sm ${userData?.email === user.email ? "cursor-not-allowed opacity-50" : ""}`}
+             onClick={()=>handelUserDelete(userData.email)}
+             >Delete</button>)
     })) : [];
+
 
     if (isLoading) return <Loading />;
     if (error) return <ErrorPage />;
@@ -68,11 +79,11 @@ const AllUserManage = () => {
                         columns={columns}
                         data={tableData}
                         cellClassName="px-6 py-8 whitespace-nowrap text-sm text-gray-500"
-                        className="min-w-full"
+                        className={`min-w-full `}
                         ClassName="px-6 py-6 text-left text-xs font-medium uppercase tracking-wider"
                     />
             }
-            <PaginationButton totalPages={5} setPage={setPage} page={page}></PaginationButton>
+            <PaginationButton totalPages={data?.totalPages} setPage={setPage} page={page}></PaginationButton>
         </div>
     );
 };
