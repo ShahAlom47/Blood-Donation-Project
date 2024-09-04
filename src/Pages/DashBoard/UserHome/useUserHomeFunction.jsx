@@ -1,8 +1,8 @@
 
 import Swal from "sweetalert2";
-import useAxios from "../../../../CustomHocks/useAxiosSecure";
-import useUser from "../../../../CustomHocks/useUser";
-import useSound from "../../../../CustomHocks/useSound";
+import useAxios from "../../../CustomHocks/useAxiosSecure";
+import useUser from "../../../CustomHocks/useUser";
+import useSound from "../../../CustomHocks/useSound";
 import { useNavigate } from "react-router-dom";
 
 

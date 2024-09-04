@@ -1,7 +1,9 @@
 import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react"; 
-import AllBloodBank from "../Componets/AdminComponents/AllBloodBank";
-import AllBloodRequest from "../Componets/AdminComponents/AllBloodRequest";
+import AllBloodBank from "./AllBloodBank/AllBloodBank";
+import AllBloodRequest from "./AllBloodRequest/AllBloodRequest";
+import AdminRoutes from "../../../Routes/AdminRoutes/AdminRoutes";
+import DonationMoney from "./DonationMoney/DonationMoney";
 
 
 const AdminHome = () => {
@@ -50,15 +52,15 @@ const AdminHome = () => {
                     >
                         <Tab sx={tabStyle} label="All Blood Request" />
                         <Tab sx={tabStyle} label="Blood Bank" />
-                        <Tab sx={tabStyle} label="My Donation History" />
+                        <Tab sx={tabStyle} label="Donation Money" />
                         <Tab sx={tabStyle} label="Tab 4" />
                         <Tab sx={tabStyle} label="Tab 5" />
                         <Tab sx={tabStyle} label="Tab 6" />
                     </Tabs>
 
-                    {value === 0 && <Box><AllBloodRequest></AllBloodRequest> </Box>}
-                    {value === 1 && <Box><AllBloodBank></AllBloodBank></Box>}
-                    {value === 2 && <Box>Content for Tab 3</Box>}
+                    {value === 0 && <Box><AdminRoutes><AllBloodRequest></AllBloodRequest> </AdminRoutes></Box>}
+                    {value === 1 && <Box><AdminRoutes><AllBloodBank></AllBloodBank></AdminRoutes></Box>}
+                    {value === 2 && <Box><AdminRoutes><DonationMoney></DonationMoney></AdminRoutes></Box>}
                     {value === 3 && <Box>Content for Tab 4</Box>}
                     {value === 4 && <Box>Content for Tab 5</Box>}
                     {value === 5 && <Box>Content for Tab 6</Box>}

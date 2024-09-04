@@ -3,7 +3,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 import useUser from "../../CustomHocks/useUser";
-import LoadingRing from "../../SharedComponents/LoadingRing/LoadingRing";
+import Loading from "../../SharedComponent/Loading";
 
 
 const AdminRoutes = ({children}) => {
@@ -14,7 +14,7 @@ const AdminRoutes = ({children}) => {
   
 
     if (loading) {
-        return <LoadingRing></LoadingRing>
+        return <Loading></Loading>
     }
 
     if (user&& user.role==='admin') {

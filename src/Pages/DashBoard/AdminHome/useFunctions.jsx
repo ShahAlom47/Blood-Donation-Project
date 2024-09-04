@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import useAxios from "../../../../CustomHocks/useAxiosSecure";
+import useAxios from "../../../CustomHocks/useAxiosSecure";
 
 
 const useFunctions = () => {

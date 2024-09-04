@@ -2,9 +2,9 @@ import { RiCheckboxCircleFill } from "react-icons/ri";
 import useUser from "../../../../CustomHocks/useUser";
 import { TbCoinTaka } from "react-icons/tb";
 import { Link } from "react-router-dom";
-import useUserHomeFunction from "../../Componets/UserComponents/useUserHomeFunction";
-import UserDonationSummary from "../../Componets/UserComponents/UserDonationSummary";
+import useUserHomeFunction from "../useUserHomeFunction";
 import DonationHistoryTable from "./DonationHistoryTable";
+import UserDonationSummary from "./UserDonationSummary";
 
 const MoneyDonationHistory = () => {
     const { user } = useUser();

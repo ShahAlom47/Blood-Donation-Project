@@ -4,7 +4,7 @@ import useAxios from "../../../../CustomHocks/useAxiosSecure";
 import Loading from "../../../../SharedComponent/Loading";
 import ErrorPage from "../../../ErrorPage/ErrorPage";
 import { ResponsiveTable } from "responsive-table-react";
-import useUserHomeFunction from "../../Componets/UserComponents/useUserHomeFunction";
+import useUserHomeFunction from "../useUserHomeFunction";
 import DataNotAvailable from "../../../../SharedComponent/DataNotAvailable";
 
 

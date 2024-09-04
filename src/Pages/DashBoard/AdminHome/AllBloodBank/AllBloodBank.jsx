@@ -6,7 +6,7 @@ import Loading from '../../../../SharedComponent/Loading';
 import ErrorPage from '../../../ErrorPage/ErrorPage';
 import { MdDeleteForever } from 'react-icons/md';
 import ReactModal from '../../../../Components/Modal/ReactModal';
-import useFunctions from './useFunctions';
+import useFunctions from '../useFunctions';
 import DataNotAvailable from '../../../../SharedComponent/DataNotAvailable';
 
 const AllBloodBank = () => {

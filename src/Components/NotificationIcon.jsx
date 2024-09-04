@@ -10,13 +10,13 @@ import { useState } from "react";
 const NotificationIcon = () => {
   const AxiosSecure = useAxios();
   const { user } = useUser();
-  const [page, setPage] = useState(1); // Pagination state
-  const itemsPerPage = 10; // Number of items per page
+  const [page, setPage] = useState(1); 
+  const itemsPerPage = 10;
 
   const token = localStorage.getItem('token');
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['getAllNotification', page], // Include page in query key
+    queryKey: ['getAllNotification', page], 
     queryFn: async () => {
       const url = user.role === 'user'
         ? `/notification/getUserNotification/${user?.email}?page=${page}&limit=${itemsPerPage}`
@@ -25,8 +25,8 @@ const NotificationIcon = () => {
       const res = await AxiosSecure.get(url);
       return res.data;
     },
-    enabled: !!token, // token থাকলেই শুধু ডেটা ফেচ করবে
-    refetchInterval: 50000, // 50 সেকেন্ড অন্তর refetch হবে
+    enabled: !!token, 
+    refetchInterval: 50000, 
   });
 
   const handelRead = async (id) => {
@@ -53,7 +53,7 @@ const NotificationIcon = () => {
       <div className="drawer drawer-end">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
-        <div className="drawer-side top-10 h-screen">
+        <div className="drawer-side top-11 h-screen">
           <label htmlFor="my-drawer-4" aria-label="close sidebar" className="drawer-overlay"></label>
           <div className="flex">
             <label htmlFor="my-drawer-4" className="drawer-button absolute left-0 top-1/2 h-10 w-4 rounded-r-md bg-color-p flex items-center text-white text-xl cursor-pointer">
