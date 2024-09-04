@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import useAxios from "../../../CustomHocks/useAxiosSecure";
+import { data } from "autoprefixer";
 
 
 const useFunctions = () => {
@@ -127,11 +128,49 @@ const useFunctions = () => {
     }
 
 
+    // user role change 
+
+    const changeUserRole = async(value,email,refetch)=>{
+        const notificationData={
+
+
+        }
+
+        Swal.fire({
+            title: "Are you sure?",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes"
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+
+                const res = await AxiosSecure.patch(`/user/updateUserRole/${email}`,{value,notificationData})
+                if(res.data.success===true){
+                    Swal.fire({
+                        title: "Changed",
+                        text: "User Role Updated",
+                        icon: "success"
+                      });
+                      return
+                }
+                Swal.fire({
+                    title: "oops",
+                    text: "",
+                    icon: "error"
+                  });
+           
+            }
+          });
+
+
+    }
 
     return {
         acceptRequester,
         rejectRequester,
         handelDelete,
+        changeUserRole,
     }
 };
 

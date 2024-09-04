@@ -35,8 +35,7 @@ const NotificationIcon = () => {
     if (res.data?.state === true)
       refetch()
   }
-  console.log(data?.pages,page);
-  // Filter unread notifications
+
   const unreadCount = data?.notifications?.filter(notification => notification?.status === 'unread').length || 0;
 
   return (

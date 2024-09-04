@@ -4,6 +4,7 @@ import AllBloodBank from "./AllBloodBank/AllBloodBank";
 import AllBloodRequest from "./AllBloodRequest/AllBloodRequest";
 import AdminRoutes from "../../../Routes/AdminRoutes/AdminRoutes";
 import DonationMoney from "./DonationMoney/DonationMoney";
+import AllUserManage from "./AllUserManage/AllUserManage";
 
 
 const AdminHome = () => {
@@ -53,7 +54,7 @@ const AdminHome = () => {
                         <Tab sx={tabStyle} label="All Blood Request" />
                         <Tab sx={tabStyle} label="Blood Bank" />
                         <Tab sx={tabStyle} label="Donation Money" />
-                        <Tab sx={tabStyle} label="Tab 4" />
+                        <Tab sx={tabStyle} label="All User" />
                         <Tab sx={tabStyle} label="Tab 5" />
                         <Tab sx={tabStyle} label="Tab 6" />
                     </Tabs>
@@ -61,7 +62,8 @@ const AdminHome = () => {
                     {value === 0 && <Box><AdminRoutes><AllBloodRequest></AllBloodRequest> </AdminRoutes></Box>}
                     {value === 1 && <Box><AdminRoutes><AllBloodBank></AllBloodBank></AdminRoutes></Box>}
                     {value === 2 && <Box><AdminRoutes><DonationMoney></DonationMoney></AdminRoutes></Box>}
-                    {value === 3 && <Box>Content for Tab 4</Box>}
+                    {value === 3 && <Box><AdminRoutes><AllUserManage></AllUserManage></AdminRoutes></Box>}
+              
                     {value === 4 && <Box>Content for Tab 5</Box>}
                     {value === 5 && <Box>Content for Tab 6</Box>}
                 </Box>

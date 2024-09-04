@@ -22,7 +22,7 @@ const AllMoneyDonationHistory = () => {
         keepPreviousData: true, 
     });
 
-    console.log("data", data, data?.data?.totalPages<page);
+ 
 
     const columns = [
         { 'text': 'Donor Name', 'id': 'donorName' },
