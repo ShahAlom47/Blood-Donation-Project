@@ -4,31 +4,28 @@ import useUser from "../../../../CustomHocks/useUser";
 import { Cell, Pie, PieChart } from "recharts";
 import { Tooltip } from "react-tooltip";
 
-
 const TotalDonationSummary = () => {
-
     const { user } = useUser();
     const AxiosSecure = useAxios();
 
     const { data } = useQuery({
         queryKey: ['userDonationSummary', user?.email],
         queryFn: async () => {
-            const res = await AxiosSecure.get(`/moneyDonation/totalDonationSummary`)
+            const res = await AxiosSecure.get(`/moneyDonation/totalDonationSummary`);
             return res.data;
         }
     });
 
-    console.log(data);
-    const oneTimeDonation = parseInt(data?.oneTimeDonation);
-    const monthlyDonation = parseInt(data?.monthlyDonation);
-    const oneTimeDonor = parseInt(data?.oneTimeDonor);
-    const monthlyDonor = parseInt(data?.monthlyDonor);
-
+    const oneTimeDonation = parseInt(data?.oneTimeDonation || 0);
+    const monthlyDonation = parseInt(data?.monthlyDonation || 0);
+    const oneTimeDonor = parseInt(data?.oneTimeDonor || 0);
+    const monthlyDonor = parseInt(data?.monthlyDonor || 0);
 
     const DonationChartData = [
         { name: 'Monthly Donation', value: monthlyDonation },
         { name: 'One-Time Donation', value: oneTimeDonation },
     ];
+
     const DonorChartData = [
         { name: 'Monthly Donor', value: monthlyDonor },
         { name: 'One Time Donor', value: oneTimeDonor },
@@ -37,38 +34,31 @@ const TotalDonationSummary = () => {
     const Donation_COLORS = ['#0b7127', '#00C49F'];
     const Donor_COLORS = ['#0b7127', '#00C49F'];
 
-    // Calculate the total amount for percentage calculation
     const totalAmount = DonationChartData.reduce((acc, item) => acc + item.value, 0);
     const totalDonor = DonorChartData.reduce((acc, item) => acc + item.value, 0);
+
     return (
-        <div className='grid gap-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1  p-4 my-5 rounded-sm shadow-xl'>
-
-{/* donor summary  */}
-            <div className="bg-gray-400 bg-opacity-10 ">
-                {/* list  */}
-                <div className="  mt-0 p-3 pb-0 bg-opacity-10">
-                    <div className=" relative flex justify-center items-center mx-auto  w-56 h-56  rounded-lg">
-                        <div className="relative flex justify-center items-center w-10/12 h-5/6 m-auto  border-4 border-color-p rounded-full">
+        <div className=' p-4 my-5 rounded-sm shadow-xl space-y-4'>
+            {/* Donor summary */}
+            <div className="bg-gray-500 bg-opacity-10 grid gap-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1">
+                <div className="mt-0 p-3 pb-0 bg-opacity-10">
+                    <div className="relative flex justify-center items-center mx-auto w-52 h-52 rounded-lg">
+                        <div className="relative flex justify-center items-center w-10/12 h-5/6 m-auto border-4 border-color-p rounded-full">
                             <div className="absolute top-4 flex justify-center text-center items-center">
-                                <span className="font-bold text-2xl ">Total </span>
+                                <span className="font-bold text-2xl">Total</span>
                             </div>
-
                             <div className="absolute bottom-4 flex justify-center items-center w-full">
-                                <span className="font-bold text-xl ">Donor</span>
+                                <span className="font-bold text-xl">Donor</span>
                             </div>
                         </div>
-                        <div className=" absolute top-[42%] flex flex-col justify-center items-center bg-color-p text-white w-full h-10  rounded-full z-10">
-                            <span className="font-semibold text-2xl">{oneTimeDonor + monthlyDonor} </span>
+                        <div className="absolute top-[42%] flex flex-col justify-center items-center bg-color-p text-white w-full h-10 rounded-full z-10">
+                            <span className="font-semibold text-2xl">{totalDonor}</span>
                         </div>
                     </div>
-
-                    
                 </div>
-
-                {/* Chart */}
-                <div className='flex lg:flex-row md:flex-row flex-col justify-between items-center'>
+                <div className='flex lg:flex-row md:flex-row flex-col justify-between items-center '>
                     <div className='flex flex-col justify-center p-4'>
-                        <h3 className='text-xl font-semibold mb-2'>Donation Summary</h3>
+                        <h3 className='text-xl font-semibold mb-2'>Donor Summary</h3>
                         <ul className='list-disc pl-5'>
                             {DonorChartData.map((entry, index) => (
                                 <li key={`item-${index}`} className='mb-2'>
@@ -92,35 +82,29 @@ const TotalDonationSummary = () => {
                             {DonorChartData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={Donor_COLORS[index % Donor_COLORS.length]} />
                             ))}
-
                         </Pie>
                         <Tooltip />
                     </PieChart>
                 </div>
-
             </div>
-{/* ======================== */}
-            {/* donation summary */}
-            <div className="bg-gray-400 bg-opacity-10">
-                {/* list  */}
-                <div className="  mt-0 p-3 pb-0 bg-opacity-10">
-                    <div className=" relative flex justify-center items-center mx-auto  w-56 h-56  rounded-lg">
-                        <div className="relative flex justify-center items-center w-10/12 h-5/6 m-auto  border-4 border-color-p rounded-full">
-                            <div className="absolute top-4 flex justify-center text-center items-center">
-                                <span className="font-bold text-2xl ">Total </span>
-                            </div>
 
+            {/* Donation summary */}
+            <div className="bg-gray-500 bg-opacity-10 grid gap-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 ">
+                <div className="mt-0 p-3 pb-0 bg-opacity-10">
+                    <div className="relative flex justify-center items-center mx-auto w-52 h-52 rounded-lg">
+                        <div className="relative flex justify-center items-center w-10/12 h-5/6 m-auto border-4 border-color-p rounded-full">
+                            <div className="absolute top-4 flex justify-center text-center items-center">
+                                <span className="font-bold text-2xl">Total</span>
+                            </div>
                             <div className="absolute bottom-4 flex justify-center items-center w-full">
-                                <span className="font-bold text-xl ">Donations</span>
+                                <span className="font-bold text-xl">Donations</span>
                             </div>
                         </div>
-                        <div className=" absolute top-[42%] flex flex-col justify-center items-center bg-color-p text-white w-full h-10  rounded-full z-10">
-                            <span className="font-semibold text-2xl">{oneTimeDonation + monthlyDonation} TK</span>
+                        <div className="absolute top-[42%] flex flex-col justify-center items-center bg-color-p text-white w-full h-10 rounded-full z-10">
+                            <span className="font-semibold text-2xl">{totalAmount} TK</span>
                         </div>
                     </div>
                 </div>
-
-                {/* Chart */}
                 <div className='flex lg:flex-row md:flex-row flex-col justify-between items-center'>
                     <div className='flex flex-col justify-center p-4'>
                         <h3 className='text-xl font-semibold mb-2'>Donation Summary</h3>
@@ -147,15 +131,12 @@ const TotalDonationSummary = () => {
                             {DonationChartData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={Donation_COLORS[index % Donation_COLORS.length]} />
                             ))}
-
                         </Pie>
                         <Tooltip />
                     </PieChart>
                 </div>
-
             </div>
         </div>
-
     );
 };
 
