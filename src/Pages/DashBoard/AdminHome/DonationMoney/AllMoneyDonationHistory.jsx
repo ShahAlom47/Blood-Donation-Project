@@ -22,7 +22,7 @@ const AllMoneyDonationHistory = () => {
         keepPreviousData: true, 
     });
 
- 
+    console.log(data);
 
     const columns = [
         { 'text': 'Donor Name', 'id': 'donorName' },
@@ -71,10 +71,10 @@ const AllMoneyDonationHistory = () => {
                     Prev
                 </button>
                 <button
-                    onClick={() => data?.totalPages> data?.currentPage && setPage(page + 1)}
+                    onClick={() => data?.totalPages> page && setPage(page + 1)}
                     style={{ borderRadius: '100% 0px' }}
                     className="btn btn-p "
-                    disabled={data?.currentPage=== data?.totalPages}
+                    disabled={page>= data?.totalPages}
                 >
                     Next
                 </button>

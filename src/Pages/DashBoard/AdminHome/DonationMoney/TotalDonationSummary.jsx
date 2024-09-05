@@ -15,7 +15,7 @@ const TotalDonationSummary = () => {
             return res.data;
         }
     });
-    console.log(data);
+   
 
     const oneTimeDonation = parseInt(data?.oneTimeDonation || 0);
     const monthlyDonation = parseInt(data?.monthlyDonation || 0);
@@ -45,8 +45,8 @@ const TotalDonationSummary = () => {
     return (
         <div className=' p-4 my-5 rounded-sm shadow-xl space-y-4'>
             {/* Donor summary */}
-            <div className="bg-gray-500 bg-opacity-10 grid gap-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1">
-                <div className="mt-0 p-3 pb-0 bg-opacity-10">
+            <div className="bg-gray-500 bg-opacity-10 grid gap-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 place-items-center justify-center">
+                <div className=" ">
                     <div className="relative flex justify-center items-center mx-auto w-48 h-48 p-2 rounded-lg">
                         <div className="relative flex justify-center items-center w-10/12 h-5/6 m-auto border-4 border-color-p rounded-full">
                             <div className="absolute top-4 flex justify-center text-center items-center">
@@ -94,8 +94,8 @@ const TotalDonationSummary = () => {
             </div>
 
             {/* Donation summary */}
-            <div className="bg-gray-500 bg-opacity-10 grid gap-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 ">
-                <div className="mt-0 p-3 pb-0 bg-opacity-10">
+            <div className="bg-gray-500 bg-opacity-10 grid gap-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 place-items-center justify-center ">
+                <div className="">
                     <div className="relative flex justify-center items-center mx-auto w-48 h-48 p-2 rounded-lg">
                         <div className="relative flex justify-center items-center w-10/12 h-5/6 m-auto border-4 border-color-p rounded-full">
                             <div className="absolute top-4 flex justify-center text-center items-center">

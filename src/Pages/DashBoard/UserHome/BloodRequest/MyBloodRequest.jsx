@@ -17,7 +17,7 @@ const MyBloodRequest = () => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalData, setModalData] = useState({})
-    const [requestPage,setRequestPage]=useState(false)
+    const [requestPage, setRequestPage] = useState(false)
 
 
 
@@ -47,8 +47,8 @@ const MyBloodRequest = () => {
                 const confirmedDonorData = {
                     donorName: name,
                     donorEmail: email,
-                    notification:{
-                        
+                    notification: {
+
                     }
                 };
 
@@ -91,22 +91,22 @@ const MyBloodRequest = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-          }).then(async(result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                const res= await AxiosSecure.delete(`/donation/delete/bloodRequest/${id}`)
-                if(res?.data?.deletedCount>0){
+                const res = await AxiosSecure.delete(`/donation/delete/bloodRequest/${id}`)
+                if (res?.data?.deletedCount > 0) {
                     refetch()
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your file has been deleted.",
                         icon: "success"
-                      });
+                    });
                 }
             }
-          });
+        });
 
-      
-   
+
+
 
     }
 
@@ -166,26 +166,32 @@ const MyBloodRequest = () => {
     return (
         <div className="p-4 pt-0">
             <div className=' w-full flex justify-end items-center mb-5'>
-                <button 
-                onClick={()=>setRequestPage(!requestPage)}
-                style={{width:'190px'}}
-                className=' btn-p font-semibold'
-                >{requestPage?'My Blood Request':'My Blood bank Request'}</button>
+                <button
+                    onClick={() => setRequestPage(!requestPage)}
+                    style={{ width: '190px' }}
+                    className=' btn-p font-semibold'
+                >{requestPage ? 'My Blood Request' : 'My Blood bank Request'}</button>
             </div>
             <div className="overflow-x-auto">
                 {
-                    requestPage?<MyBloodBankRequest></MyBloodBankRequest>:
-              
-             data?.length>0?   <ResponsiveTable
-                    columns={columns}
-                    data={tableData}
-                    cellClassName="px-6 py-8 whitespace-nowrap text-sm text-gray-500"
+                    requestPage ? <MyBloodBankRequest></MyBloodBankRequest> :
 
-                    className="min-w-full "
-                   
-                    ClassName=" px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
-                />:<DataNotAvailable></DataNotAvailable>
-            }
+                        data?.length > 0 ?
+                            <div>
+                                <div>
+                                    <h1 className="text-xl font-semibold ml-2 mb-4">Blood Request</h1>
+                                </div>
+                                <ResponsiveTable
+                                    columns={columns}
+                                    data={tableData}
+                                    cellClassName="px-6 py-8 whitespace-nowrap text-sm text-gray-500"
+
+                                    className="min-w-full "
+
+                                    ClassName=" px-6 py-6 text-left text-xs font-medium  uppercase tracking-wider"
+                                />
+                            </div> : <DataNotAvailable></DataNotAvailable>
+                }
             </div>
             <Modal
                 isOpen={modalIsOpen}
@@ -194,7 +200,7 @@ const MyBloodRequest = () => {
                 style={customStyles}
             >
                 {modalData?.donors?.length === 0 ? (
-                   <DataNotAvailable></DataNotAvailable>
+                    <DataNotAvailable></DataNotAvailable>
                 ) : (
                     <div className="space-y-4">
                         {modalData?.donors?.map((donor, index) => (
