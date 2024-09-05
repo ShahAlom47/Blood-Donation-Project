@@ -171,7 +171,7 @@ const useFunctions = () => {
     }
 
     // delete user 
-    const handelUserDelete = async(value,email,name,refetch)=>{
+    const handelUserDelete = async(email,refetch)=>{
       
           
         Swal.fire({
@@ -183,8 +183,8 @@ const useFunctions = () => {
           }).then(async (result) => {
             if (result.isConfirmed) {
 
-                const res = await AxiosSecure.delete(`/user/updateUserRole/${email}`)
-                if(res.data.success===true){
+                const res = await AxiosSecure.delete(`/user/deleteUser/${email}`)
+                if(res.data.status===true){
                     refetch()
                     Swal.fire({
                         title: "Deleted",

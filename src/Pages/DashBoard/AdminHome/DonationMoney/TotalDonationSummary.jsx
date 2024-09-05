@@ -15,24 +15,29 @@ const TotalDonationSummary = () => {
             return res.data;
         }
     });
+    console.log(data);
 
     const oneTimeDonation = parseInt(data?.oneTimeDonation || 0);
     const monthlyDonation = parseInt(data?.monthlyDonation || 0);
+    const guestDonation = parseInt(data?.guestDonation || 0);
     const oneTimeDonor = parseInt(data?.oneTimeDonor || 0);
     const monthlyDonor = parseInt(data?.monthlyDonor || 0);
+    const guestDonor = parseInt(data?.guestDonor || 0);
 
     const DonationChartData = [
         { name: 'Monthly Donation', value: monthlyDonation },
         { name: 'One-Time Donation', value: oneTimeDonation },
+        { name: 'Guest Donation', value: guestDonation },
     ];
 
     const DonorChartData = [
         { name: 'Monthly Donor', value: monthlyDonor },
         { name: 'One Time Donor', value: oneTimeDonor },
+        { name: 'Guest Donor', value: guestDonor },
     ];
 
-    const Donation_COLORS = ['#0b7127', '#00C49F'];
-    const Donor_COLORS = ['#0b7127', '#00C49F'];
+    const Donation_COLORS = ['#0b7127', '#e30000','#7721c7'];
+    const Donor_COLORS = ['#0b7127', '#e30000','#7721c7'];
 
     const totalAmount = DonationChartData.reduce((acc, item) => acc + item.value, 0);
     const totalDonor = DonorChartData.reduce((acc, item) => acc + item.value, 0);
@@ -42,7 +47,7 @@ const TotalDonationSummary = () => {
             {/* Donor summary */}
             <div className="bg-gray-500 bg-opacity-10 grid gap-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1">
                 <div className="mt-0 p-3 pb-0 bg-opacity-10">
-                    <div className="relative flex justify-center items-center mx-auto w-52 h-52 rounded-lg">
+                    <div className="relative flex justify-center items-center mx-auto w-48 h-48 p-2 rounded-lg">
                         <div className="relative flex justify-center items-center w-10/12 h-5/6 m-auto border-4 border-color-p rounded-full">
                             <div className="absolute top-4 flex justify-center text-center items-center">
                                 <span className="font-bold text-2xl">Total</span>
@@ -74,8 +79,8 @@ const TotalDonationSummary = () => {
                             data={DonorChartData}
                             cx={125}
                             cy={125}
-                            innerRadius={50}
-                            outerRadius={100}
+                            innerRadius={40}
+                            outerRadius={80}
                             paddingAngle={2}
                             dataKey="value"
                         >
@@ -91,7 +96,7 @@ const TotalDonationSummary = () => {
             {/* Donation summary */}
             <div className="bg-gray-500 bg-opacity-10 grid gap-3 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 ">
                 <div className="mt-0 p-3 pb-0 bg-opacity-10">
-                    <div className="relative flex justify-center items-center mx-auto w-52 h-52 rounded-lg">
+                    <div className="relative flex justify-center items-center mx-auto w-48 h-48 p-2 rounded-lg">
                         <div className="relative flex justify-center items-center w-10/12 h-5/6 m-auto border-4 border-color-p rounded-full">
                             <div className="absolute top-4 flex justify-center text-center items-center">
                                 <span className="font-bold text-2xl">Total</span>
@@ -123,8 +128,8 @@ const TotalDonationSummary = () => {
                             data={DonationChartData}
                             cx={125}
                             cy={125}
-                            innerRadius={50}
-                            outerRadius={100}
+                            innerRadius={40}
+                            outerRadius={80}
                             paddingAngle={2}
                             dataKey="value"
                         >

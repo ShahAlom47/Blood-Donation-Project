@@ -27,7 +27,6 @@ const AllUserManage = () => {
         keepPreviousData: true,
     });
 
-    console.log(data?.totalPages);
     const options = [
         { value: 'user', label: 'User' },
         { value: 'admin', label: 'Admin' },
@@ -63,7 +62,7 @@ const AllUserManage = () => {
         ),
         delete:(<button
              className={`btn btn-sm btn-error rounded-sm ${userData?.email === user.email ? "cursor-not-allowed opacity-50" : ""}`}
-             onClick={()=>handelUserDelete(userData.email)}
+             onClick={()=>handelUserDelete(userData.email,refetch)}
              >Delete</button>)
     })) : [];
 
