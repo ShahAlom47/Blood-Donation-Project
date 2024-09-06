@@ -3,6 +3,7 @@ import { useState } from "react";
 import MyBloodRequest from "./BloodRequest/MyBloodRequest";
 import MoneyDonationHistory from "./MoneyDonationHistory/MoneyDonationHistory";
 import PrivetRouter from "../../../Routes/PrivetRouter/PrivetRouter";
+import BloodDonationHistory from "./BloodDonationHistory/BloodDonationHistory";
 
 const UserHome = () => {
     const [value, setValue] = useState(0);
@@ -56,10 +57,10 @@ const UserHome = () => {
                     </Tabs>
 
                     {value === 0 && <Box><PrivetRouter><MyBloodRequest></MyBloodRequest></PrivetRouter></Box>}
-                    {value === 1 && <Box><PrivetRouter> Loading.... . Under developing </PrivetRouter></Box>}
+                    {value === 1 && <Box><PrivetRouter><BloodDonationHistory></BloodDonationHistory> </PrivetRouter></Box>}
                     {value === 2 && <Box><PrivetRouter><MoneyDonationHistory></MoneyDonationHistory></PrivetRouter></Box>}
-                    {value === 3 && <Box>Content for Tab 3</Box>}
-                    {value === 4 && <Box>Content for Tab 4</Box>}
+                    {value === 3 && <Box>Loading.... . Under developing </Box>}
+                    {value === 4 && <Box>Loading.... . Under developing </Box>}
                 </Box>
             </div>
         </div>

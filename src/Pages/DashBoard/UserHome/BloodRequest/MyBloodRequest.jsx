@@ -47,6 +47,7 @@ const MyBloodRequest = () => {
                 const confirmedDonorData = {
                     donorName: name,
                     donorEmail: email,
+                    donateDate:new Date().toISOString(),
                     notification: {
 
                     }
