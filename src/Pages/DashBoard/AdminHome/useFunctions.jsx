@@ -24,7 +24,7 @@ const useFunctions = () => {
                     requesterEmail: requesterEmail,
                     requesterPhone: '',
                     donorEmail: data?.email,
-                    message: `Your blood request has been accepted by admin.
+                    message: `Your blood (${data?.bloodGroup}) request has been accepted by admin.
                             , now you can contact the donor if you want. Please contact the blood bank for further assistance`  ,
                     type: 'blood_bank_blood_request',
                     status: 'unread',

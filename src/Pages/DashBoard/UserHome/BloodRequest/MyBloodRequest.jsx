@@ -47,9 +47,18 @@ const MyBloodRequest = () => {
                 const confirmedDonorData = {
                     donorName: name,
                     donorEmail: email,
-                    donateDate:new Date().toISOString(),
+                    donateDate: new Date().toISOString(),
                     notification: {
-
+                        recipientEmail: user?.email,
+                        RecipientPhone: user?.phoneNumber,
+                        donorName: name,
+                        donorEmail: email,
+                        message: `Dear ${name},
+                        We are delighted to inform you that your recent blood donation has successfully reached someone in need. Your selfless act of kindness has made a significant difference in saving a life. The recipient is truly grateful for your generosity.`,
+                        
+                        type: 'donationComplete',
+                        status: 'unread',
+                        timestamp: new Date().toISOString(),
                     }
                 };
 

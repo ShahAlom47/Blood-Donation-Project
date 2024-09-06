@@ -43,9 +43,15 @@ const BloodCard = ({ data, group }) => {
         setOpenModal(true)
     };
 
-
+    // console.log(bloodGroupData);
 
     const handelRequest = async (data) => {
+        if( data.email===user.email){
+
+            Swal.fire('Request denied! You have already added this blood to the blood bank, so you cannot request it .')
+            return
+        }
+      console.log(data);
         playSound('click')
         const notificationData = {
             requesterEmail: user?.email,
@@ -131,7 +137,7 @@ const BloodCard = ({ data, group }) => {
                                     }
                                 </div>
                                 <button
-                                    disabled={data.status === 'Accepted'}
+                                    disabled={data.status === 'Accepted' }
                                     onClick={() => handelRequest(data)}
                                     style={{ height: '30px' }}
                                     className={`btn-p ${data?.status === 'Accepted' ? 'opacity-50  cursor-not-allowed' : ''}`}

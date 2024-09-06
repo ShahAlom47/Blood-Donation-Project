@@ -45,6 +45,7 @@ const useUserHomeFunction = () => {
 
     // complete donation 
     const completeDonation = (data, refetch) => {
+   
         Swal.fire({
             title: "Are you sure?",
             icon: "warning",
@@ -55,8 +56,11 @@ const useUserHomeFunction = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 const completedData={
-                     requesterEmail: user?.email 
+                     requesterEmail: user?.email ,
+                     donorEmail:data.email,
+                     donorName:data.name ||'unknown',
                 }
+                console.log(data);
                 const res = await AxiosSecure.patch(`/bloodBank/user/completeBloodBankRequest/${data._id}`, completedData)
             
                 if (res.data.status === true) {

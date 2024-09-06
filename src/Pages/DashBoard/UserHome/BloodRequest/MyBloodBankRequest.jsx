@@ -20,12 +20,16 @@ const MyBloodBankRequest = () => {
             return res.data;
         }
     });
+
+    console.log(data);
+
     const pending = (
         <span className="bg-yellow-400 font-medium rounded-sm px-2 w-full block">Pending</span>
     )
     const notAvailable = (
         <span className="bg-red-400 font-medium rounded-sm px-2 w-full block">Not available Now</span>
     )
+   
 
     const columns = [
 

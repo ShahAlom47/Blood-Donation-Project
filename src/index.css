@@ -164,3 +164,13 @@ table.rtr-table tbody td:before {
 
   top: 9px !important;
 }
+
+
+/* Date Picker */
+.datepicker-wrapper {
+  position: relative;
+}
+
+.datepicker-wrapper .react-datepicker__tab-loop {
+  z-index: 9999 !important; 
+}
