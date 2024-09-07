@@ -21,7 +21,7 @@ const MyBloodBankRequest = () => {
         }
     });
 
-    console.log(data);
+  
 
     const pending = (
         <span className="bg-yellow-400 font-medium rounded-sm px-2 w-full block">Pending</span>
@@ -95,7 +95,7 @@ const MyBloodBankRequest = () => {
     })) : [];
     
 
-    console.log(data?.length);
+   
 
     if (isLoading) return <div><Loading /></div>;
     if (error) return <div><ErrorPage /></div>;

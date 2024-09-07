@@ -19,8 +19,8 @@ const DonateBlood = () => {
             email: user?.email,
             phoneNumber: user?.phoneNumber,
             bloodGroup: user?.bloodGroup,
-            lastDonate: user?.lastDonate 
-                ? new Date(user?.lastDonate.split('/')[2], user?.lastDonate.split('/')[1] - 1, user?.lastDonate.split('/')[0]) 
+            lastDonate: user?.lastDonate
+                ? new Date(user?.lastDonate.split('/')[2], user?.lastDonate.split('/')[1] - 1, user?.lastDonate.split('/')[0])
                 : null,
             city: user?.city,
             country: user?.country,
@@ -111,23 +111,25 @@ const DonateBlood = () => {
                         </div>
                         <div className='mt-3 '>
                             <label className="block font-semibold">Last Donate Date:</label>
-                            <div className="p-2 border border-gray-300 rounded">
+                            <div className="p-2 border border-gray-900 rounded">
                                 <Controller
                                     control={control}
                                     name="lastDonate"
-                                    rules={{ required: 'Last donate date is required' }}
                                     render={({ field }) => (
                                         <DatePicker
                                             className="w-full outline-none"
-                                            selected={field.value || null} // Null চেক
+                                            selected={field.value ?? null} // null চেক
                                             onChange={(date) => field.onChange(date)}
                                             dateFormat="dd/MM/yyyy"
+                                            isClearable 
                                         />
                                     )}
                                 />
                             </div>
-                            {errors.lastDonate && <p className="text-red-500">{errors.lastDonate.message}</p>}
                         </div>
+
+
+
                     </div>
                     <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-2 grid-cols-1">
                         <div className='mt-3'>

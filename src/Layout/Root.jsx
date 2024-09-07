@@ -6,6 +6,7 @@ import Loading from "../SharedComponent/Loading";
 import usePageLoading from "../CustomHocks/usePageLoading";
 import useGlobalClickListener from "../UtilityFiles/GlobalClickListener";
 import useSound from "../CustomHocks/useSound";
+import ChatApp from "../Pages/ChatApp/ChatApp";
 
 
 const Root = () => {
@@ -29,13 +30,15 @@ const Root = () => {
 
   return (
     loading ? <Loading></Loading> :
-      <div className="mt-12">
+      <div className="mt-12 relative">
         <Navbar></Navbar>
         {
           pageLoading ? <Loading></Loading> : <Outlet className=''></Outlet>
         }
 
         <Footer></Footer>
+        
+       <ChatApp></ChatApp>
 
       </div>
   );

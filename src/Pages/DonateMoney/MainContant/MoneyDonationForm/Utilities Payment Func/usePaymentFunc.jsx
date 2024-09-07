@@ -8,7 +8,7 @@ const usePaymentFunc = () => {
 
         if (donationData.donationType === 'monthlyDonation') {
             const res = await AxiosPublic.post('/moneyDonation/addMonthlyDonation', donationData)
-            console.log(res);
+       
             if(res.data?.status==true){
                 return {success:true,message:'Your Monthly Donation Successfully Complete'}
             }

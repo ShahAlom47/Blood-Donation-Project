@@ -24,12 +24,13 @@ const BloodDonationHistory = () => {
         keepPreviousData: true,
     });
 
-  console.log(data);
+ 
 
     const columns = [
        
         { 'text': 'Recipient`s Email', 'id': 'userEmail' },
         { 'text': 'Recipient`s Phone', 'id': 'userPhone' },
+        { 'text': 'Status', 'id': 'status' },
         { 'text': 'Blood Group', 'id': 'bloodGroup' },
        
 
@@ -41,7 +42,8 @@ const BloodDonationHistory = () => {
         return {
           
             userEmail: completedRequester ? completedRequester.requesterEmail : userData.email,
-            userPhone: completedRequester ? completedRequester.requesterPhone : userData.phone,
+            userPhone: completedRequester ? completedRequester.requesterPhone :( userData.phone || 'No blood was taken'),
+            status:userData.status==='completed' ?userData.status:(<p className="bg-cyan-300 px-2">Not Complete</p>),
             bloodGroup:userData.bloodGroup,
         };
     }) : [];

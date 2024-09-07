@@ -80,7 +80,7 @@ const emailData2 = {
           const createPaymentIntent = async () => {
             try {
               const response = await AxiosPublic.post("/payment/create-payment-intent", { price: parseFloat(donationData?.amount|| donationData?.monthlyAmount) });
-            console.log(response);
+           
               setClientSecret(response.data.clientSecret);
               setErrMsg('')
             } catch (error) {
@@ -101,7 +101,7 @@ const emailData2 = {
         setTransactionId('')
         e.preventDefault()
 
-        console.log(stripe,elements);
+     
         if (!stripe || !elements) {
             return;
         }
@@ -148,7 +148,7 @@ const emailData2 = {
                 }
 
                 const res= await addDonation(paymentData)
-                console.log(res);
+              
                 if(res.success===true){
                   toast.success(res.message)
                   if (donationData.donationType === 'monthlyDonation') {

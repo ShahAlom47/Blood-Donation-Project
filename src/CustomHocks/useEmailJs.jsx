@@ -29,7 +29,7 @@ const useEmailJs = () => {
       // Send email via EmailJS API
       const res = await AxiosPublic.post('https://api.emailjs.com/api/v1.0/email/send', emailData);
 
-      console.log(res);
+      
       if (res.data === 'OK') {
         
         if (reset) reset();

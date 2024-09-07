@@ -23,7 +23,7 @@ const DonationHistoryTable = () => {
             console.log("Donation history fetched successfully:", data);
         }
     });
-    console.log("data", data);
+  
 
 
     const columns = [

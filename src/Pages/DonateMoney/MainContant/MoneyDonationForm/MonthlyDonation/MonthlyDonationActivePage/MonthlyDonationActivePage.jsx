@@ -50,7 +50,6 @@ const MonthlyDonationActivePage = ({ setLastDonationMonth, data, refetch, }) => 
         setUpdateErr('')
 
         const amount = parseInt(e.target.amount.value);
-        console.log(amount, data?.monthlyAmount);
         if (amount === data?.monthlyAmount) {
             setUpdateErr("You must change the amount to update.");
             return

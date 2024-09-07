@@ -117,7 +117,7 @@ const OneTimeDonation = () => {
             })
         };
         
-// console.log(donationData);
+
 
         navigate('/paymentPage', { state: { donationData } });
     };

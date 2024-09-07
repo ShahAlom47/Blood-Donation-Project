@@ -43,7 +43,7 @@ const BloodCard = ({ data, group }) => {
         setOpenModal(true)
     };
 
-    // console.log(bloodGroupData);
+  
 
     const handelRequest = async (data) => {
         if( data.email===user.email){
@@ -51,7 +51,7 @@ const BloodCard = ({ data, group }) => {
             Swal.fire('Request denied! You have already added this blood to the blood bank, so you cannot request it .')
             return
         }
-      console.log(data);
+    
         playSound('click')
         const notificationData = {
             requesterEmail: user?.email,

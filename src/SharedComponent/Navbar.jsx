@@ -14,7 +14,7 @@ import useUser from '../CustomHocks/useUser';
 import NotificationIcon from '../Components/NotificationIcon';
 import { IoIosArrowDown } from 'react-icons/io';
 import useSound from '../CustomHocks/useSound';
-
+import profilePic from '../assets/image/user-fake-profile-img.png'
 const Navbar = () => {
     const [isOpen, setOpen] = useState(false);
     const [btn,setBtn]=useState(false)
@@ -152,7 +152,9 @@ const Navbar = () => {
                                 <div className="dropdown dropdown-end p-0 m-0">
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar p-0 m-0">
                                         <div className="w-8 rounded-full">
-                                            <img alt="profile phot" src={user?.photoURL} />
+                                         
+                                             <img alt="profile phot" src={user?.photoURL?user?.photoURL:profilePic} />
+                                           
                                         </div>
                                     </div>
                                     <ul tabIndex={0} className="-mt-1 z-[1] text-white p-2 shadow menu menu-sm dropdown-content bg-color-p rounded-sm w-32">

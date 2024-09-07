@@ -46,7 +46,7 @@ const handelDonate=()=>{
                     <div className="">
                         <h1 className="text-3xl font-bold mb-2">{user.name}  <span className="bg-gray-200 rounded-md text-lg px-2">{user.role}</span></h1>
                         <h2 className=" text-sm"><strong>Blood Group:</strong> <span className=" bg-color- p-1 rounded-full font-semibold text-color-p">{user.bloodGroup}</span></h2>
-                        <h2 className=" text-sm"><strong>Last Donate:</strong> <span className="  rounded-full font-medium ">{user.lastDonate}</span></h2>
+                        <h2 className=" text-sm"><strong>Last Donate:</strong> <span className="  rounded-full font-medium ">{user.lastDonate?user.lastDonate: <strong className="text-color-p">Not Yet</strong> }</span></h2>
 
                     </div>
 
@@ -99,8 +99,8 @@ const customStyles = {
         bottom: 'auto',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)',
-        width: '40%',
-        maxWidth: '50%',
+        width: '60%',
+        maxWidth: '60%',
         minWidth: '50%',
         height: 'auto',
         maxHeight: '90vh',

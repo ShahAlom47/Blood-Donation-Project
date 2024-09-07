@@ -60,7 +60,7 @@ const useUserHomeFunction = () => {
                      donorEmail:data.email,
                      donorName:data.name ||'unknown',
                 }
-                console.log(data);
+               
                 const res = await AxiosSecure.patch(`/bloodBank/user/completeBloodBankRequest/${data._id}`, completedData)
             
                 if (res.data.status === true) {
