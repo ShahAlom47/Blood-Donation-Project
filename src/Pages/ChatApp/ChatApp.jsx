@@ -8,10 +8,10 @@ import UserChat from "./UserChat/UserChat";
 
 const ChatApp = () => {
     const [openChatBox, setOpenChatBox] = useState(false)
-    const {user}= useUser()
+    const { user } = useUser()
 
 
-
+    if (!user) return
     return (
         <div>
             <button className="top-[80dvh] fixed z-[9999] right-5" onClick={() => setOpenChatBox(!openChatBox)}>
@@ -21,17 +21,19 @@ const ChatApp = () => {
                 </div>
             </button>
 
-            <div>
+            <div className="h-[70dvh] border border-green-600 m-1">
                 <MotionChatBox openChatBox={openChatBox} setOpenChatBox={setOpenChatBox} >
+                  
                    {
-                    user?.role==='admin'?
-                    <AdminChat></AdminChat>:
-                    <UserChat></UserChat>
-                   }
+                        user?.role === 'admin' ?
+                            <AdminChat ></AdminChat> :
+                            <UserChat></UserChat>
+                    }
+                 
 
 
                 </MotionChatBox>
-              
+
             </div>
 
 

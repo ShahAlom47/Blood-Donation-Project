@@ -7,10 +7,12 @@ import usePageLoading from "../CustomHocks/usePageLoading";
 import useGlobalClickListener from "../UtilityFiles/GlobalClickListener";
 import useSound from "../CustomHocks/useSound";
 import ChatApp from "../Pages/ChatApp/ChatApp";
+import useUser from "../CustomHocks/useUser";
 
 
 const Root = () => {
   const [loading, setLoading] = useState(true);
+  const { user } = useUser;
 
   const { playSound } = useSound()
   useGlobalClickListener(() => {
@@ -27,6 +29,7 @@ const Root = () => {
 
     loadData();
   }, []);
+  console.log(user);
 
   return (
     loading ? <Loading></Loading> :
@@ -37,8 +40,8 @@ const Root = () => {
         }
 
         <Footer></Footer>
-        
-       <ChatApp></ChatApp>
+
+        <ChatApp></ChatApp>
 
       </div>
   );
