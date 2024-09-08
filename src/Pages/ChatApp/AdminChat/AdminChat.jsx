@@ -1,7 +1,6 @@
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 import useAxios from "../../../CustomHocks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
 import useUser from "../../../CustomHocks/useUser";
 import { FaArrowLeft } from "react-icons/fa6";
 import { MdSend } from "react-icons/md";
@@ -15,21 +14,31 @@ const AdminChat = () => {
   const [selectedUser, setSelectedUser] = useState(null)
   const [isOpen, setOpen] = useState(false)
   const [newMessage, setNewMessage] = useState('');
+  const [userList, setUserList] = useState([]);
 
-  const { data: userList } = useQuery({
-    queryKey: ['getChatList', user?.email],
-    queryFn: async () => {
-      const res = await AxiosSecure.get(`/chatData/chartUsers/${user?.email}`)
-      return res.data
-    }
-  })
+
 
 
 
 
   useEffect(() => {
+
+
+    const fetchUserList = async () => {
+      try {
+        const res = await AxiosSecure.get(`/chatData/chartUsers/${user?.email}`);
+        setUserList(res.data);
+      } catch (error) {
+        console.error('Error fetching user list:', error);
+      }
+    };
+
+    fetchUserList();
+
+
+
     if (selectedUser) {
-      socket.emit('join', {userEmail:selectedUser.userEmail,userRole:user?.role});  // Emit join event with user email
+      socket.emit('join', { userEmail: selectedUser.userEmail, userRole: user?.role });  // Emit join event with user email
     }
 
     socket.on('adminMessage', (data) => {
@@ -40,7 +49,7 @@ const AdminChat = () => {
     return () => {
       socket.off('adminMessage');
     };
-  }, [user?.email, selectedUser,user?.role]);
+  }, [user?.email, selectedUser, user?.role,AxiosSecure]);
 
   const handelUserMsg = async (userEmail) => {
     setSelectedUser(userEmail)
@@ -48,12 +57,18 @@ const AdminChat = () => {
 
   }
 
-  const sendMsg = async() =>{
-
-
+  const sendMsg = async () => {
+    socket.emit('sendAdminMessage', { 
+      receiverEmail:selectedUser.userEmail,
+      userEmail: user?.email, 
+      userName: user?.name, 
+      userRole: user?.role,
+       newMessage });
+       setNewMessage('')
+       
   }
 
-  console.log(messages);
+  
   return (
 
     <div className=" h-[62dvh] ">
@@ -90,19 +105,19 @@ const AdminChat = () => {
               ))}
             </div>
           </div>
-         
-            <div className=" sticky bottom-0 bg-gray-200 flex justify-between items-center gap-2 p-2">
-              <input
-                className='input rounded-full outline-none flex-1'
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type your message here..."
-              />
-              <button onClick={sendMsg} className='p-2 rounded-full text-2xl text-color-p hover:bg-gray-200 '  ><MdSend /></button>
-            </div>
+
+          <div className=" sticky bottom-0 bg-gray-200 flex justify-between items-center gap-2 p-2">
+            <input
+              className='input rounded-full outline-none flex-1'
+              type="text"
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type your message here..."
+            />
+            <button onClick={sendMsg} className='p-2 rounded-full text-2xl text-color-p hover:bg-gray-200 '  ><MdSend /></button>
           </div>
-        
+        </div>
+
       }
 
     </div>

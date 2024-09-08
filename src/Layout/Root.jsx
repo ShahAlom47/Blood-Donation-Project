@@ -6,7 +6,6 @@ import Loading from "../SharedComponent/Loading";
 import usePageLoading from "../CustomHocks/usePageLoading";
 import useGlobalClickListener from "../UtilityFiles/GlobalClickListener";
 import useSound from "../CustomHocks/useSound";
-import ChatApp from "../Pages/ChatApp/ChatApp";
 import useUser from "../CustomHocks/useUser";
 
 
@@ -41,7 +40,7 @@ const Root = () => {
 
         <Footer></Footer>
 
-        <ChatApp></ChatApp>
+
 
       </div>
   );

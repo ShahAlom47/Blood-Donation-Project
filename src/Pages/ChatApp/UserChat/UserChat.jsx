@@ -12,14 +12,22 @@ const UserChat = () => {
 
   useEffect(() => {
     if (user?.email) {
+      // Join the chat room
       socket.emit('join', { userEmail: user?.email, userRole: user?.role });
 
+      // Listen for user messages
       socket.on('userMessage', (data) => {
+        setMessages(data);
+      });
+
+      // Listen for admin messages
+      socket.on('adminMessage', (data) => {
         setMessages(data);
       });
 
       return () => {
         socket.off('userMessage');
+        socket.off('adminMessage');
       };
     }
   }, [user?.email, user?.role]);
@@ -27,10 +35,10 @@ const UserChat = () => {
   const sendMsg = async () => {
     if (message === '') return;
 
-    // Emit message to the server
+    // Send the user's message to the server
     socket.emit('message', { userEmail: user?.email, userName: user?.name, userRole: user?.role, message });
 
-    // Update local messages state
+    // Update the local messages state with the new message
     setMessages(prevMessages => [...prevMessages, { message: message }]);
     setMessage('');
   };

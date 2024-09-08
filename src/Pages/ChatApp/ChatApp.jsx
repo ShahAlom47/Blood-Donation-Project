@@ -21,7 +21,7 @@ const ChatApp = () => {
                 </div>
             </button>
 
-            <div className="h-[70dvh] border border-green-600 m-1">
+            <div className={`h-[70dvh] ${openChatBox?'':'hidden'} `}>
                 <MotionChatBox openChatBox={openChatBox} setOpenChatBox={setOpenChatBox} >
                   
                    {
