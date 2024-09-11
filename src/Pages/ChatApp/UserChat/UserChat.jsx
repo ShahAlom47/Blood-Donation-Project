@@ -9,7 +9,7 @@ const UserChat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const { user } = useUser();
-
+console.log(messages);
   useEffect(() => {
     if (user?.email) {
       // Join the chat room
@@ -46,16 +46,14 @@ const UserChat = () => {
   return (
     <div className="h-[62dvh] m-1 flex flex-col justify-between overflow-y-scroll relative">
       <div className="flex-1 p-2">
-        <div className="space-y-2 flex flex-col">
-          {messages.map((msg, index) => (
-            <div className="flex items-start gap-3" key={index}>
-              <strong className="rounded-full p-1 bg-gray-300">User</strong>
-              <span className="mb-3 bg-green-600 p-2 rounded-bl-md rounded-tr-lg">
-                {msg.message}
-              </span>
+      <div className=" space-y-2  flex flex-col  ">
+              {messages.map((msg, index) => (
+                <div className={`flex items-start  gap-3 w-8/12 ${msg.senderEmail===user.email || msg.senderRole===user.role?'ml-auto flex-row-reverse':'mr-auto ' } `} key={index}>
+                  <img className="w-8 h-8 rounded-full justify-center items-center flex bg-gray-400" src={`${msg.senderEmail===user.email?user.photoURL:''}`} alt="P" />
+                  <span className=" mb-3 bg-green-600 p-2 rounded-bl-md rounded-tr-lg"> {msg.message}</span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
       </div>
 
       <div className="flex justify-between items-center gap-2 p-2 sticky bottom-0 bg-gray-200">

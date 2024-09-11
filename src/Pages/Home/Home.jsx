@@ -1,6 +1,5 @@
 
 
-import ChatApp from "../ChatApp/ChatApp";
 import Banner from "./Banner/Banner";
 import Banner2 from "./Banner/Banner2";
 import BloodRequest from "./BloodRequest/BloodRequest";
@@ -19,7 +18,6 @@ const Home = () => {
             <OurServices></OurServices>
             <BloodRequest></BloodRequest>
             <ContactSection></ContactSection>
-            <ChatApp></ChatApp>
         </div>
     );
 };

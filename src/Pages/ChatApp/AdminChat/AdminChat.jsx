@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 import useAxios from "../../../CustomHocks/useAxiosSecure";
@@ -7,35 +8,20 @@ import { MdSend } from "react-icons/md";
 
 const socket = io('http://localhost:3000'); // Backend URL
 
-const AdminChat = () => {
+const AdminChat = ({userList}) => {
   const { user } = useUser();
   const AxiosSecure = useAxios()
   const [messages, setMessages] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null)
   const [isOpen, setOpen] = useState(false)
   const [newMessage, setNewMessage] = useState('');
-  const [userList, setUserList] = useState([]);
 
 
 
-
+console.log(messages);
 
 
   useEffect(() => {
-
-
-    const fetchUserList = async () => {
-      try {
-        const res = await AxiosSecure.get(`/chatData/chartUsers/${user?.email}`);
-        setUserList(res.data);
-      } catch (error) {
-        console.error('Error fetching user list:', error);
-      }
-    };
-
-    fetchUserList();
-
-
 
     if (selectedUser) {
       socket.emit('join', { userEmail: selectedUser.userEmail, userRole: user?.role });  // Emit join event with user email
@@ -98,8 +84,8 @@ const AdminChat = () => {
           <div className="flex-1 p-2">
             <div className=" space-y-2  flex flex-col  ">
               {messages.map((msg, index) => (
-                <div className="flex items-start  gap-3" key={index}>
-                  <strong className="rounded-full p-1 bg-gray-300">User</strong>
+                <div className={`flex items-start  gap-3 w-8/12 ${msg.senderEmail===user.email || msg.senderRole===user.role?'ml-auto flex-row-reverse':'mr-auto ' } `} key={index}>
+                  <img className="w-8 h-8 rounded-full justify-center items-center flex bg-gray-400" src={`${msg.senderEmail===user.email?user.photoURL:''}`} alt="P" />
                   <span className=" mb-3 bg-green-600 p-2 rounded-bl-md rounded-tr-lg"> {msg.message}</span>
                 </div>
               ))}

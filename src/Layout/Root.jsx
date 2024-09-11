@@ -7,6 +7,7 @@ import usePageLoading from "../CustomHocks/usePageLoading";
 import useGlobalClickListener from "../UtilityFiles/GlobalClickListener";
 import useSound from "../CustomHocks/useSound";
 import useUser from "../CustomHocks/useUser";
+import ChatApp from "../Pages/ChatApp/ChatApp";
 
 
 const Root = () => {
@@ -39,6 +40,7 @@ const Root = () => {
         }
 
         <Footer></Footer>
+        <ChatApp></ChatApp>
 
 
 
