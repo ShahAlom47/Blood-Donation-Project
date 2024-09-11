@@ -18,7 +18,7 @@ const AdminChat = ({userList}) => {
 
 
 
-console.log(messages);
+
 
 
   useEffect(() => {
@@ -44,6 +44,8 @@ console.log(messages);
   }
 
   const sendMsg = async () => {
+    if (newMessage === '') return;
+
     socket.emit('sendAdminMessage', { 
       receiverEmail:selectedUser.userEmail,
       userEmail: user?.email, 

@@ -9,7 +9,8 @@ const UserChat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const { user } = useUser();
-console.log(messages);
+
+  
   useEffect(() => {
     if (user?.email) {
       // Join the chat room
