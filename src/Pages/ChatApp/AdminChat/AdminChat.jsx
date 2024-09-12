@@ -5,10 +5,11 @@ import useAxios from "../../../CustomHocks/useAxiosSecure";
 import useUser from "../../../CustomHocks/useUser";
 import { FaArrowLeft } from "react-icons/fa6";
 import { MdSend } from "react-icons/md";
+import useChartAppFunc from "../useChartAppFunc";
 
-const socket = io('http://localhost:3000'); // Backend URL
+const socket = io(import.meta.env.VITE_BASE_URL); // Backend URL
 
-const AdminChat = ({userList}) => {
+const AdminChat = ({userList,setUpdateUi,updateUi}) => {
   const { user } = useUser();
   const AxiosSecure = useAxios()
   const [messages, setMessages] = useState([]);
@@ -16,6 +17,7 @@ const AdminChat = ({userList}) => {
   const [isOpen, setOpen] = useState(false)
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
+  const {  changeAdminReadMsgStatus} = useChartAppFunc();
 
 
 
@@ -41,18 +43,25 @@ useEffect(() => {
     }
 
     socket.on('adminMessage', (data) => {
-
       setMessages(data);
     });
 
     return () => {
       socket.off('adminMessage');
     };
-  }, [user?.email, selectedUser, user?.role,AxiosSecure]);
+  }, [user?.email, selectedUser, user?.role,AxiosSecure,updateUi]);
 
   const handelUserMsg = async (userEmail) => {
     setSelectedUser(userEmail)
     setOpen(true)
+
+    if (user?.role === 'admin') {
+      const readRes = await changeAdminReadMsgStatus(userEmail?.userEmail, user?.email, user?.role)
+      if(readRes.data?.success===true){
+          setUpdateUi(!updateUi)
+      }
+  }
+
 
   }
 
@@ -114,6 +123,12 @@ useEffect(() => {
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  sendMsg(); 
+                }
+              }}
               placeholder="Type your message here..."
             />
             <button onClick={sendMsg} className='p-2 rounded-full text-2xl text-color-p hover:bg-gray-200 '  ><MdSend /></button>

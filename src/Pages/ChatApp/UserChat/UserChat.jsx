@@ -4,7 +4,7 @@ import { MdSend } from "react-icons/md";
 import { io } from "socket.io-client";
 import useUser from "../../../CustomHocks/useUser";
 
-const socket = io('http://localhost:3000');
+const socket = io(import.meta.env.VITE_BASE_URL);
 
 
 const UserChat = forwardRef((props, ref) => {
@@ -18,6 +18,7 @@ const UserChat = forwardRef((props, ref) => {
     setTimeout(() => {
       if (messagesEndRef.current) {
         messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+       
       }
     }, 100); 
   };
@@ -93,9 +94,15 @@ const UserChat = forwardRef((props, ref) => {
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              sendMsg(); 
+            }
+          }}
           placeholder="Type your message here..."
         />
-        <button onClick={sendMsg} className='p-2 rounded-full text-2xl text-color-p hover:bg-gray-200'>
+        <button onClick={sendMsg} type="submit" className='p-2 rounded-full text-2xl text-color-p hover:bg-gray-200'>
           <MdSend />
         </button>
       </div>
