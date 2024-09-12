@@ -4,7 +4,7 @@ import Loader from 'react-js-loader';
 
 const Loading = () => {
   return (
-    <div style={loaderStyle} className='min-h-screen w-full flex justify-center items-center'>
+    <div style={loaderStyle} className='min-h-screen w-full flex justify-center items-center bg-white '>
       <div className='w-3/12 m-auto'>
         <video style={videoStyle} className='w-full m-auto bg-transparent' autoPlay loop muted>
           <source src={video} type='video/mp4' />

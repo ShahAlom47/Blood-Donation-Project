@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import MotionChatBox from "./MotionChatBox/MotionChatBox";
 import useUser from "../../CustomHocks/useUser";
@@ -14,6 +14,8 @@ const ChatApp = () => {
     const [userList, setUserList] = useState([]);
     const [userUnreadMsg, setUnreadMsg] = useState(0);
 
+    const userChatRef = useRef(null); // Reference to UserChat component
+
     useEffect(() => {
         if (user) {
             socket.emit('joinChat', { userEmail: user?.email, userRole: user?.role });
@@ -25,7 +27,6 @@ const ChatApp = () => {
 
             // Listen for chat user list
             socket.on('joinChatUser', (data) => {
-         
                 setUserList(data);
             });
 
@@ -34,18 +35,26 @@ const ChatApp = () => {
                 socket.off('joinChatUser');
             };
         }
-    }, [user,openChatBox]); // Only run this effect if `user` changes
+    }, [user, openChatBox]);
 
     // Calculate total unread messages
     const totalUnread = userList?.reduce((total, user) => {
         return total + (user.unread || 0);
     }, 0);
 
+    // Toggle chat box and scroll to bottom when opened
+    const handleChatIconClick = () => {
+        setOpenChatBox(!openChatBox);
+        if (userChatRef.current) {
+            userChatRef.current.scrollToBottom(); // Scroll to the bottom when the chat box opens
+        }
+    };
+
     if (!user) return null;
 
     return (
         <div>
-            <button className="top-[80dvh] fixed z-[9999] right-5" onClick={() => setOpenChatBox(!openChatBox)}>
+            <button className="top-[80dvh] fixed z-[9999] right-5" onClick={handleChatIconClick}>
                 <div className="p-2 rounded-full bg-gray- bg-color-p hover:bg-red-700 cursor-pointer relative">
                     <IoChatbubbleEllipsesOutline className="text-3xl text-white" />
                     <p className="bg-white rounded-full absolute -top-1/3 p-1 right-1 border border-color-p font-medium">
@@ -59,7 +68,7 @@ const ChatApp = () => {
                     {user?.role === 'admin' ? (
                         <AdminChat userList={userList} />
                     ) : (
-                        <UserChat />
+                        <UserChat ref={userChatRef} />
                     )}
                 </MotionChatBox>
             </div>

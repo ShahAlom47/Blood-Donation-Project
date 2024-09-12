@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { io } from "socket.io-client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAxios from "../../../CustomHocks/useAxiosSecure";
 import useUser from "../../../CustomHocks/useUser";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -15,9 +15,22 @@ const AdminChat = ({userList}) => {
   const [selectedUser, setSelectedUser] = useState(null)
   const [isOpen, setOpen] = useState(false)
   const [newMessage, setNewMessage] = useState('');
+  const messagesEndRef = useRef(null);
 
 
 
+ // Function to scroll to the bottom of the chat
+ const scrollToBottom = () => {
+  setTimeout(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, 100); 
+};
+
+useEffect(() => {
+  scrollToBottom();
+}, [messages]);
 
 
 
@@ -91,6 +104,7 @@ const AdminChat = ({userList}) => {
                   <span className=" mb-3 bg-green-600 p-2 rounded-bl-md rounded-tr-lg"> {msg.message}</span>
                 </div>
               ))}
+              <div ref={messagesEndRef} ></div>
             </div>
           </div>
 
