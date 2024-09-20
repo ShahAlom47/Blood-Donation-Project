@@ -56,14 +56,7 @@ const ChatApp = () => {
             userChatRef.current.scrollToBottom(); // Scroll to the bottom when the chat box opens
         }
 
-        // if (user?.role === 'admin') {
-        //     const readRes = await changeAdminReadMsgStatus(user?.email, user?.role)
-        //     if(readRes.data?.success===true){
-        //         setUpdateUi(!updateUi)
-        //     }
-        //     return
-        // }
-        // else
+    
          if (user?.role === 'user') {
             const readRes = await changeUserReadMsgStatus(user?.email, user?.role)
             if(readRes.data?.success===true){

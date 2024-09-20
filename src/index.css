@@ -174,3 +174,7 @@ table.rtr-table tbody td:before {
 .datepicker-wrapper .react-datepicker__tab-loop {
   z-index: 9999 !important; 
 }
+
+.bb{
+  border:  solid  black 3px;
+}

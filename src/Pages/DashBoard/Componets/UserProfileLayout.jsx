@@ -10,18 +10,19 @@ import Modal from 'react-modal';
 import PhotoForm from "./PhotoForm/PhotoForm";
 import useUserMonthlyDonationData from "../../../CustomHocks/useUserMonthlyDonationData";
 import { BiMessageAltError } from "react-icons/bi";
+import { CiSettings } from "react-icons/ci";
 
 const UserProfileLayout = () => {
     const { user } = useUser();
-    const navigate =useNavigate();
+    const navigate = useNavigate();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const { latestDonationMonth, isDonationTime } = useUserMonthlyDonationData();
 
 
-const handelDonate=()=>{
-    localStorage.setItem('donationOption','monthly')
-    navigate('/donateMoney')
-}
+    const handelDonate = () => {
+        localStorage.setItem('donationOption', 'monthly')
+        navigate('/donateMoney')
+    }
 
     const closeModal = () => {
         setModalIsOpen(false);
@@ -46,26 +47,33 @@ const handelDonate=()=>{
                     <div className="">
                         <h1 className="text-3xl font-bold mb-2">{user.name}  <span className="bg-gray-200 rounded-md text-lg px-2">{user.role}</span></h1>
                         <h2 className=" text-sm"><strong>Blood Group:</strong> <span className=" bg-color- p-1 rounded-full font-semibold text-color-p">{user.bloodGroup}</span></h2>
-                        <h2 className=" text-sm"><strong>Last Donate:</strong> <span className="  rounded-full font-medium ">{user.lastDonate?user.lastDonate: <strong className="text-color-p">Not Yet</strong> }</span></h2>
+                        <h2 className=" text-sm"><strong>Last Donate:</strong> <span className="  rounded-full font-medium ">{user.lastDonate ? user.lastDonate : <strong className="text-color-p">Not Yet</strong>}</span></h2>
 
                     </div>
 
 
                 </div>
-                <div className="flex justify-end items-end  lg:w-2/12 md:w-2/12 w-full">
+                <div className="flex justify-end gap-3 items-end  lg:w-2/12 md:w-2/12 w-full">
+                    <div className="dropdown dropdown-end">
+                        <div tabIndex={0} role="button" className="btn-p m-1 flex justify-center items-center gap-3"> <CiSettings/> Settings</div>
+                        <ul tabIndex={0} className="dropdown-content menu bg-color-p rounded-sm z-[1] w-52 p-2 shadow">
+                            <Link to={'/donateBlood/user/editProfile'}><button  className=" btn btn-sm w-full rounded-sm mb-3 flex justify-start gap-3 items-center "><FiEdit /> Edit Profile</button></Link>
+                            <Link to={'/donateBlood/user/change-password'}><button  className=" btn btn-sm w-full rounded-sm mb-3 flex justify-start gap-3 items-center "> <FiEdit /> Change Password</button></Link>
 
-                    <Link to={'/donateBlood/user/editProfile'}><button style={{ width: '130px' }} className="btn-p flex justify-center gap-3 items-center "><FiEdit /> Edit Profile</button></Link>
+                        </ul>
+                    </div>
+
                 </div>
 
             </div>
             <div className=" ">
-               {
-                isDonationTime? <div className="text-color-p flex items-center gap-2 px-1 py-2">
-                 <BiMessageAltError /> 
-                  Your last donation was on <strong>{latestDonationMonth}</strong>. It`s time to donate again.
-                  <button onClick={handelDonate} className="btn btn-link" >Donate Now</button>
-             </div>:''
-               }
+                {
+                    isDonationTime ? <div className="text-color-p flex items-center gap-2 px-1 py-2">
+                        <BiMessageAltError />
+                        Your last donation was on <strong>{latestDonationMonth}</strong>. It`s time to donate again.
+                        <button onClick={handelDonate} className="btn btn-link" >Donate Now</button>
+                    </div> : ''
+                }
 
             </div>
             <Modal

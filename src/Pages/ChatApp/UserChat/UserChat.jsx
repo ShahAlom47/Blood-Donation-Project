@@ -6,6 +6,13 @@ import useUser from "../../../CustomHocks/useUser";
 
 const socket = io(import.meta.env.VITE_BASE_URL);
 
+// const socket = io(import.meta.env.VITE_BASE_URL, {
+//   transports: ['websocket', 'polling'], // Enable WebSocket with fallback to polling
+//   reconnectionAttempts: 5,
+//   timeout: 10000, // 10 seconds timeout for connection
+// });
+
+
 
 const UserChat = forwardRef((props, ref) => {
   const [message, setMessage] = useState('');

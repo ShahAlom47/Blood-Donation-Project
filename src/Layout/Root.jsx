@@ -34,15 +34,17 @@ const Root = () => {
   return (
     loading ? <Loading></Loading> :
       <div className="mt-12 relative">
+       
         <Navbar></Navbar>
+        
         {
           pageLoading ? <Loading></Loading> : <Outlet className=''></Outlet>
         }
 
         <Footer></Footer>
+     
+
         <ChatApp></ChatApp>
-
-
 
       </div>
   );
