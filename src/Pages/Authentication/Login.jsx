@@ -100,7 +100,8 @@ const Login = () => {
                         </div>
                         <button style={{ width: '100%' }} type="submit" className="btn-p w-full mt-4">Login</button>
                     </form>
-                    <p className=' text-center my-7 font-semibold '>Don`t have an account?<Link to={'/register'}><button className='btn btn-link '> Register Now</button></Link></p>
+                    <p className=' text-center mt-4 font-semibold '><Link to={'/forgetPassword'}><button className='btn btn-link '> Forget Password</button></Link></p>
+                    <p className=' text-center mb-7 font-semibold '>Don`t have an account?<Link to={'/register'}><button className='btn btn-link '> Register Now</button></Link></p>
                 </div>
             </div>
         </div>

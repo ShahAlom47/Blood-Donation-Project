@@ -18,6 +18,8 @@ import BloodBank from "../Pages/BloodBank/BloodBank";
 import DonateMoney from "../Pages/DonateMoney/DonateMoney";
 import PaymentPage from "../Pages/DonateMoney/MainContant/MoneyDonationForm/PaymentPage/PaymentPage";
 import EditPassword from "../Pages/DashBoard/Componets/EditPassword/EditPassword";
+import ForgetPassword from "../Pages/Authentication/ForgetPassword/ForgetPassword";
+import VerifyAccountEmail from "../Pages/Authentication/ForgetPassword/VerifyAccountEmail";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +81,14 @@ const router = createBrowserRouter([
       {
         path: "/donateBlood/user/change-password",
         element: <div><AnimatedLayout> <PrivetRouter><EditPassword></EditPassword></PrivetRouter></AnimatedLayout></div>,
+      },
+      {
+        path: "/forgetPassword",
+        element: <div><AnimatedLayout> <ForgetPassword></ForgetPassword></AnimatedLayout></div>,
+      },
+      {
+        path: "/verifyAccountEmail/:email",
+        element: <div><AnimatedLayout> <VerifyAccountEmail></VerifyAccountEmail></AnimatedLayout></div>,
       },
 
     ]

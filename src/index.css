@@ -178,3 +178,8 @@ table.rtr-table tbody td:before {
 .bb{
   border:  solid  black 3px;
 }
+
+.shadow-4-side {
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px 4px 8px rgba(0, 0, 0, 0.2),
+              4px -4px 8px rgba(0, 0, 0, 0.2), -4px -4px 8px rgba(0, 0, 0, 0.2);
+}

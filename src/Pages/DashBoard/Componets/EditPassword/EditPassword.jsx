@@ -5,6 +5,7 @@ import useUser from "../../../../CustomHocks/useUser";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import usePasswordChange from "../../../../CustomHocks/usePasswordChange";
 
 const EditPassword = () => {
   const [passwordError, setPasswordError] = useState('');
@@ -14,6 +15,8 @@ const EditPassword = () => {
   const { user } = useUser();
   const navigate = useNavigate()
   const AxiosSecure = useAxios();
+
+  const {changePassword}=usePasswordChange()
 
   const checkPassword = async (e) => {
     e.preventDefault();
@@ -36,8 +39,8 @@ const EditPassword = () => {
       return
     }
 
-    const res = await AxiosSecure.patch(`/user/changePassword/${user?.email}`, { newPassword:data.password })
-    console.log(res.data);
+    const res = await changePassword(user.email,data.password)
+   
     if (res.data?.status ) {
       reset()
       Swal.fire(res.data.message)
