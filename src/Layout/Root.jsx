@@ -6,13 +6,11 @@ import Loading from "../SharedComponent/Loading";
 import usePageLoading from "../CustomHocks/usePageLoading";
 import useGlobalClickListener from "../UtilityFiles/GlobalClickListener";
 import useSound from "../CustomHocks/useSound";
-import useUser from "../CustomHocks/useUser";
 import ChatApp from "../Pages/ChatApp/ChatApp";
 
 
 const Root = () => {
   const [loading, setLoading] = useState(true);
-  const { user } = useUser;
 
   const { playSound } = useSound()
   useGlobalClickListener(() => {
@@ -29,7 +27,6 @@ const Root = () => {
 
     loadData();
   }, []);
-  console.log(user);
 
   return (
     loading ? <Loading></Loading> :

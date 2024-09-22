@@ -87,7 +87,7 @@ const router = createBrowserRouter([
         element: <div><AnimatedLayout> <ForgetPassword></ForgetPassword></AnimatedLayout></div>,
       },
       {
-        path: "/verifyAccountEmail/:email",
+        path: "/verifyOTP/:otp",
         element: <div><AnimatedLayout> <VerifyAccountEmail></VerifyAccountEmail></AnimatedLayout></div>,
       },
 
