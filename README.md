@@ -45,21 +45,24 @@
    https://github.com/ShahAlom47/Blood-Donation-Project.git
 2. Install npm
   
-3. .env file :
-   
-(for contact form)
-VITE_EMAILJS_SERVICE_ID=********
-VITE_EMAILJS_TEMPLATE_ID=********
-VITE_EMAILJS_PUBLIC_KEY=********
+3. Create a `.env` file:
 
- EmailJS Account (For user payment confirmation email)
-VITE_EMAILJS_RED_SERVICE_ID=********
-VITE_EMAILJS_RED_TEMPLATE_ID=********
-VITE_EMAILJS_RED_PUBLIC_KEY=********
+   ```bash
+   # For contact form
+   VITE_EMAILJS_SERVICE_ID=********
+   VITE_EMAILJS_TEMPLATE_ID=********
+   VITE_EMAILJS_PUBLIC_KEY=********
 
-VITE_STRIPE_KEY=pk_test_********
+   # EmailJS Account (For user payment confirmation email)
+   VITE_EMAILJS_RED_SERVICE_ID=********
+   VITE_EMAILJS_RED_TEMPLATE_ID=********
+   VITE_EMAILJS_RED_PUBLIC_KEY=********
 
-# VITE_BASE_URL=http://localhost:3000
+   # Stripe API Key
+   VITE_STRIPE_KEY=pk_test_********
+
+   # Base URL
+   VITE_BASE_URL=http://localhost:3000
 
   
 
