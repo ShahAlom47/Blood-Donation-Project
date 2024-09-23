@@ -7,8 +7,8 @@ const useNodeMailer = () => {
   
     const sendEmail=async(mailOption)=>{
  
+        console.log(mailOption.text);
         const mailRes= AxiosPublic.post('/sendMail',{mailOption})
-        console.log(mailOption);
         return mailRes.data
 
     }

@@ -36,7 +36,7 @@ const ForgetPassword = () => {
                 text: `Your Code=${newOTP}`
             };
             sendEmail(mailOptions);
-            navigate(`/verifyOTP/${newOTP}`)
+            navigate(`/verifyOTP/****}`,{ state: { otp: newOTP, email: accountFound?.email } })
         }
     }
 

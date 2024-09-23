@@ -1,16 +1,25 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { MdOutlineVerified } from "react-icons/md";
+import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
+import Swal from "sweetalert2";
+import { useForm } from "react-hook-form";
+import usePasswordChange from "../../../CustomHocks/usePasswordChange";
 
 const VerifyAccountEmail = () => {
-    const { otp } = useParams();
+    const location = useLocation();
+    const { otp, email } = location.state || {};
     const inputsRef = useRef([]);
-    const [timeOut, setTimeOut] = useState(false)
     const [seconds, setSeconds] = useState(59);
     const [isVerified, setVerify] = useState(false)
     const [isNotMatch, setNotMatch] = useState(false)
+    const [passwordError, setPasswordError] = useState('');
+    const [showPass, setShowPass] = useState(false);
+    const { changePassword } = usePasswordChange()
+    const navigate = useNavigate()
 
-    console.log(otp);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+
 
     useEffect(() => {
         let timer = null;
@@ -19,7 +28,6 @@ const VerifyAccountEmail = () => {
             timer = setInterval(() => setSeconds(prev => prev - 1), 1000);
         } else {
             clearInterval(timer);
-            setTimeOut(true);
         }
 
         return () => clearInterval(timer);
@@ -41,19 +49,46 @@ const VerifyAccountEmail = () => {
     const handleOtp = (e) => {
         e.preventDefault();
         const OTP = inputsRef.current.map(input => input.value).join('');
-        if (OTP === otp) {
+        console.log(typeof OTP, typeof otp);
+        if (otp === OTP) {
+
             setVerify(true)
             setNotMatch(false)
-            console.log(OTP, 'match');
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Otp Verified",
+                showConfirmButton: false,
+                timer: 1500
+            });
             return
         }
         setVerify(false)
         setNotMatch(true)
-        console.log(OTP, 'not  match');
         return
 
     };
 
+    const onSubmit = async (data) => {
+        if (data.password != data.confirmPassword) {
+            setPasswordError('Confirm Password is not match')
+            return
+        }
+        const res = await changePassword(email, data.password)
+
+        if (res.data?.status) {
+            reset()
+            Swal.fire(res.data.message)
+            setTimeout(() => {
+                navigate('/login')
+            }, 1200);
+            return
+        }
+        Swal.fire(res.data.message)
+
+    }
+
+    console.log(email, otp);
     return (
         <div className="min-h-screen flex justify-center items-center flex-col">
             <div className="lg:w-6/12 md:w-8/12 w-full mx-auto shadow-4-side p-5 mb-5 text-center">
@@ -61,10 +96,48 @@ const VerifyAccountEmail = () => {
                 <p className="mb-2 text-lg text-gray-800">We are sending an OTP to verify your email address.</p>
 
                 {isVerified ?
-                    <div className="flex gap-3 flex-col items-center justify-center">
-                            <MdOutlineVerified  className="text-8xl text-green-700 text-center"></MdOutlineVerified>
-                            <button type="button" className="p-x4 btn btn-md rounded-sm bg-green-700 hover:bg-green-600 text-white">Next</button>
-                    </div>
+                    <form onSubmit={handleSubmit(onSubmit)} className=" w-full my-4">
+
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-medium">New Password</label>
+                            <div className='relative input input-bordered rounded w-full mt-1'>
+                                <input
+                                    type={`${showPass ? 'text' : 'password'}`}
+                                    {...register("password", {
+                                        required: "Password is required",
+                                        minLength: {
+                                            value: 6,
+                                            message: "Password must be at least 6 characters long"
+                                        },
+                                        pattern: {
+                                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
+                                            message: "Password must contain at least one letter and one number"
+                                        }
+                                    })}
+                                    className=" mt-1 w-full h-full "
+                                />
+                                <button type="button" className='absolute top-1/4 right-5' onClick={() => setShowPass(!showPass)}>{showPass ? <IoIosEyeOff /> : <IoIosEye />}</button>
+                            </div>
+                            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-medium">Confirm Password</label>
+                            <div className='relative input input-bordered rounded w-full mt-1'>
+                                <input
+                                    type={`${showPass ? 'text' : 'password'}`}
+                                    {...register("confirmPassword", {
+                                        required: "Confirm Password is required",
+
+                                    })}
+                                    className=" mt-1 w-full h-full "
+                                />
+                                <button type="button" className='absolute top-1/4 right-5' onClick={() => setShowPass(!showPass)}>{showPass ? <IoIosEyeOff /> : <IoIosEye />}</button>
+                            </div>
+                            {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
+                        </div>
+
+                        <button style={{ width: '100%' }} type="submit" className="btn-p w-full mt-4">Confirm</button>
+                    </form>
                     :
                     <form onSubmit={handleOtp} className="my-4 flex flex-col items-center gap-5">
                         <div className="flex justify-center gap-2">
@@ -91,13 +164,13 @@ const VerifyAccountEmail = () => {
                             )}
                         </div>
                         {
-                            !timeOut &&
+                            // !timeOut &&
                             <button type="submit" className="mx-auto btn btn-md rounded-sm bg-green-700 hover:bg-green-600 text-white">Verify</button>
                         }
                     </form>
                 }
             </div>
-            
+
         </div>
     );
 };
